@@ -19,16 +19,15 @@ import edu.wpi.first.wpilibj.SPI;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
-public class DriveTrain extends Subsystem implements PIDOutput{
+public class DriveTrain extends Subsystem {
 
   private WPI_TalonSRX motorFL = new WPI_TalonSRX(IDs.frontLeftMotor.value);
   private WPI_TalonSRX motorFR = new WPI_TalonSRX(IDs.frontLeftMotor.value);
   private WPI_TalonSRX motorBL = new WPI_TalonSRX(IDs.frontLeftMotor.value);
   private WPI_TalonSRX motorBR = new WPI_TalonSRX(IDs.frontLeftMotor.value);
 
-  public final PIDController turnController;
+  //public final PIDController turnController;
   AHRS navX;
-
 
   private double lSumOfError = 0;
   private double rSumOfError = 0;
@@ -44,12 +43,12 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 
     navX = new AHRS(SPI.Port.kMXP);
 
-    turnController = new PIDController(PID.TkP,PID.TkI,PID.TkD, navX, this);
+    //turnController = new PIDController(PID.TkP,PID.TkI,PID.TkD, navX, this);
 
-    turnController.setInputRange(-180.0f,180.0f);
-    turnController.setOutputRange(-0.45, 0.45);
-    turnController.setAbsoluteTolerance(2.0f);
-    turnController.setContinuous(true);
+    //turnController.setInputRange(-180.0f,180.0f);
+    //turnController.setOutputRange(-0.45, 0.45);
+    //turnController.setAbsoluteTolerance(2.0f);
+    //turnController.setContinuous(true);
     
   }
 
@@ -118,28 +117,29 @@ public class DriveTrain extends Subsystem implements PIDOutput{
   public void PIDTurnAngle(double angle){
 
     navX.reset();
-    turnController.reset();
-    turnController.setPID(PID.TkP,PID.TkI,PID.TkD);
-    turnController.setSetpoint(angle);
-    turnController.enable();
+    //turnController.reset();
+    //turnController.setPID(PID.TkP,PID.TkI,PID.TkD);
+    //turnController.setSetpoint(angle);
+    //turnController.enable();
 
   }
   public void PIDTurnToAngle(double angle){
 
-    turnController.reset();
-    turnController.setPID(PID.TkP,PID.TkI,PID.TkD);
-    turnController.setSetpoint(angle);
-    turnController.enable();
+    //turnController.reset();
+    //turnController.setPID(PID.TkP,PID.TkI,PID.TkD);
+    //turnController.setSetpoint(angle);
+    //turnController.enable();
 
   }
 
   @Override
   public void initDefaultCommand() {}
-
+/*
   @Override
   public void pidWrite(double output) {
 
-    Drive(output,output);
+    Drive(output,-output);
 
   }
+*/
 }
