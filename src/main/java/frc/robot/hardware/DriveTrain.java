@@ -7,24 +7,49 @@
 
 package frc.robot.hardware;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 import frc.robot.Constants.Doubles;
 import frc.robot.Constants.IDs;
-
+import frc.robot.Constants.PID;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.SPI;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
 
-public class DriveTrain extends Subsystem {
+public class DriveTrain extends Subsystem implements PIDOutput{
 
   private WPI_TalonSRX motorFL = new WPI_TalonSRX(IDs.frontLeftMotor.value);
   private WPI_TalonSRX motorFR = new WPI_TalonSRX(IDs.frontLeftMotor.value);
   private WPI_TalonSRX motorBL = new WPI_TalonSRX(IDs.frontLeftMotor.value);
   private WPI_TalonSRX motorBR = new WPI_TalonSRX(IDs.frontLeftMotor.value);
 
+  public final PIDController turnController;
+  AHRS navX;
+
+
+  private double lSumOfError = 0;
+  private double rSumOfError = 0;
+  private double lLastError = 0;
+  private double rLastError = 0;
+
+  public double time = 0;
+
   public DriveTrain(){
 
     motorBL.follow(motorFL);
     motorBR.follow(motorFR);
+
+    navX = new AHRS(SPI.Port.kMXP);
+
+    turnController = new PIDController(PID.TkP,PID.TkI,PID.TkD, navX, this);
+
+    turnController.setInputRange(-180.0f,180.0f);
+    turnController.setOutputRange(-0.45, 0.45);
+    turnController.setAbsoluteTolerance(2.0f);
+    turnController.setContinuous(true);
     
   }
 
@@ -55,7 +80,65 @@ public class DriveTrain extends Subsystem {
 
     }
   }
+  public void PIDDrive(double setpoint){
+
+    double leftEncoderPosition = Robot.sensors.getLeftEncoderValue();
+    double rightEncoderPosition = Robot.sensors.getRightEncoderValue();
+
+    double time = Timer.getFPGATimestamp();
+
+    if(Robot.controllers.getJoyButton(1)){setpoint = 6;}
+    else if(Robot.controllers.getJoyButton(2)){setpoint = 0;}
+
+    double lError = setpoint - leftEncoderPosition;
+    double rError = setpoint - rightEncoderPosition;
+
+    double dt = Timer.getFPGATimestamp() - time;
+
+    if(Math.abs(lError) < PID.stopRange){lSumOfError += lError * dt;}
+    if(Math.abs(rError) < PID.stopRange){rSumOfError += rError * dt;}
+    
+    lSumOfError += lError * dt;
+    rSumOfError += rError * dt;
+
+    double lErrorRate = (lError - lLastError) / dt;
+    double rErrorRate = (rError - rLastError) / dt;
+
+    double leftMotorOutput = PID.LkP * lError + PID.LkI * lSumOfError + PID.LkD * lErrorRate;
+    double rightMotorOutput = PID.RkP * rError + PID.RkI * rSumOfError + PID.RkD * rErrorRate;
+
+    Drive(leftMotorOutput, rightMotorOutput);
+
+    time = Timer.getFPGATimestamp();
+    
+    lLastError = lError;
+    rLastError = rError;
+
+  }
+  public void PIDTurnAngle(double angle){
+
+    navX.reset();
+    turnController.reset();
+    turnController.setPID(PID.TkP,PID.TkI,PID.TkD);
+    turnController.setSetpoint(angle);
+    turnController.enable();
+
+  }
+  public void PIDTurnToAngle(double angle){
+
+    turnController.reset();
+    turnController.setPID(PID.TkP,PID.TkI,PID.TkD);
+    turnController.setSetpoint(angle);
+    turnController.enable();
+
+  }
 
   @Override
   public void initDefaultCommand() {}
+
+  @Override
+  public void pidWrite(double output) {
+
+
+  }
 }

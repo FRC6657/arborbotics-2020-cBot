@@ -9,6 +9,10 @@ public interface PID {
     public double RkI = 0;
     public double RkD = 0;
 
+    public double TkP = 0;
+    public double TkI = 0;
+    public double TkD = 0;
+
     public double stopRange = 1.5;
     
 }

@@ -8,14 +8,13 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.*;
 import frc.robot.hardware.*;
 
 public class Robot extends TimedRobot {
 
-  public static Encoders encoders = new Encoders();
+  public static Sensors sensors = new Sensors();
   public static DriveTrain drivetrain = new DriveTrain();
   public static Controllers controllers = new Controllers();
 
@@ -29,69 +28,21 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
 
-    SmartDashboard.putNumber("Left Encoder Value:", encoders.getLeftEncoderValue());
-    SmartDashboard.putNumber("Right Encoder Value:", encoders.getRightEncoderValue());
-
-    SmartDashboard.putNumber("Setpoint: ",setpoint);
-    SmartDashboard.putNumber("lSumOfError:",lSumOfError);
-    SmartDashboard.putNumber("rSumOfError:",rSumOfError);
-    SmartDashboard.putNumber("lError:",lLastError);
-    SmartDashboard.putNumber("rError:",rLastError);
-    SmartDashboard.putNumber("Time: ", time);
+    SmartDashboard.putNumber("Left Encoder Value:", sensors.getLeftEncoderValue());
+    SmartDashboard.putNumber("Right Encoder Value:", sensors.getRightEncoderValue());
 
   }
 
   @Override
   public void autonomousInit() {
-    encoders.Reset();
-    lSumOfError = 0;
-    rSumOfError = 0;
-    lLastError = 0;
-    rLastError = 0;
-    time = 0;
+    sensors.ResetEncoders();
+    drivetrain.time = 0;
   }
-
-  double setpoint = 0;
-  double lSumOfError = 0;
-  double rSumOfError = 0;
-  double lLastError = 0;
-  double rLastError = 0;
-
-  double time = Timer.getFPGATimestamp();
 
   @Override
   public void autonomousPeriodic() {
 
-    double leftEncoderPosition = encoders.getLeftEncoderValue();
-    double rightEncoderPosition = encoders.getRightEncoderValue();
-
-    if(controllers.getJoyButton(1)){setpoint = 6;}
-    else if(controllers.getJoyButton(2)){setpoint = 0;}
-
-    double lError = setpoint - leftEncoderPosition;
-    double rError = setpoint - rightEncoderPosition;
-
-    double dt = Timer.getFPGATimestamp() - time;
-
-    if(Math.abs(lError) < PID.stopRange){lSumOfError += lError * dt;}
-    if(Math.abs(rError) < PID.stopRange){rSumOfError += rError * dt;}
     
-    lSumOfError += lError * dt;
-    rSumOfError += rError * dt;
-
-    double lErrorRate = (lError - lLastError) / dt;
-    double rErrorRate = (rError - rLastError) / dt;
-
-    double leftMotorOutput = LkP * lError + LkI * lSumOfError + LkD * lErrorRate;
-    double rightMotorOutput = RkP * rError + RkI * rSumOfError + RkD * rErrorRate;
-
-    drivetrain.Drive(leftMotorOutput, rightMotorOutput);
-
-    time = Timer.getFPGATimestamp();
-    
-    lLastError = lError;
-    rLastError = rError;
-
   }
 
   @Override
@@ -107,17 +58,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-    
-    SmartDashboard.putNumber("Left Encoder Value:", encoders.getLeftEncoderValue());
-    SmartDashboard.putNumber("Right Encoder Value:", encoders.getRightEncoderValue());
 
-    SmartDashboard.putNumber("Setpoint: ",setpoint);
-    SmartDashboard.putNumber("lSumOfError:",lSumOfError);
-    SmartDashboard.putNumber("rSumOfError:",rSumOfError);
-    SmartDashboard.putNumber("lError:",lLastError);
-    SmartDashboard.putNumber("rError:",rLastError);
-    SmartDashboard.putNumber("Time: ", time);
-    
   }
 
   @Override
