@@ -7,30 +7,80 @@
 
 package frc.robot;
 
+import edu.wpi.first.hal.sim.RelaySim;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
+import frc.robot.Constants.*;
+import frc.robot.hardware.*;
 
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the TimedRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the build.gradle file in the
- * project.
- */
 public class Robot extends TimedRobot {
-  /**
-   * This function is run when the robot is first started up and should be used
-   * for any initialization code.
-   */
+
+  public static Encoders encoders = new Encoders();
+  public static DriveTrain drivetrain = new DriveTrain();
+  public static Controllers controllers = new Controllers();
+
+  final double LkP = PID.LkP;
+  final double LkI = PID.LkI;
+  final double LkD = PID.LkD;
+  final double RkP = PID.RkP;
+  final double RkI = PID.RkI;
+  final double RkD = PID.RkD;
+
   @Override
   public void robotInit() {
   }
 
   @Override
   public void autonomousInit() {
+    encoders.Reset();
+    lSumOfError = 0;
+    rSumOfError = 0;
+    lLastError = 0;
+    rLastError = 0;
+    time = 0;
   }
+
+  double setpoint = 0;
+  double lSumOfError = 0;
+  double rSumOfError = 0;
+  double lLastError = 0;
+  double rLastError = 0;
+
+  double time = Timer.getFPGATimestamp();
 
   @Override
   public void autonomousPeriodic() {
+
+    double leftEncoderPosition = encoders.getLeftEncoderValue();
+    double rightEncoderPosition = encoders.getRightEncoderValue();
+
+    if(controllers.getButton(1)){setpoint = 6;}
+    else if(controllers.getButton(2)){setpoint = 0;}
+
+    double lError = setpoint - leftEncoderPosition;
+    double rError = setpoint - rightEncoderPosition;
+
+    double dt = Timer.getFPGATimestamp() - time;
+
+    if(Math.abs(lError) < PID.stopRange){lSumOfError += lError * dt;}
+    if(Math.abs(rError) < PID.stopRange){rSumOfError += rError * dt;}
+    
+    lSumOfError += lError * dt;
+    rSumOfError += rError * dt;
+
+    double lErrorRate = (lError - lLastError) / dt;
+    double rErrorRate = (rError - rLastError) / dt;
+
+    double leftMotorOutput = LkP * lError + LkI * lSumOfError + LkD * lErrorRate;
+    double rightMotorOutput = RkP * rError + RkI * rSumOfError + RkD * rErrorRate;
+
+    drivetrain.Drive(leftMotorOutput, rightMotorOutput);
+
+    time = Timer.getFPGATimestamp();
+    
+    lLastError = lError;
+    rLastError = rError;
+
   }
 
   @Override
