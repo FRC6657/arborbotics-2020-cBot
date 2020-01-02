@@ -139,6 +139,7 @@ public class DriveTrain extends Subsystem implements PIDOutput{
   @Override
   public void pidWrite(double output) {
 
+    Drive(output,output);
 
   }
 }
