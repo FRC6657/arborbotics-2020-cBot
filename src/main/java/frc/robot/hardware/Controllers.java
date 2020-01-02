@@ -19,7 +19,9 @@ public class Controllers extends Subsystem {
   private Joystick joyStick = new Joystick(IDs.joyStick.value);
 
 
-  public boolean getButton(int button){return joyStick.getRawButton(button);}
+  public boolean getJoyButton(int button){return joyStick.getRawButton(button);}
+
+  public double getJoyAxis(int axis){return joyStick.getRawAxis(axis);}
 
   @Override
   public void initDefaultCommand() {}

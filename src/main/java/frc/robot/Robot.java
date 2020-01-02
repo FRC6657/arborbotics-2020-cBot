@@ -7,9 +7,9 @@
 
 package frc.robot;
 
-import edu.wpi.first.hal.sim.RelaySim;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.*;
 import frc.robot.hardware.*;
 
@@ -28,6 +28,17 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
+
+    SmartDashboard.putNumber("Left Encoder Value:", encoders.getLeftEncoderValue());
+    SmartDashboard.putNumber("Right Encoder Value:", encoders.getRightEncoderValue());
+
+    SmartDashboard.putNumber("Setpoint: ",setpoint);
+    SmartDashboard.putNumber("lSumOfError:",lSumOfError);
+    SmartDashboard.putNumber("rSumOfError:",rSumOfError);
+    SmartDashboard.putNumber("lError:",lLastError);
+    SmartDashboard.putNumber("rError:",rLastError);
+    SmartDashboard.putNumber("Time: ", time);
+
   }
 
   @Override
@@ -54,8 +65,8 @@ public class Robot extends TimedRobot {
     double leftEncoderPosition = encoders.getLeftEncoderValue();
     double rightEncoderPosition = encoders.getRightEncoderValue();
 
-    if(controllers.getButton(1)){setpoint = 6;}
-    else if(controllers.getButton(2)){setpoint = 0;}
+    if(controllers.getJoyButton(1)){setpoint = 6;}
+    else if(controllers.getJoyButton(2)){setpoint = 0;}
 
     double lError = setpoint - leftEncoderPosition;
     double rError = setpoint - rightEncoderPosition;
@@ -89,6 +100,24 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
+
+    drivetrain.teleDrive();
+
+  }
+
+  @Override
+  public void robotPeriodic() {
+    
+    SmartDashboard.putNumber("Left Encoder Value:", encoders.getLeftEncoderValue());
+    SmartDashboard.putNumber("Right Encoder Value:", encoders.getRightEncoderValue());
+
+    SmartDashboard.putNumber("Setpoint: ",setpoint);
+    SmartDashboard.putNumber("lSumOfError:",lSumOfError);
+    SmartDashboard.putNumber("rSumOfError:",rSumOfError);
+    SmartDashboard.putNumber("lError:",lLastError);
+    SmartDashboard.putNumber("rError:",rLastError);
+    SmartDashboard.putNumber("Time: ", time);
+    
   }
 
   @Override

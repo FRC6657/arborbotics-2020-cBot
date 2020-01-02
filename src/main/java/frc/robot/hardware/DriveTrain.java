@@ -8,6 +8,8 @@
 package frc.robot.hardware;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Robot;
+import frc.robot.Constants.Doubles;
 import frc.robot.Constants.IDs;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -34,6 +36,24 @@ public class DriveTrain extends Subsystem {
     motorFL.set(leftSpeed);
     motorFR.set(-rightSpeed);
 
+  }
+
+  public void teleDrive(){
+
+    if((Robot.controllers.getJoyAxis(1) > Doubles.driveDeadband || Robot.controllers.getJoyAxis(1) < -Doubles.driveDeadband) || (Robot.controllers.getJoyAxis(3) > Doubles.turnDeadband || Robot.controllers.getJoyAxis(3) < -Doubles.turnDeadband)){
+
+      double drive = -Robot.controllers.getJoyAxis(1) * Doubles.driveModifier;
+      double turn = Robot.controllers.getJoyAxis(3) * Doubles.turnModifier;
+
+      if(!(Robot.controllers.getJoyAxis(1) > Doubles.driveDeadband) || !(Robot.controllers.getJoyAxis(1) < -Doubles.driveDeadband)){drive = 0;}
+      if((Robot.controllers.getJoyAxis(3) > Doubles.driveDeadband) || (Robot.controllers.getJoyAxis(3) < -Doubles.driveDeadband)){turn = 0;}
+    
+      double leftPower = drive + turn;
+      double rightPower = drive - turn;
+
+      Drive(leftPower, rightPower);
+
+    }
   }
 
   @Override
