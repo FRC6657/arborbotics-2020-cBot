@@ -16,10 +16,15 @@ import frc.robot.hardware.*;
 
 public class Robot extends TimedRobot {
   
-  private Controllers controllers = new Controllers();
+  public static Controllers controllers = new Controllers();
+  public static DriveTrain drivetrain = new DriveTrain();
+  public static Chicken3 chicken3 = new Chicken3();
 
-  public WPI_TalonSRX outR = new WPI_TalonSRX(1);
-  public WPI_TalonSRX outL = new WPI_TalonSRX(2);
+  private WPI_TalonSRX intakeSpin = new WPI_TalonSRX(51);
+  private WPI_TalonSRX intakePivot = new WPI_TalonSRX(50);
+
+  //public WPI_TalonSRX outR = new WPI_TalonSRX(1);
+  //public WPI_TalonSRX outL = new WPI_TalonSRX(2);
 
   //final double LkP = PID.LkP;
   //final double LkI = PID.LkI;
@@ -51,18 +56,21 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
   }
-
   @Override
   public void teleopPeriodic() {
 
-    if(controllers.getJoyAxis(1) > 0.1){outL.set(controllers.getJoyAxis(1)); outR.set(-controllers.getJoyAxis(1));}
-    if(controllers.getJoyAxis(1) < 0.1){outL.set(-controllers.getJoyAxis(1)); outR.set(controllers.getJoyAxis(1));}
+    //drivetrain.teleDrive();
 
+    if(controllers.getJoyAxis(1) > 0.5){intakeSpin.set(1);}
+    if(controllers.getJoyAxis(1) < 0.5){intakeSpin.set(-1);}
+    
 
   }
 
   @Override
   public void robotPeriodic() {
+
+    //SmartDashboard.putBoolean("Button 6 Status", Robot.controllers.button6status);
 
   }
 
