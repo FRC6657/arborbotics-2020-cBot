@@ -21,13 +21,16 @@ import com.kauailabs.navx.frc.AHRS;
 
 public class DriveTrain extends Subsystem implements PIDOutput{
 
-  private WPI_TalonSRX motorFL = new WPI_TalonSRX(IDs.frontLeftMotor.value);
-  private WPI_TalonSRX motorFR = new WPI_TalonSRX(IDs.frontLeftMotor.value);
-  private WPI_TalonSRX motorBL = new WPI_TalonSRX(IDs.frontLeftMotor.value);
-  private WPI_TalonSRX motorBR = new WPI_TalonSRX(IDs.frontLeftMotor.value);
+  //private WPI_TalonSRX motorFL = new WPI_TalonSRX(IDs.frontLeftMotor.value);
+  //private WPI_TalonSRX motorFR = new WPI_TalonSRX(IDs.frontLeftMotor.value);
+  //private WPI_TalonSRX motorBL = new WPI_TalonSRX(IDs.frontLeftMotor.value);
+  //private WPI_TalonSRX motorBR = new WPI_TalonSRX(IDs.frontLeftMotor.value);
 
-  public final PIDController turnController;
-  AHRS navX;
+  //public WPI_TalonSRX outL = new WPI_TalonSRX(2);
+  //public WPI_TalonSRX outR = new WPI_TalonSRX(1);
+
+  //public final PIDController turnController;
+  //AHRS navX;
 
 
   private double lSumOfError = 0;
@@ -39,34 +42,40 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 
   public DriveTrain(){
 
-    motorBL.follow(motorFL);
-    motorBR.follow(motorFR);
+    //motorBL.follow(motorFL);
+    //motorBR.follow(motorFR);
 
-    navX = new AHRS(SPI.Port.kMXP);
+    //navX = new AHRS(SPI.Port.kMXP);
 
-    turnController = new PIDController(PID.TkP,PID.TkI,PID.TkD, navX, this);
+    //turnController = new PIDController(PID.TkP,PID.TkI,PID.TkD, navX, this);
 
-    turnController.setInputRange(-180.0f,180.0f);
-    turnController.setOutputRange(-0.45, 0.45);
-    turnController.setAbsoluteTolerance(2.0f);
-    turnController.setContinuous(true);
+    //turnController.setInputRange(-180.0f,180.0f);
+    //turnController.setOutputRange(-0.45, 0.45);
+    //turnController.setAbsoluteTolerance(2.0f);
+    //turnController.setContinuous(true);
     
   }
 
-  public void driveLeft(double speed){motorFL.set(speed);}
-  public void driveRight(double speed){motorFR.set(-speed);}
+  //public void driveLeft(double speed){//motorFL.set(speed);}
+  //public void driveRight(double speed){//motorFR.set(-speed);}
 
   public void Drive(double leftSpeed, double rightSpeed){
 
-    motorFL.set(leftSpeed);
-    motorFR.set(-rightSpeed);
+    //motorFL.set(leftSpeed);
+    //motorFR.set(-rightSpeed);
 
   }
 
   public void teleDrive(){
 
+    //if(Robot.controllers.getJoyAxis(1) > 0.1){outL.set(Robot.controllers.getJoyAxis(1)); outR.set(-Robot.controllers.getJoyAxis(1));}
+    //if(Robot.controllers.getJoyAxis(1) < 0.1){outL.set(-Robot.controllers.getJoyAxis(1)); outR.set(Robot.controllers.getJoyAxis(1));}
+
+
+    /*
     if((Robot.controllers.getJoyAxis(1) > Doubles.driveDeadband || Robot.controllers.getJoyAxis(1) < -Doubles.driveDeadband) || (Robot.controllers.getJoyAxis(3) > Doubles.turnDeadband || Robot.controllers.getJoyAxis(3) < -Doubles.turnDeadband)){
 
+      
       double drive = -Robot.controllers.getJoyAxis(1) * Doubles.driveModifier;
       double turn = Robot.controllers.getJoyAxis(3) * Doubles.turnModifier;
 
@@ -77,11 +86,10 @@ public class DriveTrain extends Subsystem implements PIDOutput{
       double rightPower = drive - turn;
 
       Drive(leftPower, rightPower);
-
+*/
     }
-  }
   public void PIDDrive(double setpoint){
-
+/*
     double leftEncoderPosition = Robot.sensors.getLeftEncoderValue();
     double rightEncoderPosition = Robot.sensors.getRightEncoderValue();
 
@@ -113,23 +121,24 @@ public class DriveTrain extends Subsystem implements PIDOutput{
     
     lLastError = lError;
     rLastError = rError;
+    */
 
   }
   public void PIDTurnAngle(double angle){
 
-    navX.reset();
-    turnController.reset();
-    turnController.setPID(PID.TkP,PID.TkI,PID.TkD);
-    turnController.setSetpoint(angle);
-    turnController.enable();
+    //navX.reset();
+    //turnController.reset();
+    //turnController.setPID(PID.TkP,PID.TkI,PID.TkD);
+    //turnController.setSetpoint(angle);
+    //turnController.enable();
 
   }
   public void PIDTurnToAngle(double angle){
 
-    turnController.reset();
-    turnController.setPID(PID.TkP,PID.TkI,PID.TkD);
-    turnController.setSetpoint(angle);
-    turnController.enable();
+    //turnController.reset();
+    //turnController.setPID(PID.TkP,PID.TkI,PID.TkD);
+    //turnController.setSetpoint(angle);
+    //turnController.enable();
 
   }
 
@@ -139,7 +148,7 @@ public class DriveTrain extends Subsystem implements PIDOutput{
   @Override
   public void pidWrite(double output) {
 
-    Drive(output,output);
+    //Drive(output,output);
 
   }
 }

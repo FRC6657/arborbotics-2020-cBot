@@ -7,36 +7,39 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.*;
 import frc.robot.hardware.*;
 
 public class Robot extends TimedRobot {
+  
+  private Controllers controllers = new Controllers();
 
-  public static Sensors sensors = new Sensors();
-  public static DriveTrain drivetrain = new DriveTrain();
-  public static Controllers controllers = new Controllers();
+  public WPI_TalonSRX outR = new WPI_TalonSRX(1);
+  public WPI_TalonSRX outL = new WPI_TalonSRX(2);
 
-  final double LkP = PID.LkP;
-  final double LkI = PID.LkI;
-  final double LkD = PID.LkD;
-  final double RkP = PID.RkP;
-  final double RkI = PID.RkI;
-  final double RkD = PID.RkD;
+  //final double LkP = PID.LkP;
+  //final double LkI = PID.LkI;
+  //final double LkD = PID.LkD;
+  //final double RkP = PID.RkP;
+  //final double RkI = PID.RkI;
+  //final double RkD = PID.RkD;
 
   @Override
   public void robotInit() {
 
-    SmartDashboard.putNumber("Left Encoder Value:", sensors.getLeftEncoderValue());
-    SmartDashboard.putNumber("Right Encoder Value:", sensors.getRightEncoderValue());
+    //SmartDashboard.putNumber("Left Encoder Value:", sensors.getLeftEncoderValue());
+    //SmartDashboard.putNumber("Right Encoder Value:", sensors.getRightEncoderValue());
 
   }
 
   @Override
   public void autonomousInit() {
-    sensors.ResetEncoders();
-    drivetrain.time = 0;
+    //sensors.ResetEncoders();
+    //drivetrain.time = 0;
   }
 
   @Override
@@ -52,7 +55,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    drivetrain.teleDrive();
+    if(controllers.getJoyAxis(1) > 0.1){outL.set(controllers.getJoyAxis(1)); outR.set(-controllers.getJoyAxis(1));}
+    if(controllers.getJoyAxis(1) < 0.1){outL.set(-controllers.getJoyAxis(1)); outR.set(controllers.getJoyAxis(1));}
+
 
   }
 

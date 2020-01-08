@@ -4,7 +4,7 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
+/*
 package frc.robot.hardware;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  * Add your docs here.
  */
+/*
 public class Sensors extends Subsystem {
 
   private Encoder leftEncoder = new Encoder(0,1,true,EncodingType.k4X);
@@ -37,3 +38,4 @@ public class Sensors extends Subsystem {
   @Override
   public void initDefaultCommand() {}
 }
+*/
