@@ -23,6 +23,7 @@ public class Controllers extends Subsystem {
 
   public double getJoyAxis(int axis){return joyStick.getRawAxis(axis);}
 
+  public double getJoyPOV(int pov){return joyStick.getPOV(pov);}
   @Override
   public void initDefaultCommand() {}
 }

@@ -16,7 +16,8 @@ import frc.robot.hardware.*;
 
 public class Robot extends TimedRobot {
   
-  private Controllers controllers = new Controllers();
+  public static Controllers controllers = new Controllers();
+  private DriveTrain drivetrain = new DriveTrain();
 
   public WPI_TalonSRX outR = new WPI_TalonSRX(1);
   public WPI_TalonSRX outL = new WPI_TalonSRX(2);
@@ -51,13 +52,10 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
   }
-
   @Override
   public void teleopPeriodic() {
 
-    if(controllers.getJoyAxis(1) > 0.1){outL.set(controllers.getJoyAxis(1)); outR.set(-controllers.getJoyAxis(1));}
-    if(controllers.getJoyAxis(1) < 0.1){outL.set(-controllers.getJoyAxis(1)); outR.set(controllers.getJoyAxis(1));}
-
+    drivetrain.teleDrive();
 
   }
 
