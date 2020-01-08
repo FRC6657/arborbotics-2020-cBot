@@ -7,30 +7,45 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.TimedRobot;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the TimedRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the build.gradle file in the
- * project.
- */
+import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants.*;
+import frc.robot.hardware.*;
+
 public class Robot extends TimedRobot {
-  /**
-   * This function is run when the robot is first started up and should be used
-   * for any initialization code.
-   */
+  
+  private Controllers controllers = new Controllers();
+
+  public WPI_TalonSRX outR = new WPI_TalonSRX(1);
+  public WPI_TalonSRX outL = new WPI_TalonSRX(2);
+
+  //final double LkP = PID.LkP;
+  //final double LkI = PID.LkI;
+  //final double LkD = PID.LkD;
+  //final double RkP = PID.RkP;
+  //final double RkI = PID.RkI;
+  //final double RkD = PID.RkD;
+
   @Override
   public void robotInit() {
+
+    //SmartDashboard.putNumber("Left Encoder Value:", sensors.getLeftEncoderValue());
+    //SmartDashboard.putNumber("Right Encoder Value:", sensors.getRightEncoderValue());
+
   }
 
   @Override
   public void autonomousInit() {
+    //sensors.ResetEncoders();
+    //drivetrain.time = 0;
   }
 
   @Override
   public void autonomousPeriodic() {
+
+    
   }
 
   @Override
@@ -39,6 +54,16 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
+
+    if(controllers.getJoyAxis(1) > 0.1){outL.set(controllers.getJoyAxis(1)); outR.set(-controllers.getJoyAxis(1));}
+    if(controllers.getJoyAxis(1) < 0.1){outL.set(-controllers.getJoyAxis(1)); outR.set(controllers.getJoyAxis(1));}
+
+
+  }
+
+  @Override
+  public void robotPeriodic() {
+
   }
 
   @Override
