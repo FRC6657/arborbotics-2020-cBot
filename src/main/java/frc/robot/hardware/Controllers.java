@@ -8,31 +8,38 @@
 package frc.robot.hardware;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Robot;
 import frc.robot.Constants.*;
+import frc.robot.Commands.*;
 
 /**
  * Add your docs here.
  */
 public class Controllers extends Subsystem {
 
+  Button Intake;
+  Button Outtake;
+
+  //Command intakeIn = new IntakeIn();
+  //Command intakeOut = new IntakeOut();
+  
   private Joystick joyStick = new Joystick(IDs.joyStick.value);
 
   public boolean getJoyButton(int button){return joyStick.getRawButton(button);}
 
   public double getJoyAxis(int axis){return joyStick.getRawAxis(axis);}
 
-  public double getJoyPOV(int pov){return joyStick.getPOV(pov);}
-
-  public boolean getRawButtonReleased(int button){return joyStick.getRawButtonReleased(button);}
-  public boolean getRawButtonPressed(int button){return joyStick.getRawButtonPressed(button);}
-
-  public boolean button6status = false;
-
   public Controllers(){
 
-    if(getRawButtonPressed(6)){button6status = true;}
-    if(getRawButtonReleased(6)){button6status = false;}
+    Intake = new JoystickButton(joyStick, 4);
+    Outtake = new JoystickButton(joyStick, 6);
+
+  //  Intake.whileHeld(intakeIn);
+  //  Outtake.whileHeld(intakeOut);
 
   }
 
