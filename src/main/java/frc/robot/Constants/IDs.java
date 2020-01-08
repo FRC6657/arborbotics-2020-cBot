@@ -7,6 +7,8 @@ public enum IDs {
     frontRightMotor(2),
     //backLeftMotor(3),
     //backRightMotor(4),
+
+    turkeyOneWheel(79),
     //Controllers
     joyStick(0);
 

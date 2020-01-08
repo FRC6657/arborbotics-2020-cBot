@@ -18,12 +18,24 @@ public class Controllers extends Subsystem {
 
   private Joystick joyStick = new Joystick(IDs.joyStick.value);
 
-
   public boolean getJoyButton(int button){return joyStick.getRawButton(button);}
 
   public double getJoyAxis(int axis){return joyStick.getRawAxis(axis);}
 
   public double getJoyPOV(int pov){return joyStick.getPOV(pov);}
+
+  public boolean getRawButtonReleased(int button){return joyStick.getRawButtonReleased(button);}
+  public boolean getRawButtonPressed(int button){return joyStick.getRawButtonPressed(button);}
+
+  public boolean button6status = false;
+
+  public Controllers(){
+
+    if(getRawButtonPressed(6)){button6status = true;}
+    if(getRawButtonReleased(6)){button6status = false;}
+
+  }
+
   @Override
   public void initDefaultCommand() {}
 }

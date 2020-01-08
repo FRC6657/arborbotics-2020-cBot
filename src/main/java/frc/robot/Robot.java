@@ -62,6 +62,8 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
 
+    SmartDashboard.putBoolean("Button 6 Status", Robot.controllers.button6status);
+
   }
 
   @Override
