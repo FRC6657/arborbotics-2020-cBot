@@ -21,8 +21,10 @@ import frc.robot.Commands.*;
  */
 public class Controllers extends Subsystem {
 
-  Button Intake;
-  Button Outtake;
+  JoystickButton Intake;
+  JoystickButton Outtake;
+
+  JoystickButton RotationControl;
 
   //Command intakeIn = new IntakeIn();
   //Command intakeOut = new IntakeOut();
@@ -37,6 +39,12 @@ public class Controllers extends Subsystem {
 
     Intake = new JoystickButton(joyStick, 4);
     Outtake = new JoystickButton(joyStick, 6);
+
+    //RotationControl = new JoystickButton(joyStick, IDs.rotationControlButton.value);
+
+    //RotationControl rotationControl = new RotationControl();
+
+    //RotationControl.whileHeld(rotationControl);
 
   //  Intake.whileHeld(intakeIn);
   //  Outtake.whileHeld(intakeOut);

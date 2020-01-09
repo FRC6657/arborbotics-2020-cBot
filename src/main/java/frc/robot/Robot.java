@@ -19,6 +19,7 @@ public class Robot extends TimedRobot {
   public static Controllers controllers = new Controllers();
   public static DriveLocomotive driveLocomotive = new DriveLocomotive();
   public static Chicken3 chicken3 = new Chicken3();
+  public static Turkey1 turkey1 = new Turkey1();
 
   private WPI_TalonSRX intakeSpin = new WPI_TalonSRX(51);
   private WPI_TalonSRX intakePivot = new WPI_TalonSRX(50);
