@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.SPI;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
-public class DriveTrain extends Subsystem {
+public class DriveLocomotive extends Subsystem {
 
   private WPI_TalonSRX motorFL = new WPI_TalonSRX(IDs.frontLeftMotor.value);
   private WPI_TalonSRX motorFR = new WPI_TalonSRX(IDs.frontLeftMotor.value);
@@ -40,7 +40,7 @@ public class DriveTrain extends Subsystem {
 
   public double time = 0;
 
-  public DriveTrain(){
+  public DriveLocomotive(){
 
     motorBL.follow(motorFL);
     motorBR.follow(motorFR);

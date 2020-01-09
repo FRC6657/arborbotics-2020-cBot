@@ -17,7 +17,7 @@ import frc.robot.hardware.*;
 public class Robot extends TimedRobot {
   
   public static Controllers controllers = new Controllers();
-  public static DriveTrain drivetrain = new DriveTrain();
+  public static DriveLocomotive driveLocomotive = new DriveLocomotive();
   public static Chicken3 chicken3 = new Chicken3();
 
   private WPI_TalonSRX intakeSpin = new WPI_TalonSRX(51);
@@ -44,7 +44,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     //sensors.ResetEncoders();
-    //drivetrain.time = 0;
+    //driveLocomotive.time = 0;
   }
 
   @Override
@@ -59,7 +59,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    //drivetrain.teleDrive();
+    //driveLocomotive.teleDrive();
 
     if(controllers.getJoyAxis(1) > 0.5){intakeSpin.set(1);}
     if(controllers.getJoyAxis(1) < 0.5){intakeSpin.set(-1);}
