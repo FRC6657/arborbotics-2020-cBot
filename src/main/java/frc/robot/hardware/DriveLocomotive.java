@@ -8,6 +8,7 @@
 package frc.robot.hardware;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 import frc.robot.Constants.Doubles;
@@ -16,22 +17,21 @@ import frc.robot.Constants.PID;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SPI;
+
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
 public class DriveLocomotive extends Subsystem {
 
-  private WPI_TalonSRX motorFL = new WPI_TalonSRX(IDs.frontLeftMotor.value);
-  private WPI_TalonSRX motorFR = new WPI_TalonSRX(IDs.frontLeftMotor.value);
-  private WPI_TalonSRX motorBL = new WPI_TalonSRX(IDs.frontLeftMotor.value);
-  private WPI_TalonSRX motorBR = new WPI_TalonSRX(IDs.frontLeftMotor.value);
-
-  public WPI_TalonSRX outL = new WPI_TalonSRX(2);
-  public WPI_TalonSRX outR = new WPI_TalonSRX(1);
+  public WPI_TalonSRX motorFL = new WPI_TalonSRX(IDs.frontLeftMotor.value);
+  public WPI_TalonSRX motorFR = new WPI_TalonSRX(IDs.frontRightMotor.value);
+  public WPI_VictorSPX motorBL = new WPI_VictorSPX(IDs.backLeftMotor.value);
+  public WPI_VictorSPX motorBR = new WPI_VictorSPX(IDs.backRightMotor.value);
 
   //public final PIDController turnController;
   AHRS navX;
-
 
   private double lSumOfError = 0;
   private double rSumOfError = 0;
@@ -42,8 +42,7 @@ public class DriveLocomotive extends Subsystem {
 
   public DriveLocomotive(){
 
-    motorBL.follow(motorFL);
-    motorBR.follow(motorFR);
+
 
     navX = new AHRS(SPI.Port.kMXP);
 
@@ -63,14 +62,13 @@ public class DriveLocomotive extends Subsystem {
 
     motorFL.set(leftSpeed);
     motorFR.set(-rightSpeed);
+    motorBL.set(leftSpeed);
+    motorBR.set(-rightSpeed);
 
   }
 
   public void teleDrive(){
 
-    if(Robot.controllers.getJoyAxis(1) > 0.1){outL.set(Robot.controllers.getJoyAxis(1)); outR.set(-Robot.controllers.getJoyAxis(1));}
-    if(Robot.controllers.getJoyAxis(1) < 0.1){outL.set(-Robot.controllers.getJoyAxis(1)); outR.set(Robot.controllers.getJoyAxis(1));}
-    
     if((Robot.controllers.getJoyAxis(1) > Doubles.driveDeadband || Robot.controllers.getJoyAxis(1) < -Doubles.driveDeadband) || (Robot.controllers.getJoyAxis(3) > Doubles.turnDeadband || Robot.controllers.getJoyAxis(3) < -Doubles.turnDeadband)){
       
       double drive = -Robot.controllers.getJoyAxis(1) * Doubles.driveModifier;
@@ -83,6 +81,7 @@ public class DriveLocomotive extends Subsystem {
       double rightPower = drive - turn;
 
       Drive(leftPower, rightPower);
+
     }
   }
   public void PIDDrive(double setpoint){
@@ -129,6 +128,11 @@ public class DriveLocomotive extends Subsystem {
     //turnController.setPID(PID.TkP,PID.TkI,PID.TkD);
     //turnController.setSetpoint(angle);
     //turnController.enable();
+
+  }
+  public double getAngle(){
+
+    return navX.getAngle();
 
   }
   public void PIDTurnToAngle(double angle){

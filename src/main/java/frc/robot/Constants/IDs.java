@@ -4,9 +4,14 @@ public enum IDs {
 
     //CAN
     frontLeftMotor(1),
-    frontRightMotor(2),
-    backLeftMotor(3),
+    backLeftMotor(2),
+    frontRightMotor(3),
     backRightMotor(4),
+    intakeSpin(5),
+    intakePivot(6),
+    outtakeL(7),
+    outtakeR(8),
+
 
     turkeyOneWheel(79),
     //Controllers
