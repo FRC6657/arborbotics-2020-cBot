@@ -12,8 +12,6 @@ public enum IDs {
     outtakeL(7),
     outtakeR(8),
 
-
-    turkeyOneWheel(79),
     //Controllers
     joyStick(0);
 

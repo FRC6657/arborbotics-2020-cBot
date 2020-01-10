@@ -19,7 +19,7 @@ import frc.robot.hardware.*;
 
 public class Robot extends TimedRobot {
   
-  public static Controllers controllers = new Controllers();
+  public static Controllers controllers;
   public static DriveLocomotive driveLocomotive = new DriveLocomotive();
   public static Chicken3 chicken3 = new Chicken3();
   public static Chicken1 chicken1 = new Chicken1();
@@ -47,6 +47,8 @@ public class Robot extends TimedRobot {
     //SmartDashboard.putNumber("Left Encoder Value:", sensors.getLeftEncoderValue());
     //SmartDashboard.putNumber("Right Encoder Value:", sensors.getRightEncoderValue());
 
+    controllers = new Controllers();
+
   }
 
   @Override
@@ -66,7 +68,7 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void teleopPeriodic() {
-    /*
+
     if(Robot.controllers.getJoyButton(1)){chicken3.Out(0.75);}
     if(Robot.controllers.getJoyButton(2)){chicken3.In(0.75);}
     if(Robot.controllers.getJoyButton(5)){chicken3.Stop();}
@@ -78,10 +80,9 @@ public class Robot extends TimedRobot {
     if(Robot.controllers.getJoyButton(12)){chicken1.Pivot(0.1);}
     if(Robot.controllers.getJoyButton(11)){chicken1.Pivot(-0.1);}
     if(Robot.controllers.getJoyButton(5)){chicken1.Pivot(0);}
-*/
 
-  if(Robot.controllers.getJoyButton(1)){servo.set(180);}
-  if(Robot.controllers.getJoyButton(2)){servo.set(0);}
+    if(Robot.controllers.getJoyButton(1)){servo.set(0.5);}
+    if(Robot.controllers.getJoyButton(6)){servo.set(0);}
     
 
     double drive = -controllers.getJoyAxis(1) * 0.5;

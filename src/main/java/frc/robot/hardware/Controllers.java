@@ -46,12 +46,19 @@ public class Controllers extends Subsystem {
     intakePivotUp = new JoystickButton(joyStick, ControllerBinds.intakePivotUp.value);
     intakePivotDown = new JoystickButton(joyStick, ControllerBinds.intakePivotDown.value);
 
-    outtakeOut.whileHeld(new IntakeOut());
-    outtakeIn.whileHeld(new IntakeIn());
-    intakeOut.whileHeld(new IntakeOut());
-    intakeIn.whileHeld(new IntakeIn());
-    intakePivotUp.whileHeld(new IntakePivotUp());
-    intakePivotDown.whileHeld(new IntakePivotDown());
+    OuttakeOut oo = new OuttakeOut();
+    OuttakeIn oi = new OuttakeIn();
+    IntakeOut io = new IntakeOut();
+    IntakeIn ii = new IntakeIn();
+    IntakePivotUp ipu = new IntakePivotUp();
+    IntakePivotDown ipd = new IntakePivotDown();
+
+    outtakeOut.whileHeld(oo);
+    outtakeIn.whileHeld(oi);
+    intakeOut.whileHeld(io);
+    intakeIn.whileHeld(ii);
+    intakePivotUp.whileHeld(ipu);
+    intakePivotDown.whileHeld(ipd);
 
   }
 
