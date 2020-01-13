@@ -13,8 +13,9 @@ import frc.robot.Constants.*;
 
 public class OuttakeIn extends Command {
   public OuttakeIn() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+
+    requires(Robot.chicken3);
+
   }
 
   // Called just before this Command runs the first time

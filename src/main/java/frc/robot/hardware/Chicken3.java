@@ -9,6 +9,7 @@ package frc.robot.hardware;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Constants.IDs;
 
@@ -20,9 +21,13 @@ public class Chicken3 extends Subsystem {
   private WPI_TalonSRX outL = new WPI_TalonSRX(IDs.outtakeL.value);
   private WPI_TalonSRX outR = new WPI_TalonSRX(IDs.outtakeR.value);
 
+  private Servo gateServo = new Servo(0);
+
   public void Out(double speed){outL.set(speed); outR.set(speed);}
   public void In(double speed){outL.set(-speed); outR.set(-speed);}
   public void Stop(){outL.set(0);outR.set(0);}
+  public void OpenGate(){gateServo.set(0.5);}
+  public void CloseGate(){gateServo.set(0);}
 
   @Override
   public void initDefaultCommand() {

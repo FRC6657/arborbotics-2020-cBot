@@ -13,8 +13,8 @@ import frc.robot.Constants.Doubles;
 
 public class IntakeIn extends Command {
   public IntakeIn() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    requires(Robot.chicken3);
+    requires(Robot.chicken1);
   }
 
   // Called just before this Command runs the first time
@@ -26,6 +26,7 @@ public class IntakeIn extends Command {
   @Override
   protected void execute() {
     Robot.chicken1.Spin(Doubles.intakeSpeed);
+    Robot.chicken3.CloseGate();
   }
 
   // Make this return true when this Command no longer needs to run execute()

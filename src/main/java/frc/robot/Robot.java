@@ -24,8 +24,6 @@ public class Robot extends TimedRobot {
   public static Chicken3 chicken3 = new Chicken3();
   public static Chicken1 chicken1 = new Chicken1();
 
-  private Servo servo = new Servo(0);
-
   //public WPI_TalonSRX motorFL = new WPI_TalonSRX(IDs.frontLeftMotor.value);
   //public WPI_TalonSRX motorFR = new WPI_TalonSRX(IDs.frontRightMotor.value);
   //public VictorSPX motorBL = new VictorSPX(IDs.backLeftMotor.value);

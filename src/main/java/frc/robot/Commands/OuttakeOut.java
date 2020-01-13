@@ -13,8 +13,7 @@ import frc.robot.Constants.Doubles;
 
 public class OuttakeOut extends Command {
   public OuttakeOut() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    requires(Robot.chicken3);
   }
 
   // Called just before this Command runs the first time
@@ -26,6 +25,7 @@ public class OuttakeOut extends Command {
   @Override
   protected void execute() {
     Robot.chicken3.Out(Doubles.outtakeSpeed);
+    Robot.chicken3.OpenGate();
   }
 
   // Make this return true when this Command no longer needs to run execute()

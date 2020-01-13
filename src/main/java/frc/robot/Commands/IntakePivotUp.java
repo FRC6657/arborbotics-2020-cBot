@@ -13,8 +13,9 @@ import frc.robot.Constants.*;
 
 public class IntakePivotUp extends Command {
   public IntakePivotUp() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+
+    requires(Robot.chicken1);
+
   }
 
   // Called just before this Command runs the first time
