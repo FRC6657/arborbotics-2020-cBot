@@ -1,6 +1,6 @@
 package frc.robot.Constants;
 
-public enum ControllerBinds {
+public enum ControllerBinds {//Stores all of the controller button mappings in one place for easy editing
 
     //Joystick
     outtakeOut(1),

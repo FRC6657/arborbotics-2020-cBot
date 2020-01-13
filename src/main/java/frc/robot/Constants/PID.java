@@ -1,6 +1,6 @@
 package frc.robot.Constants;
 
-public interface PID {
+public interface PID {//PID values for all of the pid equations
 
     public double LkP = 0;
     public double LkI = 0;

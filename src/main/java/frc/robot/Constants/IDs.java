@@ -1,6 +1,6 @@
 package frc.robot.Constants;
 
-public enum IDs {
+public enum IDs {//Stores all of the id values such as controllers and CAN
 
     //CAN
     frontLeftMotor(1),

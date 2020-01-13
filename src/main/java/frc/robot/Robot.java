@@ -19,8 +19,10 @@ import frc.robot.hardware.*;
 
 public class Robot extends TimedRobot {
   
+  //Subsystrem Declaration
   public static Controllers controllers;
-  public static DriveLocomotive driveLocomotive = new DriveLocomotive();
+  public static Sensors sensors = new Sensors();
+  public static DriveTrain driveTrain = new DriveTrain();
   public static Chicken3 chicken3 = new Chicken3();
   public static Chicken1 chicken1 = new Chicken1();
 
@@ -45,12 +47,13 @@ public class Robot extends TimedRobot {
     //SmartDashboard.putNumber("Left Encoder Value:", sensors.getLeftEncoderValue());
     //SmartDashboard.putNumber("Right Encoder Value:", sensors.getRightEncoderValue());
 
-    controllers = new Controllers();
+    controllers = new Controllers();//Allows controller inputs
 
   }
 
   @Override
   public void autonomousInit() {
+    sensors.resetAngle();//Resets navX Angle
     //sensors.ResetEncoders();
     //driveLocomotive.time = 0;
   }
@@ -63,10 +66,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    sensors.resetAngle();//Resets navX Angle
   }
   @Override
   public void teleopPeriodic() {
-/*
+    /* This code will stay here until the correct controll code is proven to work.
     if(Robot.controllers.getJoyButton(1)){chicken3.Out(0.9);}
     if(Robot.controllers.getJoyButton(2)){chicken3.In(0.9);}
     if(Robot.controllers.getJoyButton(5)){chicken3.Stop();}
@@ -83,24 +87,13 @@ public class Robot extends TimedRobot {
     if(Robot.controllers.getJoyButton(6)){servo.set(0);}
     */
 
-    double drive = controllers.getJoyAxis(1) * 0.5;
-    double turn = controllers.getJoyAxis(2) * 0.5;
-
-    if(controllers.getJoyAxis(1) < 0.1 & controllers.getJoyAxis(1) > -0.1){drive = 0;}
-    if(controllers.getJoyAxis(2) < 0.1 & controllers.getJoyAxis(2) > -0.1){turn = 0;}
-
-    double leftSpeed = -drive + turn;
-    double rightSpeed = drive + turn;
-
-    driveLocomotive.Drive(leftSpeed, rightSpeed);
-
   }
 
   @Override
   public void robotPeriodic() {
 
-    Shuffleboard.getTab("SmartDashboard");
-    SmartDashboard.putNumber("Angle",Robot.driveLocomotive.getAngle());
+    Shuffleboard.getTab("SmartDashboard");//Creates new Shuffleboard Tab
+    SmartDashboard.putNumber("Angle",Robot.sensors.getAngle()); //Puts the navX Z rotation angle onto the Shuffleboard Tab 'SmartDashboard'
 
   }
   public void testInit() {

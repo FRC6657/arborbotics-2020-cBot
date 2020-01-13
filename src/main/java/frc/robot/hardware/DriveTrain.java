@@ -14,8 +14,6 @@ import frc.robot.Robot;
 import frc.robot.Constants.Doubles;
 import frc.robot.Constants.IDs;
 import frc.robot.Constants.PID;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SPI;
 
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -23,42 +21,26 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
-public class DriveLocomotive extends Subsystem {
+public class DriveTrain extends Subsystem {
 
-  public WPI_TalonSRX motorFL = new WPI_TalonSRX(IDs.frontLeftMotor.value);
-  public WPI_TalonSRX motorFR = new WPI_TalonSRX(IDs.frontRightMotor.value);
-  public WPI_VictorSPX motorBL = new WPI_VictorSPX(IDs.backLeftMotor.value);
-  public WPI_VictorSPX motorBR = new WPI_VictorSPX(IDs.backRightMotor.value);
+  public WPI_TalonSRX motorFL = new WPI_TalonSRX(IDs.frontLeftMotor.value); //Declares Front Left Motor
+  public WPI_TalonSRX motorFR = new WPI_TalonSRX(IDs.frontRightMotor.value);//Declares Front Right Motor
+  public WPI_VictorSPX motorBL = new WPI_VictorSPX(IDs.backLeftMotor.value);//Declares Back Left Motor
+  public WPI_VictorSPX motorBR = new WPI_VictorSPX(IDs.backRightMotor.value);//Declares Back Right Motor
 
-  //public final PIDController turnController;
-  AHRS navX;
-
+  /*Pid Things that can be ignored for now
   private double lSumOfError = 0;
   private double rSumOfError = 0;
   private double lLastError = 0;
   private double rLastError = 0;
 
   public double time = 0;
+  */
+  public DriveTrain(){}
 
-  public DriveLocomotive(){
-
-
-
-    navX = new AHRS(SPI.Port.kMXP);
-
-    //turnController = new PIDController(PID.TkP,PID.TkI,PID.TkD, navX, this);
-
-    //turnController.setInputRange(-180.0f,180.0f);
-    //turnController.setOutputRange(-0.45, 0.45);
-    //turnController.setAbsoluteTolerance(2.0f);
-    //turnController.setContinuous(true);
-    
-  }
-
-  public void driveLeft(double speed){motorFL.set(speed);}
-  public void driveRight(double speed){motorFR.set(-speed);}
-
-  public void Drive(double leftSpeed, double rightSpeed){
+  public void driveLeft(double speed){motorFL.set(speed);}//For controlling only the left side of the drivetrain
+  public void driveRight(double speed){motorFR.set(-speed);}//For controlling only the right side of the drivetrain
+  public void Drive(double leftSpeed, double rightSpeed){//For controlling both sides of the drivetrain at once
 
     motorFL.set(leftSpeed);
     motorFR.set(-rightSpeed);
@@ -67,24 +49,21 @@ public class DriveLocomotive extends Subsystem {
 
   }
 
-  public void teleDrive(){
+  public void teleDrive(){//This contains the drive code for teleOp
 
-    if((Robot.controllers.getJoyAxis(1) > Doubles.driveDeadband || Robot.controllers.getJoyAxis(1) < -Doubles.driveDeadband) || (Robot.controllers.getJoyAxis(3) > Doubles.turnDeadband || Robot.controllers.getJoyAxis(3) < -Doubles.turnDeadband)){
-      
-      double drive = -Robot.controllers.getJoyAxis(1) * Doubles.driveModifier;
-      double turn = Robot.controllers.getJoyAxis(3) * Doubles.turnModifier;
+    double drive = Robot.controllers.getJoyAxis(1) * Doubles.driveModifier; //Creates a variable for the intent to move on the robots y axis
+    double turn = Robot.controllers.getJoyAxis(2) * Doubles.turnModifier;//Creates a variable for the intent to move on the robots z axis
 
-      if(!(Robot.controllers.getJoyAxis(1) > Doubles.driveDeadband) || !(Robot.controllers.getJoyAxis(1) < -Doubles.driveDeadband)){drive = 0;}
-      if((Robot.controllers.getJoyAxis(3) > Doubles.driveDeadband) || (Robot.controllers.getJoyAxis(3) < -Doubles.driveDeadband)){turn = 0;}
-    
-      double leftPower = drive + turn;
-      double rightPower = drive - turn;
+    if(Robot.controllers.getJoyAxis(1) < Doubles.driveDeadband & Robot.controllers.getJoyAxis(1) > -Doubles.driveDeadband){drive = 0;}//Deadband for y axis
+    if(Robot.controllers.getJoyAxis(2) < Doubles.turnDeadband & Robot.controllers.getJoyAxis(2) > -Doubles.turnDeadband){turn = 0;}//Deadband for z axis
 
-      Drive(leftPower, rightPower);
+    double leftSpeed = -drive + turn; //Calculates the left drive power based on the movement intent of the driver
+    double rightSpeed = drive + turn; //Calculates the right drive power based on the movement intent of the driver
 
-    }
+    Drive(leftSpeed, rightSpeed); //Drives the robot based on calculated drive speeds
+
   }
-  public void PIDDrive(double setpoint){
+  public void PIDDrive(double setpoint){//PID Things that can be ignored for now
 
   /*
     double leftEncoderPosition = Robot.sensors.getLeftEncoderValue();
@@ -119,28 +98,6 @@ public class DriveLocomotive extends Subsystem {
     lLastError = lError;
     rLastError = rError;
     */
-
-  }
-  public void PIDTurnAngle(double angle){
-
-    //navX.reset();
-    //turnController.reset();
-    //turnController.setPID(PID.TkP,PID.TkI,PID.TkD);
-    //turnController.setSetpoint(angle);
-    //turnController.enable();
-
-  }
-  public double getAngle(){
-
-    return navX.getAngle();
-
-  }
-  public void PIDTurnToAngle(double angle){
-
-    //turnController.reset();
-    //turnController.setPID(PID.TkP,PID.TkI,PID.TkD);
-    //turnController.setSetpoint(angle);
-    //turnController.enable();
 
   }
 

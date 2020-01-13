@@ -16,18 +16,15 @@ import frc.robot.Robot;
 import frc.robot.Constants.*;
 import frc.robot.Commands.*;
 
-
-/**
- * Add your docs here.
- */
-public class Controllers extends Subsystem {
+public class Controllers extends Subsystem {//Handes the drivers inputs and binds those inputs to commands
   
-  private Joystick joyStick;
+  private Joystick joyStick;//Declares the Joystick
 
-  public boolean getJoyButton(int button){return joyStick.getRawButton(button);}
+  public boolean getJoyButton(int button){return joyStick.getRawButton(button);}//Gets if the given button was the last pressed
 
-  public double getJoyAxis(int axis){return joyStick.getRawAxis(axis);}
+  public double getJoyAxis(int axis){return joyStick.getRawAxis(axis);}//Gets the current axis position of a given access
 
+  //Creates joystick buttons for every robot function that will need one
   public JoystickButton outtakeOut;
   public JoystickButton outtakeIn;
   public JoystickButton intakeOut;
@@ -37,8 +34,9 @@ public class Controllers extends Subsystem {
   
   public Controllers(){
 
-    joyStick = new Joystick(IDs.joyStick.value);
+    joyStick = new Joystick(IDs.joyStick.value);//Binds the Joystick to its driverstation ID
 
+    //Binds each Joystick button to a Binding located in the ControllerBinds Enum
     outtakeOut = new JoystickButton(joyStick, ControllerBinds.intakeOut.value);
     outtakeIn = new JoystickButton(joyStick, ControllerBinds.intakeIn.value);
     intakeOut = new JoystickButton(joyStick, ControllerBinds.intakeOut.value);
@@ -46,6 +44,7 @@ public class Controllers extends Subsystem {
     intakePivotUp = new JoystickButton(joyStick, ControllerBinds.intakePivotUp.value);
     intakePivotDown = new JoystickButton(joyStick, ControllerBinds.intakePivotDown.value);
 
+    //Shortens commands into simple 2 letter names
     OuttakeOut oo = new OuttakeOut();
     OuttakeIn oi = new OuttakeIn();
     IntakeOut io = new IntakeOut();
@@ -53,6 +52,7 @@ public class Controllers extends Subsystem {
     IntakePivotUp ipu = new IntakePivotUp();
     IntakePivotDown ipd = new IntakePivotDown();
 
+    //Binds each button with a command
     outtakeOut.whileHeld(oo);
     outtakeIn.whileHeld(oi);
     intakeOut.whileHeld(io);
