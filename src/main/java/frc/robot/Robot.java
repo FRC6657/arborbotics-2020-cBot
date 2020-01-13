@@ -68,31 +68,31 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void teleopPeriodic() {
-
-    if(Robot.controllers.getJoyButton(1)){chicken3.Out(0.75);}
-    if(Robot.controllers.getJoyButton(2)){chicken3.In(0.75);}
+/*
+    if(Robot.controllers.getJoyButton(1)){chicken3.Out(0.9);}
+    if(Robot.controllers.getJoyButton(2)){chicken3.In(0.9);}
     if(Robot.controllers.getJoyButton(5)){chicken3.Stop();}
     
-    if(Robot.controllers.getJoyButton(6)){chicken1.Spin(1);}
-    if(Robot.controllers.getJoyButton(4)){chicken1.Spin(-1);}
+    if(Robot.controllers.getJoyButton(6)){chicken1.Spin(0.8);}
+    if(Robot.controllers.getJoyButton(4)){chicken1.Spin(-0.8);}
     if(Robot.controllers.getJoyButton(5)){chicken1.Spin(0);}
 
-    if(Robot.controllers.getJoyButton(12)){chicken1.Pivot(0.1);}
-    if(Robot.controllers.getJoyButton(11)){chicken1.Pivot(-0.1);}
+    if(Robot.controllers.getJoyButton(12)){chicken1.Pivot(0.2);}
+    if(Robot.controllers.getJoyButton(11)){chicken1.Pivot(-0.2);}
     if(Robot.controllers.getJoyButton(5)){chicken1.Pivot(0);}
 
     if(Robot.controllers.getJoyButton(1)){servo.set(0.5);}
     if(Robot.controllers.getJoyButton(6)){servo.set(0);}
-    
+    */
 
-    double drive = -controllers.getJoyAxis(1) * 0.5;
+    double drive = controllers.getJoyAxis(1) * 0.5;
     double turn = controllers.getJoyAxis(2) * 0.5;
 
     if(controllers.getJoyAxis(1) < 0.1 & controllers.getJoyAxis(1) > -0.1){drive = 0;}
     if(controllers.getJoyAxis(2) < 0.1 & controllers.getJoyAxis(2) > -0.1){turn = 0;}
 
-    double leftSpeed = drive + turn;
-    double rightSpeed = drive - turn;
+    double leftSpeed = -drive + turn;
+    double rightSpeed = drive + turn;
 
     driveLocomotive.Drive(leftSpeed, rightSpeed);
 
