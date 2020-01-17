@@ -51,16 +51,16 @@ public class DriveTrain extends Subsystem {
 
   public void teleDrive(){//This contains the drive code for teleOp
 
-    double drive = Robot.controllers.getJoyAxis(1) * Doubles.driveModifier; //Creates a variable for the intent to move on the robots y axis
-    double turn = Robot.controllers.getJoyAxis(2) * Doubles.turnModifier;//Creates a variable for the intent to move on the robots z axis
+    //ouble drive = Robot.controllers.getJoyAxis(1) * Doubles.driveModifier; //Creates a variable for the intent to move on the robots y axis
+    //double turn = Robot.controllers.getJoyAxis(2) * Doubles.turnModifier;//Creates a variable for the intent to move on the robots z axis
 
-    if(Robot.controllers.getJoyAxis(1) < Doubles.driveDeadband & Robot.controllers.getJoyAxis(1) > -Doubles.driveDeadband){drive = 0;}//Deadband for y axis
-    if(Robot.controllers.getJoyAxis(2) < Doubles.turnDeadband & Robot.controllers.getJoyAxis(2) > -Doubles.turnDeadband){turn = 0;}//Deadband for z axis
+    //if(Robot.controllers.getJoyAxis(1) < Doubles.driveDeadband & Robot.controllers.getJoyAxis(1) > -Doubles.driveDeadband){drive = 0;}//Deadband for y axis
+    //if(Robot.controllers.getJoyAxis(2) < Doubles.turnDeadband & Robot.controllers.getJoyAxis(2) > -Doubles.turnDeadband){turn = 0;}//Deadband for z axis
 
-    double leftSpeed = -drive + turn; //Calculates the left drive power based on the movement intent of the driver
-    double rightSpeed = drive + turn; //Calculates the right drive power based on the movement intent of the driver
+    //double leftSpeed = -drive + turn; //Calculates the left drive power based on the movement intent of the driver
+    //double rightSpeed = drive + turn; //Calculates the right drive power based on the movement intent of the driver
 
-    Drive(leftSpeed, rightSpeed); //Drives the robot based on calculated drive speeds
+    //Drive(leftSpeed, rightSpeed); //Drives the robot based on calculated drive speeds
 
   }
   public void PIDDrive(double setpoint){//PID Things that can be ignored for now

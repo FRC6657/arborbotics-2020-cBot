@@ -23,11 +23,19 @@ public class Chicken3 extends Subsystem {
 
   private Servo gateServo = new Servo(0);//Declares the servo used to stop the PowerCells from getting into the wheels before we want them to
 
-  public void Out(double speed){outL.set(speed); outR.set(speed);}//Shoots the Ball
-  public void In(double speed){outL.set(-speed); outR.set(-speed);}//Un-Shoots the ball(Basically Useless)
-  public void Stop(){outL.set(0);outR.set(0);}//Stops the outtake from spinning(Basically Useless)
-  public void OpenGate(){gateServo.set(0.5);}//Opens the gate to allow Powercells to be shot
-  public void CloseGate(){gateServo.set(0);}//Closes the gate to allow Powercells to be stored properly
+  public void outtakeOut(double speed){
+
+    outL.set(-speed);
+    outL.set(-speed);
+    gateServo.set(180);
+
+  }
+
+  public void outtakeStop(){
+    outL.set(0);
+    outR.set(0);
+    gateServo.set(0);
+  }
 
   @Override
   public void initDefaultCommand() {
