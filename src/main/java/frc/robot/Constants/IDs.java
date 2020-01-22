@@ -13,7 +13,8 @@ public enum IDs {//Stores all of the id values such as controllers and CAN
     outtakeR(8),
 
     //Controllers
-    joyStick(0);
+    joyStick(0),
+    controller(1);
 
     public final int value;
     IDs(int value){this.value = value;}

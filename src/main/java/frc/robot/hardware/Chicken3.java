@@ -24,20 +24,15 @@ public class Chicken3 extends Subsystem {
   private Servo gateServo = new Servo(0);//Declares the servo used to stop the PowerCells from getting into the wheels before we want them to
 
   public void outtakeOut(double speed){
-
     outL.set(-speed);
-    outL.set(-speed);
-    gateServo.set(180);
-
+    outR.set(-speed);
+    gateServo.setAngle(90);
   }
-
   public void outtakeStop(){
     outL.set(0);
     outR.set(0);
-    gateServo.set(0);
+    gateServo.setAngle(140);
   }
-
   @Override
-  public void initDefaultCommand() {
-  }
+  public void initDefaultCommand() {}
 }

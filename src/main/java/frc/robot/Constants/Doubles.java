@@ -8,10 +8,8 @@ public interface Doubles {//Stores all of the frequently edited double values us
     public double driveModifier = 0.5;
     public double turnModifier = 0.5;
 
-    public double rotateCSpeed = 1;
-
-    public double intakeSpeed = 1;
-    public double outtakeSpeed = 1;
+    public double intakeSpeed = 0.6;
+    public double outtakeSpeed = 0.8;
 
     public double intakePivotUpSpeed = 0.1;
     public double intakePivotDownSpeed = 0.1;

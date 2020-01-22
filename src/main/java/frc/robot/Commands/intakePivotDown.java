@@ -4,20 +4,20 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.Constants.Doubles;
 
-public class outtakeOut extends Command {
+public class intakePivotDown extends Command {
   
-  public outtakeOut() {
-    requires(Robot.chicken3);
+  public intakePivotDown() {
+    requires(Robot.chicken1);
   }
 
   @Override
   protected void execute() {
-    Robot.chicken3.outtakeOut(Doubles.outtakeSpeed);
+    Robot.chicken1.Pivot(-Doubles.intakePivotUpSpeed);
   }
 
   @Override
-	protected void end() {
-		Robot.chicken3.outtakeStop();
+  protected void end() {
+    Robot.chicken1.pivotStop();
   }
   
   @Override
