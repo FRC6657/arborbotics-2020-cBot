@@ -30,6 +30,7 @@ public class Robot extends TimedRobot {
   public static DriveTrain driveTrain = new DriveTrain();
   public static Chicken3 chicken3 = new Chicken3();
   public static Chicken1 chicken1 = new Chicken1();
+  public static Pigeon1 pigeon1 = new Pigeon1();
   public static Controllers controllers;
 
   public static int direction = 1; //1 = forward | -1 = reversed

@@ -29,6 +29,7 @@ public class DriveTrain extends Subsystem {
   public WPI_VictorSPX motorBL = new WPI_VictorSPX(IDs.backLeftMotor.value);//Declares Back Left Motor
   public WPI_VictorSPX motorBR = new WPI_VictorSPX(IDs.backRightMotor.value);//Declares Back Right Motor
 
+  /*PID Things that can be ignored for now
   private double lSumOfError = 0;
   private double rSumOfError = 0;
   private double lLastError = 0;
@@ -104,14 +105,14 @@ public class DriveTrain extends Subsystem {
     
     lLastError = lError;
     rLastError = rError;
-    */
+    
 
-  }
+  }*/
 
   @Override
   public void initDefaultCommand() {
 
-    super.setDefaultCommand(new Driver_Controlls());
+    super.setDefaultCommand(new Driver_Controls());
 
   } 
 

@@ -11,6 +11,8 @@ public interface Doubles {//Stores all of the frequently edited double values us
     public double intakeSpeed = 0.6;
     public double outtakeSpeed = 0.8;
 
+    public double liftSpeed = 1;
+
     public double intakePivotUpSpeed = 0.1;
     public double intakePivotDownSpeed = 0.1;
 
