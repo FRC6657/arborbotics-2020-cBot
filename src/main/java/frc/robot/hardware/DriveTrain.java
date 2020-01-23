@@ -112,7 +112,7 @@ public class DriveTrain extends Subsystem {
   @Override
   public void initDefaultCommand() {
 
-    super.setDefaultCommand(new Driver_Controlls());
+    super.setDefaultCommand(new Driver_Controls());
 
   }
 

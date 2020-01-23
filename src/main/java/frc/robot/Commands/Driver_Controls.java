@@ -10,8 +10,8 @@ package frc.robot.Commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class Driver_Controlls extends Command {
-  public Driver_Controlls() {
+public class Driver_Controls extends Command {
+  public Driver_Controls() {
 
     super.requires(Robot.driveTrain);
 
