@@ -18,8 +18,11 @@ public class Chicken1 extends Subsystem {//Code for the intake(Chicken 1)
   private WPI_TalonSRX intakePivot = new WPI_TalonSRX(6);//Declares the Pivot Motor
 
   public void Spin(double speed){intakeSpin.set(speed);}//Spints the roller
-
   public void Pivot(double speed){intakePivot.set(speed);}//Rotates the mech
+
+  public void spinStop(){intakeSpin.set(0);}
+  public void pivotStop(){intakePivot.set(0);}
+
   @Override
   public void initDefaultCommand() {
   }

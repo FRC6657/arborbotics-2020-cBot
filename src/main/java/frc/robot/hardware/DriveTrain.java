@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
+import frc.robot.Commands.Driver_Controlls;
 import frc.robot.Constants.Doubles;
 import frc.robot.Constants.IDs;
 import frc.robot.Constants.PID;
@@ -35,7 +36,7 @@ public class DriveTrain extends Subsystem {
   private double rLastError = 0;
 
   public double time = 0;
-  */
+  
   public DriveTrain(){}
 
   public void driveLeft(double speed){motorFL.set(speed);}//For controlling only the left side of the drivetrain
@@ -49,7 +50,7 @@ public class DriveTrain extends Subsystem {
 
   }
 
-  public void teleDrive(){//This contains the drive code for teleOp
+  public void StickDrive(){//This contains the drive code for Stick Driving
 
     double drive = Robot.controllers.getJoyAxis(1) * Doubles.driveModifier; //Creates a variable for the intent to move on the robots y axis
     double turn = Robot.controllers.getJoyAxis(2) * Doubles.turnModifier;//Creates a variable for the intent to move on the robots z axis
@@ -63,6 +64,16 @@ public class DriveTrain extends Subsystem {
     Drive(leftSpeed, rightSpeed); //Drives the robot based on calculated drive speeds
 
   }
+
+  public void AndrewDrive(){
+
+    double drive = Robot.controllers.getControllerAxis(6)-Robot.controllers.getControllerAxis(5);
+    double turn = Robot.controllers.getControllerAxis(1) * Doubles.turnModifier;
+
+    Drive(drive + turn, drive - turn);
+
+  }
+
   public void PIDDrive(double setpoint){//PID Things that can be ignored for now
 
   /*
@@ -70,9 +81,6 @@ public class DriveTrain extends Subsystem {
     double rightEncoderPosition = Robot.sensors.getRightEncoderValue();
 
     double time = Timer.getFPGATimestamp();
-
-    if(Robot.controllers.getJoyButton(1)){setpoint = 6;}
-    else if(Robot.controllers.getJoyButton(2)){setpoint = 0;}
 
     double lError = setpoint - leftEncoderPosition;
     double rError = setpoint - rightEncoderPosition;
@@ -97,12 +105,16 @@ public class DriveTrain extends Subsystem {
     
     lLastError = lError;
     rLastError = rError;
-    */
+    
 
-  }
+  }*/
 
   @Override
-  public void initDefaultCommand() {}
+  public void initDefaultCommand() {
+
+    super.setDefaultCommand(new Driver_Controlls());
+
+  }
 
   /*
   @Override

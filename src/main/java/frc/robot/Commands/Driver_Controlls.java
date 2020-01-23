@@ -9,12 +9,11 @@ package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.Constants.*;
 
-public class IntakePivotUp extends Command {
-  public IntakePivotUp() {
+public class Driver_Controlls extends Command {
+  public Driver_Controlls() {
 
-    requires(Robot.chicken1);
+    super.requires(Robot.driveTrain);
 
   }
 
@@ -26,7 +25,11 @@ public class IntakePivotUp extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.chicken1.Pivot(Doubles.intakePivotUpSpeed);
+
+    if(Robot.DriverProfile == 1){Robot.driveTrain.StickDrive();}
+    else if(Robot.DriverProfile == 2){Robot.driveTrain.StickDrive();}
+    else if(Robot.DriverProfile == 3){Robot.driveTrain.AndrewDrive();}
+
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -37,12 +40,12 @@ public class IntakePivotUp extends Command {
 
   // Called once after isFinished returns true
   @Override
-  protected void end() {
-  }
+  protected void end() {}
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    Robot.driveTrain.Drive(0, 0);
   }
 }
