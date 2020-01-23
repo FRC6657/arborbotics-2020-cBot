@@ -11,6 +11,7 @@ public enum IDs {//Stores all of the id values such as controllers and CAN
     intakePivot(6),
     outtakeL(7),
     outtakeR(8),
+    liftMotor(9),
 
     //Controllers
     joyStick(0);

@@ -25,6 +25,7 @@ public class Robot extends TimedRobot {
   public static DriveTrain driveTrain = new DriveTrain();
   public static Chicken3 chicken3 = new Chicken3();
   public static Chicken1 chicken1 = new Chicken1();
+  public static Pigeon1 pigeon1 = new Pigeon1();
 
   //public WPI_TalonSRX motorFL = new WPI_TalonSRX(IDs.frontLeftMotor.value);
   //public WPI_TalonSRX motorFR = new WPI_TalonSRX(IDs.frontRightMotor.value);
