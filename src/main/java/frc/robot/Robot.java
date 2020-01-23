@@ -10,6 +10,7 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.fasterxml.jackson.annotation.JsonInclude.Value;
+import com.fasterxml.jackson.core.StreamWriteFeature;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Servo;
@@ -31,7 +32,7 @@ public class Robot extends TimedRobot {
   public static Chicken1 chicken1 = new Chicken1();
   public static Controllers controllers;
 
-  public static int direction = 1;//1 = forward | -1 = reversed
+  public static int direction = 1; //1 = forward | -1 = reversed
 
   //final double LkP = PID.LkP;
   //final double LkI = PID.LkI;
@@ -40,7 +41,6 @@ public class Robot extends TimedRobot {
   //final double RkI = PID.RkI;
   //final double RkD = PID.RkD;
 
-  public static Integer DriverProfile;
   SendableChooser<Integer> driverProfileChooser = new SendableChooser<>();
   
 
@@ -75,7 +75,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     sensors.resetAngle();//Resets navX Angle
-    DriverProfile = driverProfileChooser.getSelected();
+    controllers.DriverProfile = driverProfileChooser.getSelected();
   }
   @Override
   public void teleopPeriodic() {
@@ -86,8 +86,13 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
 
+    double sendableProfile = controllers.DriverProfile;
+
     Shuffleboard.getTab("SmartDashboard");//Creates new Shuffleboard Tab
     SmartDashboard.putNumber("Angle",Robot.sensors.getAngle()); //Puts the navX Z rotation angle onto the Shuffleboard Tab 'SmartDashboard'
+    SmartDashboard.putNumber("Selected Profile", sendableProfile);
+    SmartDashboard.putNumber("LBumper", Robot.controllers.getControllerAxis(3));
+    SmartDashboard.putNumber("RBumper", Robot.controllers.getControllerAxis(2));
 
   }
   public void testInit() {

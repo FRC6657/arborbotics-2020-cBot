@@ -66,8 +66,8 @@ public class DriveTrain extends Subsystem {
 
   public void AndrewDrive(){
 
-    double drive = Robot.controllers.getControllerAxis(6)-Robot.controllers.getControllerAxis(5);
-    double turn = Robot.controllers.getControllerAxis(1) * Doubles.turnModifier;
+    double drive = Robot.controllers.getControllerAxis(3) - Robot.controllers.getControllerAxis(2);
+    double turn = Robot.controllers.getControllerAxis(4) * Doubles.turnModifier;
 
     Drive(drive + turn, drive - turn);
 
@@ -113,7 +113,7 @@ public class DriveTrain extends Subsystem {
 
     super.setDefaultCommand(new Driver_Controlls());
 
-  }
+  } 
 
   /*
   @Override

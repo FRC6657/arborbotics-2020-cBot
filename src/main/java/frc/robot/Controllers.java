@@ -38,15 +38,17 @@ public class Controllers {
     Button AIntakePivotUp = new JoystickButton(this.controller, ControllerBinds.AintakePivotUp.value);
     Button AIntakePivotDown = new JoystickButton(this.controller, ControllerBinds.AintakePivotDown.value);
 
+    public Integer DriverProfile = 2;
+
     public Controllers(){
 
-        if(Robot.DriverProfile == 1){
+        if(DriverProfile == 1){
             this.JOuttakeOut.whileHeld(new outtakeOut());
             this.JIntakeIn.whileHeld(new intakeIn());
             this.JIntakePivotUp.whileHeld(new intakePivotUp());
             this.JIntakePivotDown.whileHeld(new intakePivotDown());     
         }
-        else if(Robot.DriverProfile == 2){
+       else if(DriverProfile == 2){
 
             this.COuttakeOut.whileHeld(new outtakeOut());
             this.CIntakeIn.whileHeld(new intakeIn());
@@ -54,7 +56,7 @@ public class Controllers {
             this.CIntakePivotDown.whileHeld(new intakePivotDown());     
 
         }
-        else if(Robot.DriverProfile == 3){
+        else if(DriverProfile == 3){
 
             this.AOuttakeOut.whileHeld(new outtakeOut());
             this.AIntakeIn.whileHeld(new intakeIn());

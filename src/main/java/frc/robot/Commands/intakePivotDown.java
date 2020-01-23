@@ -12,7 +12,7 @@ public class intakePivotDown extends Command {
 
   @Override
   protected void execute() {
-    Robot.chicken1.Pivot(-Doubles.intakePivotUpSpeed);
+    Robot.chicken1.Pivot(Doubles.intakePivotUpSpeed);
   }
 
   @Override
