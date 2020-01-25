@@ -1,8 +1,8 @@
 package frc.robot;
 
-public class utilities {
+public class Utilities {
 
-    public utilities(){
+    public Utilities(){
         //empty super
     }
 
