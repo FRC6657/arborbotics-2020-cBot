@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
-import frc.robot.Commands.Driver_Controlls;
+import frc.robot.Commands.Driver_Controls;
 import frc.robot.Constants.Doubles;
 import frc.robot.Constants.IDs;
 import frc.robot.Constants.PID;
@@ -36,18 +36,17 @@ public class DriveTrain extends Subsystem {
   private double rLastError = 0;
 
   public double time = 0;
-  
+*/  
   public DriveTrain(){}
 
   public void driveLeft(double speed){motorFL.set(speed);}//For controlling only the left side of the drivetrain
   public void driveRight(double speed){motorFR.set(-speed);}//For controlling only the right side of the drivetrain
-  public void Drive(double leftSpeed, double rightSpeed){//For controlling both sides of the drivetrain at once
 
+  public void Drive(double leftSpeed, double rightSpeed){//For controlling both sides of the drivetrain at once
     motorFL.set(leftSpeed);
     motorFR.set(-rightSpeed);
     motorBL.set(leftSpeed);
     motorBR.set(-rightSpeed);
-
   }
 
   public void StickDrive(){//This contains the drive code for Stick Driving
@@ -65,18 +64,24 @@ public class DriveTrain extends Subsystem {
 
   }
 
-  public void AndrewDrive(){
+  public void AndrewDrive(){//Drive code for my personal driving style
 
-    double drive = Robot.controllers.getControllerAxis(3) - Robot.controllers.getControllerAxis(2);
+    double drive = (Robot.controllers.getControllerAxis(3) - Robot.controllers.getControllerAxis(2)) * 0.5;
     double turn = Robot.controllers.getControllerAxis(4) * Doubles.turnModifier;
+
+    Math.pow(drive,2);
+    Math.pow(turn,2);
+
+    if(Robot.controllers.getControllerAxis(3) < 0){drive *= -1;}
+    if(Robot.controllers.getControllerAxis(2) < 0){turn *= -1;}
 
     Drive(drive + turn, drive - turn);
 
   }
-
+/*
   public void PIDDrive(double setpoint){//PID Things that can be ignored for now
 
-  /*
+  
     double leftEncoderPosition = Robot.sensors.getLeftEncoderValue();
     double rightEncoderPosition = Robot.sensors.getRightEncoderValue();
 
@@ -114,7 +119,7 @@ public class DriveTrain extends Subsystem {
 
     super.setDefaultCommand(new Driver_Controls());
 
-  } 
+  }
 
   /*
   @Override

@@ -10,20 +10,30 @@ package frc.robot.hardware;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Constants.IDs;
 
+/**
+ * Add your docs here.
+ */
+public class Lifty extends Subsystem {
+  
+  private WPI_TalonSRX liftMotor = new WPI_TalonSRX(IDs.liftMotor.value);
 
-public class Chicken1 extends Subsystem {//Code for the intake(Chicken 1)
+  public void liftUp(double speed){
+    liftMotor.set(speed);
+  }
 
-  private WPI_TalonSRX intakeSpin = new WPI_TalonSRX(5);//Declares the Roller Motor
-  //private WPI_TalonSRX intakePivot = new WPI_TalonSRX(6);//Declares the Pivot Motor
+  public void liftDown(double speed){
+    liftMotor.set(-speed);
+  }
 
-  public void Spin(double speed){intakeSpin.set(speed);}//Spints the roller
-  //public void Pivot(double speed){intakePivot.set(speed);}//Rotates the mech
-
-  public void spinStop(){intakeSpin.set(0);}
-  //public void pivotStop(){intakePivot.set(0);}
+  public void stop(){
+    liftMotor.set(0);
+  }
 
   @Override
   public void initDefaultCommand() {
+    // Set the default command for a subsystem here.
+    // setDefaultCommand(new MySpecialCommand());
   }
 }

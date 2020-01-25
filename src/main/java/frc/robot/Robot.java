@@ -30,7 +30,8 @@ public class Robot extends TimedRobot {
   public static DriveTrain driveTrain = new DriveTrain();
   public static Chicken3 chicken3 = new Chicken3();
   public static Chicken1 chicken1 = new Chicken1();
-  public static Pigeon1 pigeon1 = new Pigeon1();
+  public static Chicken2 chicken2 = new Chicken2();
+  public static Lifty lifty = new Lifty();
   public static Controllers controllers;
 
   public static int direction = 1; //1 = forward | -1 = reversed
@@ -42,7 +43,7 @@ public class Robot extends TimedRobot {
   //final double RkI = PID.RkI;
   //final double RkD = PID.RkD;
 
-  SendableChooser<Integer> driverProfileChooser = new SendableChooser<>();
+  SendableChooser<String> driverProfileChooser = new SendableChooser<>();
   
 
   @Override
@@ -53,9 +54,10 @@ public class Robot extends TimedRobot {
 
     Robot.controllers = new Controllers();
 
-    driverProfileChooser.addOption("Single Stick", 1);
-    driverProfileChooser.addOption("Dual Driver", 2);
-    driverProfileChooser.addOption("Andrew's Drive", 3);
+    driverProfileChooser.setDefaultOption("Dual Driver", "Double");
+    driverProfileChooser.addOption("Single Stick", "Single");
+    driverProfileChooser.addOption("Andrew's Drive", "Andrew");
+    
     SmartDashboard.putData("Driver Profile",driverProfileChooser);
     
   }
@@ -77,6 +79,7 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     sensors.resetAngle();//Resets navX Angle
     controllers.DriverProfile = driverProfileChooser.getSelected();
+    SmartDashboard.putString("Selected Profile", driverProfileChooser.getSelected());
   }
   @Override
   public void teleopPeriodic() {
@@ -87,11 +90,8 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
 
-    double sendableProfile = controllers.DriverProfile;
-
     Shuffleboard.getTab("SmartDashboard");//Creates new Shuffleboard Tab
     SmartDashboard.putNumber("Angle",Robot.sensors.getAngle()); //Puts the navX Z rotation angle onto the Shuffleboard Tab 'SmartDashboard'
-    SmartDashboard.putNumber("Selected Profile", sendableProfile);
     SmartDashboard.putNumber("LBumper", Robot.controllers.getControllerAxis(3));
     SmartDashboard.putNumber("RBumper", Robot.controllers.getControllerAxis(2));
 

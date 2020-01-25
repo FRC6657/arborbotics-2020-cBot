@@ -23,47 +23,39 @@ public class Controllers {
 
     XboxController controller = new XboxController(IDs.controller.value);
 
-    Button JOuttakeOut = new JoystickButton(this.joyStick, ControllerBinds.JouttakeOut.value);
-    Button JIntakeIn = new JoystickButton(this.joyStick, ControllerBinds.JintakeIn.value);
-    Button JIntakePivotUp = new JoystickButton(this.joyStick, ControllerBinds.JintakePivotUp.value);
-    Button JIntakePivotDown = new JoystickButton(this.joyStick, ControllerBinds.JintakePivotDown.value);
+    Button OuttakeOut;
+    Button IntakeIn;
 
-    Button COuttakeOut = new JoystickButton(this.controller, ControllerBinds.CouttakeOut.value);
-    Button CIntakeIn = new JoystickButton(this.controller, ControllerBinds.CintakeIn.value);
-    Button CIntakePivotUp = new JoystickButton(this.controller, ControllerBinds.CintakePivotUp.value);
-    Button CIntakePivotDown = new JoystickButton(this.controller, ControllerBinds.CintakePivotDown.value);
-
-    Button AOuttakeOut = new JoystickButton(this.controller, ControllerBinds.AouttakeOut.value);
-    Button AIntakeIn = new JoystickButton(this.controller, ControllerBinds.AintakeIn.value);
-    Button AIntakePivotUp = new JoystickButton(this.controller, ControllerBinds.AintakePivotUp.value);
-    Button AIntakePivotDown = new JoystickButton(this.controller, ControllerBinds.AintakePivotDown.value);
-
-    public Integer DriverProfile = 2;
+    public String DriverProfile = "Double";
 
     public Controllers(){
+/*
+        if(DriverProfile == "Double"){
 
-        if(DriverProfile == 1){
-            this.JOuttakeOut.whileHeld(new outtakeOut());
-            this.JIntakeIn.whileHeld(new intakeIn());
-            this.JIntakePivotUp.whileHeld(new intakePivotUp());
-            this.JIntakePivotDown.whileHeld(new intakePivotDown());     
-        }
-       else if(DriverProfile == 2){
+            OuttakeOut = new JoystickButton(this.controller, ControllerBinds.CouttakeOut.value);
+            IntakeIn = new JoystickButton(this.controller, ControllerBinds.CintakeIn.value);
 
-            this.COuttakeOut.whileHeld(new outtakeOut());
-            this.CIntakeIn.whileHeld(new intakeIn());
-            this.CIntakePivotUp.whileHeld(new intakePivotUp());
-            this.CIntakePivotDown.whileHeld(new intakePivotDown());     
 
         }
-        else if(DriverProfile == 3){
+        else if(DriverProfile == "Single"){
 
-            this.AOuttakeOut.whileHeld(new outtakeOut());
-            this.AIntakeIn.whileHeld(new intakeIn());
-            this.AIntakePivotUp.whileHeld(new intakePivotUp());
-            this.AIntakePivotDown.whileHeld(new intakePivotDown());
+            OuttakeOut = new JoystickButton(this.controller, ControllerBinds.JouttakeOut.value);
+            IntakeIn = new JoystickButton(this.controller, ControllerBinds.JintakeIn.value);
 
-        }
+
+     }
+     */
+        //else if(DriverProfile == "Andrew"){
+
+            OuttakeOut = new JoystickButton(this.controller, ControllerBinds.AouttakeOut.value);
+            IntakeIn = new JoystickButton(this.controller, ControllerBinds.AintakeIn.value);
+
+        //}
+
+        OuttakeOut.whileHeld(new outtakeOut());
+        IntakeIn.whileHeld(new intakeIn());
+        
+
     }
     public double getJoyAxis(int axis){return joyStick.getRawAxis(axis);}
     public double getControllerAxis(int axis){return controller.getRawAxis(axis);}

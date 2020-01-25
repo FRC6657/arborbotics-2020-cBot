@@ -25,11 +25,11 @@ public class Driver_Controls extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-/*
-    if(Robot.DriverProfile == 1){Robot.driveTrain.StickDrive();}
-    else if(Robot.DriverProfile == 2){Robot.driveTrain.StickDrive();}
-    else if(Robot.DriverProfile == 3){Robot.driveTrain.AndrewDrive();}
-*/
+
+    if(Robot.controllers.DriverProfile == "Single"){Robot.driveTrain.StickDrive();}
+    else if(Robot.controllers.DriverProfile == "Double"){Robot.driveTrain.StickDrive();}
+    else if(Robot.controllers.DriverProfile == "Andrew"){Robot.driveTrain.AndrewDrive();}
+
   }
 
   // Make this return true when this Command no longer needs to run execute()

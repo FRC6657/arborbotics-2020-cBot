@@ -15,25 +15,18 @@ import frc.robot.Constants.IDs;
 /**
  * Add your docs here.
  */
-public class Pigeon1 extends Subsystem {
-  
-  private WPI_TalonSRX liftMotor = new WPI_TalonSRX(IDs.liftMotor.value);
+public class Chicken2 extends Subsystem {
+  private WPI_TalonSRX whip = new WPI_TalonSRX(IDs.whip.value);
 
-  public void liftUp(double speed){
-    liftMotor.set(speed);
+  public void whipOn(double speed){
+    whip.set(speed);
   }
 
-  public void liftDown(double speed){
-    liftMotor.set(-speed);
-  }
-
-  public void stop(){
-    liftMotor.set(0);
+  public void whipOff(){
+    whip.set(0);
   }
 
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
   }
 }
