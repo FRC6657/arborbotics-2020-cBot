@@ -65,7 +65,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    sensors.resetAngle();//Resets navX Angle
+    //sensors.resetAngle();//Resets navX Angle
     //sensors.ResetEncoders();
     //driveLocomotive.time = 0;
   }
@@ -78,7 +78,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    sensors.resetAngle();//Resets navX Angle
+    //sensors.resetAngle();//Resets navX Angle
     controllers.DriverProfile = driverProfileChooser.getSelected();
     SmartDashboard.putString("Selected Profile", driverProfileChooser.getSelected());
   }
@@ -92,7 +92,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
 
     Shuffleboard.getTab("SmartDashboard");//Creates new Shuffleboard Tab
-    SmartDashboard.putNumber("Angle",Robot.sensors.getAngle()); //Puts the navX Z rotation angle onto the Shuffleboard Tab 'SmartDashboard'
+    SmartDashboard.putNumber("Encoder",Robot.sensors.getLeftEncoderValue());//Puts the navX Z rotation angle onto the Shuffleboard Tab 'SmartDashboard'
     SmartDashboard.putNumber("LBumper", Robot.controllers.getControllerAxis(3));
     SmartDashboard.putNumber("RBumper", Robot.controllers.getControllerAxis(2));
 

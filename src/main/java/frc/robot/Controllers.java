@@ -29,7 +29,7 @@ public class Controllers {
     public String DriverProfile = "Double";
 
     public Controllers(){
-/*
+
         if(DriverProfile == "Double"){
 
             OuttakeOut = new JoystickButton(this.controller, ControllerBinds.CouttakeOut.value);
@@ -39,18 +39,18 @@ public class Controllers {
         }
         else if(DriverProfile == "Single"){
 
-            OuttakeOut = new JoystickButton(this.controller, ControllerBinds.JouttakeOut.value);
-            IntakeIn = new JoystickButton(this.controller, ControllerBinds.JintakeIn.value);
+            OuttakeOut = new JoystickButton(this.joyStick, ControllerBinds.JouttakeOut.value);
+            IntakeIn = new JoystickButton(this.joyStick, ControllerBinds.JintakeIn.value);
 
 
      }
-     */
-        //else if(DriverProfile == "Andrew"){
+     
+        else if(DriverProfile == "Andrew"){
 
             OuttakeOut = new JoystickButton(this.controller, ControllerBinds.AouttakeOut.value);
             IntakeIn = new JoystickButton(this.controller, ControllerBinds.AintakeIn.value);
 
-        //}
+        }
 
         OuttakeOut.whileHeld(new outtakeOut());
         IntakeIn.whileHeld(new intakeIn());
