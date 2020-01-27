@@ -15,6 +15,7 @@ import com.fasterxml.jackson.core.StreamWriteFeature;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -33,9 +34,15 @@ public class Robot extends TimedRobot {
   public static Chicken2 chicken2 = new Chicken2();
   public static Lifty lifty = new Lifty();
   public static Controllers controllers = new Controllers();
-  public static Utilities utilities = new Utilities();
 
   public static int direction = 1; //1 = forward | -1 = reversed
+
+  XboxController controller = new XboxController(1);
+
+  private WPI_TalonSRX outL = new WPI_TalonSRX(IDs.outtakeL.value);
+  private WPI_TalonSRX outR = new WPI_TalonSRX(IDs.outtakeR.value);
+  private WPI_TalonSRX intake = new WPI_TalonSRX(IDs.intakeSpin.value);
+
 
   //final double LkP = PID.LkP;
   //final double LkI = PID.LkI;
@@ -53,7 +60,7 @@ public class Robot extends TimedRobot {
     //SmartDashboard.putNumber("Left Encoder Value:", sensors.getLeftEncoderValue());
     //SmartDashboard.putNumber("Right Encoder Value:", sensors.getRightEncoderValue());
 
-    Robot.controllers = new Controllers();
+    //Robot.controllers = new Controllers();
 
     driverProfileChooser.setDefaultOption("Dual Driver", "Double");
     driverProfileChooser.addOption("Single Stick", "Single");
@@ -79,12 +86,16 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     //sensors.resetAngle();//Resets navX Angle
-    controllers.DriverProfile = driverProfileChooser.getSelected();
+    //controllers.DriverProfile = driverProfileChooser.getSelected();
     SmartDashboard.putString("Selected Profile", driverProfileChooser.getSelected());
   }
   @Override
   public void teleopPeriodic() {
-    Scheduler.getInstance().run();
+    //Scheduler.getInstance().run();
+
+    if(controller.getRawButton(6)){outL.set(-Doubles.outtakeSpeed); outR.set(-Doubles.outtakeSpeed);}
+    if(controller.getRawButton(5)){intake.set(Doubles.intakeSpeed);}
+    if(controller.getRawButton(1)){outL.set(0);outR.set(0);intake.set(0);}
   }
 
 
@@ -93,8 +104,8 @@ public class Robot extends TimedRobot {
 
     Shuffleboard.getTab("SmartDashboard");//Creates new Shuffleboard Tab
     SmartDashboard.putNumber("Encoder",Robot.sensors.getLeftEncoderValue());//Puts the navX Z rotation angle onto the Shuffleboard Tab 'SmartDashboard'
-    SmartDashboard.putNumber("LBumper", Robot.controllers.getControllerAxis(3));
-    SmartDashboard.putNumber("RBumper", Robot.controllers.getControllerAxis(2));
+    //SmartDashboard.putNumber("LBumper", Robot.controllers.getControllerAxis(3));
+    //SmartDashboard.putNumber("RBumper", Robot.controllers.getControllerAxis(2));
 
   }
   public void testInit() {

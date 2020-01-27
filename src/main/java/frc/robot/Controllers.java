@@ -47,8 +47,8 @@ public class Controllers {
      
         else if(DriverProfile == "Andrew"){
 
-            OuttakeOut = new JoystickButton(this.controller, ControllerBinds.AouttakeOut.value);
-            IntakeIn = new JoystickButton(this.controller, ControllerBinds.AintakeIn.value);
+        OuttakeOut = new JoystickButton(this.controller, 6);
+        IntakeIn = new JoystickButton(this.controller, 5);
 
         }
 
