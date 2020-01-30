@@ -19,5 +19,7 @@ public interface Doubles {//Stores all of the frequently edited double values us
     public double whipSpeed = -0.35;
 
     public double controlPivotSpeed = 1;
+    public double controlRotateSpeed = 0.5;
+    
 
 }
