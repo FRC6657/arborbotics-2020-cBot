@@ -12,11 +12,11 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.Servo;
 
 /**
- * Add your docs here.
+ * This can be used to drive motor controllers and set servo positions.
  */
 public class MotorControl {
 
-    public void runTalonSRX(WPI_TalonSRX MotorController, double speed){MotorController.set(speed);}
+    public static void runTalonSRX(WPI_TalonSRX MotorController, double speed){MotorController.set(speed);}
     public void runVictorSPX(WPI_VictorSPX MotorController, double speed){MotorController.set(speed);}
     public void setServoAngle(Servo servo, double angle){servo.setAngle(angle);}
 
