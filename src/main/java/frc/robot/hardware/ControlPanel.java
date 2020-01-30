@@ -15,18 +15,28 @@ import frc.robot.Constants.IDs;
 /**
  * Add your docs here.
  */
-public class Chicken2 extends Subsystem {
-  private WPI_TalonSRX whip = new WPI_TalonSRX(IDs.whip.value);
+public class ControlPanel extends Subsystem {
 
-  public void whipOn(double speed){
-    whip.set(speed);
-  }
-
-  public void whipOff(){
-    whip.set(0);
-  }
+  private WPI_TalonSRX pivot = new WPI_TalonSRX(IDs.controlPanelPivot.value);
+  private WPI_TalonSRX theStack = new WPI_TalonSRX(IDs.controlPanelSpin.value);
 
   @Override
   public void initDefaultCommand() {
+  }
+
+  public void pivotUp(double speed){
+    pivot.set(speed);
+  }
+
+  public void pivotStop(){
+    pivot.set(0);
+  }
+
+  public void stackOn(double speed){
+    theStack.set(speed);
+  }
+
+  public void stacKOff(){
+    theStack.set(0);
   }
 }

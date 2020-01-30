@@ -30,14 +30,6 @@ public class DriveTrain extends Subsystem {
   public WPI_VictorSPX motorBL = new WPI_VictorSPX(IDs.backLeftMotor.value);//Declares Back Left Motor
   public WPI_VictorSPX motorBR = new WPI_VictorSPX(IDs.backRightMotor.value);//Declares Back Right Motor
 
-  /*PID Things that can be ignored for now
-  private double lSumOfError = 0;
-  private double rSumOfError = 0;
-  private double lLastError = 0;
-  private double rLastError = 0;
-
-  public double time = 0;
-*/  
   public DriveTrain(){
     motorBL.follow(motorFL, FollowerType.AuxOutput1);
     motorBR.follow(motorFR, FollowerType.AuxOutput1);
@@ -74,12 +66,12 @@ public class DriveTrain extends Subsystem {
 
     double rightTrigger = Robot.controllers.getControllerAxis(3);
     double leftTrigger = Robot.controllers.getControllerAxis(2);
-    double leftStick = Robot.controllers.getControllerAxis(1);
+    double leftStick = Robot.controllers.getControllerAxis(0);
 
-    if(rightTrigger < Doubles.driveDeadband){rightTrigger = 0;}
-    if(leftTrigger < Doubles.driveDeadband){leftTrigger = 0;}
+    if(rightTrigger < Doubles.ADriveDeadband) {rightTrigger = 0;}
+    if (leftTrigger < Doubles.ADriveDeadband) {leftTrigger = 0;}
     if(leftStick < Doubles.turnDeadband && leftStick > 0){leftStick = 0;}
-    if(leftStick < -Doubles.turnDeadband && leftStick < 0){leftStick = 0;}
+    if(leftStick > -Doubles.turnDeadband && leftStick < 0){leftStick = 0;}
 
     double squaredRightTrigger = Math.pow(rightTrigger,2);
     double squaredLeftTrigger = Math.pow(leftTrigger, 2);
@@ -104,41 +96,6 @@ public class DriveTrain extends Subsystem {
     Drive(leftPower, -rightPower); 
 
   }
-/*
-  public void PIDDrive(double setpoint){//PID Things that can be ignored for now
-
-  
-    double leftEncoderPosition = Robot.sensors.getLeftEncoderValue();
-    double rightEncoderPosition = Robot.sensors.getRightEncoderValue();
-
-    double time = Timer.getFPGATimestamp();
-
-    double lError = setpoint - leftEncoderPosition;
-    double rError = setpoint - rightEncoderPosition;
-
-    double dt = Timer.getFPGATimestamp() - time;
-
-    if(Math.abs(lError) < PID.stopRange){lSumOfError += lError * dt;}
-    if(Math.abs(rError) < PID.stopRange){rSumOfError += rError * dt;}
-    
-    lSumOfError += lError * dt;
-    rSumOfError += rError * dt;
-
-    double lErrorRate = (lError - lLastError) / dt;
-    double rErrorRate = (rError - rLastError) / dt;
-
-    double leftMotorOutput = PID.LkP * lError + PID.LkI * lSumOfError + PID.LkD * lErrorRate;
-    double rightMotorOutput = PID.RkP * rError + PID.RkI * rSumOfError + PID.RkD * rErrorRate;
-
-    Drive(leftMotorOutput, rightMotorOutput);
-
-    time = Timer.getFPGATimestamp();
-    
-    lLastError = lError;
-    rLastError = rError;
-    
-
-  }*/
 
   @Override
   public void initDefaultCommand() {
@@ -146,13 +103,4 @@ public class DriveTrain extends Subsystem {
     super.setDefaultCommand(new Driver_Controls());
 
   }
-
-  /*
-  @Override
-  public void pidWrite(double output) {
-
-    //Drive(output,output);
-
-  }
-  */
 }

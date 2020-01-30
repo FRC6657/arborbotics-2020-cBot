@@ -6,17 +6,17 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.Constants.Doubles;
 
-public class intakeIn extends Command {
+public class intakeOut extends Command {
   
-  public intakeIn() {
+  public intakeOut() {
     requires(Robot.chicken1);
     //requires(Robot.chicken2);
   }
 
   @Override
   protected void execute() {
-    Robot.chicken1.Spin(Doubles.intakeSpeed);
-    //Robot.chicken2.whipOn(-Doubles.whipSpeed);
+    Robot.chicken1.Spin(-Doubles.intakeSpeed);
+    //Robot.chicken2.whipOn(Doubles.whipSpeed);
   }
 
   @Override

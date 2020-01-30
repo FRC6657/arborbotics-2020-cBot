@@ -19,9 +19,7 @@ public enum ControllerBinds {
     
     //Andrew's Controls
     AouttakeOut(6),
-    AintakeIn(5),
-    AintakeOut(0),
-    AouttakeIn(0);
+    AintakeIn(5);
 
 
     public final int value;
