@@ -2,14 +2,17 @@ package frc.robot.Constants;
 
 public interface Doubles {//Stores all of the frequently edited double values used throughout the code for easy access
 
-    public double driveDeadband = 0.4;
-    public double turnDeadband = 0.4;
+    public double driveDeadbandMax = 0.4;
+    public double driveDeadbandMin = -0.4;
+    public double turnDeadbandMax = 0.4;
+    public double turnDeadbandMin = -0.4;
 
-    public double ADriveDeadband = 0.1;
-    public double ATurnDeadband = 0.1;
+    public double ADriveDeadbandMax = 0.1;
+    public double ADriveDeadbandMin = -0.1;
+    public double ATurnDeadbandMax = 0.1;
+    public double ATurnDeadbandMin = -0.1;
 
-    public double driveModifier = 0.75;
-    public double turnModifier = 0.25;
+    public double maxSpeed = 0.5;
 
     public double intakeSpeed = 0.45;
     public double outtakeSpeed = 0.8;

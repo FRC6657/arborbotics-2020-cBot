@@ -10,6 +10,8 @@ public enum ControllerBinds {
     JouttakeIn(3),
     JintakeOut(5),
     JintakeIn(2),
+    JDriveAxis(2),
+    JTurnAxis(1),
 
     //Controller
     CouttakeOut(1),
@@ -19,7 +21,11 @@ public enum ControllerBinds {
     
     //Andrew's Controls
     AouttakeOut(6),
-    AintakeIn(5);
+    AintakeIn(5),
+    ATurnAxis(0),
+    AGasAxis(3),
+    ABrakeAxis(2);
+    
 
 
     public final int value;

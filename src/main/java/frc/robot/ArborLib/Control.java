@@ -16,7 +16,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
  * Ex. For a standard Joystick forward is negative and backward is positive. 
  * The deadPositive in this case would be the Backward Deadband and deadNegative the Forward Deadband
  */
-public class Controll {
+public class Control {
 
     public static double applyAxisDeadband(double AxisPos, double deadPositive, double deadNegative, double axisMax, double axisMin){
 
@@ -31,7 +31,7 @@ public class Controll {
         
     }
 
-    public void StickDrive(double DriveAxisPos, double TurnAxisPos, WPI_TalonSRX leftMaster, WPI_TalonSRX rightMaster, double driveDeadMax, double driveDeadMin, double turnDeadMax, double turnDeadMin,double maxSpeed){
+    public static void StickDrive(double DriveAxisPos, double TurnAxisPos, WPI_TalonSRX leftMaster, WPI_TalonSRX rightMaster, double driveDeadMax, double driveDeadMin, double turnDeadMax, double turnDeadMin,double maxSpeed){
 
         double drive = applyAxisDeadband(DriveAxisPos, driveDeadMax, driveDeadMin,maxSpeed,-maxSpeed);
         double turn = applyAxisDeadband(TurnAxisPos, turnDeadMax, turnDeadMin,maxSpeed,-maxSpeed);
@@ -41,7 +41,7 @@ public class Controll {
 
     }
 
-    public void AndrewDrive(double GasAxis,double BrakeAxis, double TurnAxisPos, WPI_TalonSRX leftMaster, WPI_TalonSRX rightMaster, double driveDeadMax, double driveDeadMin, double turnDeadMax, double turnDeadMin,double maxSpeed){
+    public static void AndrewDrive(double GasAxis,double BrakeAxis, double TurnAxisPos, WPI_TalonSRX leftMaster, WPI_TalonSRX rightMaster, double driveDeadMax, double driveDeadMin, double turnDeadMax, double turnDeadMin,double maxSpeed){
 
         double drive = applyAxisDeadband((GasAxis - BrakeAxis), driveDeadMax, driveDeadMin,maxSpeed,-maxSpeed);
         double turn = applyAxisDeadband(TurnAxisPos, turnDeadMax, turnDeadMin,maxSpeed,-maxSpeed);

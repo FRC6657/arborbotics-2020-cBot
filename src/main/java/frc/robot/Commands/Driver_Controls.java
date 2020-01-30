@@ -9,6 +9,9 @@ package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.ArborLib.Control;
+import frc.robot.Constants.ControllerBinds;
+import frc.robot.Constants.Doubles;
 
 public class Driver_Controls extends Command {
   public Driver_Controls() {
@@ -26,10 +29,9 @@ public class Driver_Controls extends Command {
   @Override
   protected void execute() {
 
-    if(Robot.selectedProfile == "Single"){Robot.driveTrain.StickDrive();}
-    else if(Robot.selectedProfile == "Double"){Robot.driveTrain.StickDrive();}
-    else if(Robot.selectedProfile == "Andrew"){Robot.driveTrain.AndrewDrive();}
-
+    if(Robot.selectedProfile == "Single"){Control.StickDrive(Robot.controllers.getJoyAxis(ControllerBinds.JDriveAxis.value),Robot.controllers.getJoyAxis(ControllerBinds.JTurnAxis.value),Robot.driveTrain.motorFL,Robot.driveTrain.motorFR,Doubles.driveDeadbandMax,Doubles.driveDeadbandMin,Doubles.turnDeadbandMax,Doubles.turnDeadbandMin,Doubles.maxSpeed);}
+    else if(Robot.selectedProfile == "Double"){Control.StickDrive(Robot.controllers.getJoyAxis(ControllerBinds.JDriveAxis.value),Robot.controllers.getJoyAxis(ControllerBinds.JTurnAxis.value),Robot.driveTrain.motorFL,Robot.driveTrain.motorFR,Doubles.driveDeadbandMax,Doubles.driveDeadbandMin,Doubles.turnDeadbandMax,Doubles.turnDeadbandMin,Doubles.maxSpeed);}
+    else if(Robot.selectedProfile == "Andrew"){Control.AndrewDrive(Robot.controllers.getControllerAxis(ControllerBinds.AGasAxis.value),Robot.controllers.getControllerAxis(ControllerBinds.ABrakeAxis.value),Robot.controllers.getControllerAxis(ControllerBinds.ATurnAxis.value),Robot.driveTrain.motorFL,Robot.driveTrain.motorFR,Doubles.ADriveDeadbandMax,Doubles.ADriveDeadbandMin,Doubles.ATurnDeadbandMax,Doubles.ATurnDeadbandMin,Doubles.maxSpeed);}
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -46,6 +48,6 @@ public class Driver_Controls extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.driveTrain.Drive(0, 0);
+    //Robot.driveTrain.Drive(0, 0);
   }
 }

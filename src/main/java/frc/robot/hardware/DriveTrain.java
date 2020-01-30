@@ -35,67 +35,6 @@ public class DriveTrain extends Subsystem {
     motorBR.follow(motorFR, FollowerType.AuxOutput1);
   }
 
-  public void driveLeft(double speed){motorFL.set(speed);}//For controlling only the left side of the drivetrain
-  public void driveRight(double speed){motorFR.set(-speed);}//For controlling only the right side of the drivetrain
-
-  public void Drive(double leftSpeed, double rightSpeed){//For controlling both sides of the drivetrain at once
-    motorFL.set(leftSpeed);
-    motorFR.set(rightSpeed);
-    motorBL.set(leftSpeed);
-    motorBR.set(rightSpeed);
-  }
-
-  public void StickDrive(){//This contains the drive code for Stick Driving
-
-    double drive = Robot.controllers.getJoyAxis(2) * Doubles.driveModifier; //Creates a variable for the intent to move on the robots y axis
-    double turn = Robot.controllers.getJoyAxis(1) * Doubles.turnModifier;//Creates a variable for the intent to move on the robots z axis
-
-    if(Robot.controllers.getJoyAxis(2) < Doubles.driveDeadband & Robot.controllers.getJoyAxis(2) > -Doubles.driveDeadband){drive = 0;}//Deadband for y axis
-    if(Robot.controllers.getJoyAxis(1) < Doubles.turnDeadband & Robot.controllers.getJoyAxis(1) > -Doubles.turnDeadband){turn = 0;}//Deadband for z axis
-
-    double leftSpeed = drive + turn; //Calculates the left drive power based on the movement intent of the driver
-    double rightSpeed = drive - turn; //Calculates the right drive power based on the movement intent of the driver
-
-    Drive(leftSpeed, -rightSpeed); //Drives the robot based on calculated drive speeds
-
-  }
-
-  public void AndrewDrive(){//Drive code for my personal driving style
-
-    double maxDrive = 1;
-
-    double rightTrigger = Robot.controllers.getControllerAxis(3);
-    double leftTrigger = Robot.controllers.getControllerAxis(2);
-    double leftStick = Robot.controllers.getControllerAxis(0);
-
-    if(rightTrigger < Doubles.ADriveDeadband) {rightTrigger = 0;}
-    if (leftTrigger < Doubles.ADriveDeadband) {leftTrigger = 0;}
-    if(leftStick < Doubles.turnDeadband && leftStick > 0){leftStick = 0;}
-    if(leftStick > -Doubles.turnDeadband && leftStick < 0){leftStick = 0;}
-
-    double squaredRightTrigger = Math.pow(rightTrigger,2);
-    double squaredLeftTrigger = Math.pow(leftTrigger, 2);
-    double squaredLeftStick = Math.pow(leftStick, 2);
-
-    if(rightTrigger < 0){squaredRightTrigger *= -1;}
-    if(leftTrigger < 0){squaredLeftTrigger *= -1;}
-    if(leftStick < 0){squaredLeftStick *= -1;}
-
-    double drive = (squaredRightTrigger - squaredLeftTrigger) * Doubles.driveModifier; 
-    double turn = squaredLeftStick * Doubles.turnModifier;
-
-    double leftPower = drive + turn;
-    double rightPower = drive - turn;
-
-    if(leftPower > maxDrive && leftPower > 0){leftPower = maxDrive;}
-    if(leftPower < -maxDrive && leftPower < 0){leftPower = -maxDrive;}
-
-    if(rightPower > maxDrive && rightPower > 0){rightPower = maxDrive;}
-    if(rightPower < -maxDrive && rightPower < 0){rightPower = -maxDrive;}
-
-    Drive(leftPower, -rightPower); 
-
-  }
 
   @Override
   public void initDefaultCommand() {
