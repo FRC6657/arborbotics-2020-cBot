@@ -8,6 +8,7 @@
 package frc.robot.hardware;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 import frc.robot.Constants.Doubles;
@@ -16,15 +17,22 @@ import frc.robot.Constants.PID;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SPI;
+
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
+<<<<<<< HEAD:src/main/java/frc/robot/hardware/DriveTrain.java
 public class DriveTrain extends Subsystem {
+=======
+public class DriveLocomotive extends Subsystem {
+>>>>>>> 1e42d657d7da3d028849b4fd7c4867cc1f422b22:src/main/java/frc/robot/hardware/DriveLocomotive.java
 
-  private WPI_TalonSRX motorFL = new WPI_TalonSRX(IDs.frontLeftMotor.value);
-  private WPI_TalonSRX motorFR = new WPI_TalonSRX(IDs.frontLeftMotor.value);
-  private WPI_TalonSRX motorBL = new WPI_TalonSRX(IDs.frontLeftMotor.value);
-  private WPI_TalonSRX motorBR = new WPI_TalonSRX(IDs.frontLeftMotor.value);
+  public WPI_TalonSRX motorFL = new WPI_TalonSRX(IDs.frontLeftMotor.value);
+  public WPI_TalonSRX motorFR = new WPI_TalonSRX(IDs.frontRightMotor.value);
+  public WPI_VictorSPX motorBL = new WPI_VictorSPX(IDs.backLeftMotor.value);
+  public WPI_VictorSPX motorBR = new WPI_VictorSPX(IDs.backRightMotor.value);
 
   //public final PIDController turnController;
   AHRS navX;
@@ -36,10 +44,9 @@ public class DriveTrain extends Subsystem {
 
   public double time = 0;
 
-  public DriveTrain(){
+  public DriveLocomotive(){
 
-    motorBL.follow(motorFL);
-    motorBR.follow(motorFR);
+
 
     navX = new AHRS(SPI.Port.kMXP);
 
@@ -59,13 +66,15 @@ public class DriveTrain extends Subsystem {
 
     motorFL.set(leftSpeed);
     motorFR.set(-rightSpeed);
+    motorBL.set(leftSpeed);
+    motorBR.set(-rightSpeed);
 
   }
 
   public void teleDrive(){
 
     if((Robot.controllers.getJoyAxis(1) > Doubles.driveDeadband || Robot.controllers.getJoyAxis(1) < -Doubles.driveDeadband) || (Robot.controllers.getJoyAxis(3) > Doubles.turnDeadband || Robot.controllers.getJoyAxis(3) < -Doubles.turnDeadband)){
-
+      
       double drive = -Robot.controllers.getJoyAxis(1) * Doubles.driveModifier;
       double turn = Robot.controllers.getJoyAxis(3) * Doubles.turnModifier;
 
@@ -81,6 +90,7 @@ public class DriveTrain extends Subsystem {
   }
   public void PIDDrive(double setpoint){
 
+  /*
     double leftEncoderPosition = Robot.sensors.getLeftEncoderValue();
     double rightEncoderPosition = Robot.sensors.getRightEncoderValue();
 
@@ -112,15 +122,28 @@ public class DriveTrain extends Subsystem {
     
     lLastError = lError;
     rLastError = rError;
+    */
 
   }
   public void PIDTurnAngle(double angle){
 
+<<<<<<< HEAD:src/main/java/frc/robot/hardware/DriveTrain.java
     navX.reset();
+=======
+    //navX.reset();
+>>>>>>> 1e42d657d7da3d028849b4fd7c4867cc1f422b22:src/main/java/frc/robot/hardware/DriveLocomotive.java
     //turnController.reset();
     //turnController.setPID(PID.TkP,PID.TkI,PID.TkD);
     //turnController.setSetpoint(angle);
     //turnController.enable();
+<<<<<<< HEAD:src/main/java/frc/robot/hardware/DriveTrain.java
+=======
+
+  }
+  public double getAngle(){
+
+    return navX.getAngle();
+>>>>>>> 1e42d657d7da3d028849b4fd7c4867cc1f422b22:src/main/java/frc/robot/hardware/DriveLocomotive.java
 
   }
   public void PIDTurnToAngle(double angle){
@@ -134,6 +157,7 @@ public class DriveTrain extends Subsystem {
 
   @Override
   public void initDefaultCommand() {}
+<<<<<<< HEAD:src/main/java/frc/robot/hardware/DriveTrain.java
 /*
   @Override
   public void pidWrite(double output) {
@@ -142,4 +166,15 @@ public class DriveTrain extends Subsystem {
 
   }
 */
+=======
+
+  /*
+  @Override
+  public void pidWrite(double output) {
+
+    //Drive(output,output);
+
+  }
+  */
+>>>>>>> 1e42d657d7da3d028849b4fd7c4867cc1f422b22:src/main/java/frc/robot/hardware/DriveLocomotive.java
 }

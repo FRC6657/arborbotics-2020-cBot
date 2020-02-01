@@ -7,36 +7,54 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.*;
 import frc.robot.hardware.*;
 
 public class Robot extends TimedRobot {
+  
+  public static Controllers controllers;
+  public static DriveLocomotive driveLocomotive = new DriveLocomotive();
+  public static Chicken3 chicken3 = new Chicken3();
+  public static Chicken1 chicken1 = new Chicken1();
 
-  public static Sensors sensors = new Sensors();
-  public static DriveTrain drivetrain = new DriveTrain();
-  public static Controllers controllers = new Controllers();
+  private Servo servo = new Servo(0);
 
-  final double LkP = PID.LkP;
-  final double LkI = PID.LkI;
-  final double LkD = PID.LkD;
-  final double RkP = PID.RkP;
-  final double RkI = PID.RkI;
-  final double RkD = PID.RkD;
+  //public WPI_TalonSRX motorFL = new WPI_TalonSRX(IDs.frontLeftMotor.value);
+  //public WPI_TalonSRX motorFR = new WPI_TalonSRX(IDs.frontRightMotor.value);
+  //public VictorSPX motorBL = new VictorSPX(IDs.backLeftMotor.value);
+  //public VictorSPX motorBR = new VictorSPX(IDs.backRightMotor.value);
+
+  //public WPI_TalonSRX outR = new WPI_TalonSRX(7);
+  //public WPI_TalonSRX outL = new WPI_TalonSRX(8);
+
+  //final double LkP = PID.LkP;
+  //final double LkI = PID.LkI;
+  //final double LkD = PID.LkD;
+  //final double RkP = PID.RkP;
+  //final double RkI = PID.RkI;
+  //final double RkD = PID.RkD;
 
   @Override
   public void robotInit() {
 
-    SmartDashboard.putNumber("Left Encoder Value:", sensors.getLeftEncoderValue());
-    SmartDashboard.putNumber("Right Encoder Value:", sensors.getRightEncoderValue());
+    //SmartDashboard.putNumber("Left Encoder Value:", sensors.getLeftEncoderValue());
+    //SmartDashboard.putNumber("Right Encoder Value:", sensors.getRightEncoderValue());
+
+    controllers = new Controllers();
 
   }
 
   @Override
   public void autonomousInit() {
-    sensors.ResetEncoders();
-    drivetrain.time = 0;
+    //sensors.ResetEncoders();
+    //driveLocomotive.time = 0;
   }
 
   @Override
@@ -48,20 +66,45 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
   }
-
   @Override
   public void teleopPeriodic() {
 
-    drivetrain.teleDrive();
+    if(Robot.controllers.getJoyButton(1)){chicken3.Out(0.75);}
+    if(Robot.controllers.getJoyButton(2)){chicken3.In(0.75);}
+    if(Robot.controllers.getJoyButton(5)){chicken3.Stop();}
+    
+    if(Robot.controllers.getJoyButton(6)){chicken1.Spin(1);}
+    if(Robot.controllers.getJoyButton(4)){chicken1.Spin(-1);}
+    if(Robot.controllers.getJoyButton(5)){chicken1.Spin(0);}
+
+    if(Robot.controllers.getJoyButton(12)){chicken1.Pivot(0.1);}
+    if(Robot.controllers.getJoyButton(11)){chicken1.Pivot(-0.1);}
+    if(Robot.controllers.getJoyButton(5)){chicken1.Pivot(0);}
+
+    if(Robot.controllers.getJoyButton(1)){servo.set(0.5);}
+    if(Robot.controllers.getJoyButton(6)){servo.set(0);}
+    
+
+    double drive = -controllers.getJoyAxis(1) * 0.5;
+    double turn = controllers.getJoyAxis(2) * 0.5;
+
+    if(controllers.getJoyAxis(1) < 0.1 & controllers.getJoyAxis(1) > -0.1){drive = 0;}
+    if(controllers.getJoyAxis(2) < 0.1 & controllers.getJoyAxis(2) > -0.1){turn = 0;}
+
+    double leftSpeed = drive + turn;
+    double rightSpeed = drive - turn;
+
+    driveLocomotive.Drive(leftSpeed, rightSpeed);
 
   }
 
   @Override
   public void robotPeriodic() {
 
-  }
+    Shuffleboard.getTab("SmartDashboard");
+    SmartDashboard.putNumber("Angle",Robot.driveLocomotive.getAngle());
 
-  @Override
+  }
   public void testInit() {
   }
 
