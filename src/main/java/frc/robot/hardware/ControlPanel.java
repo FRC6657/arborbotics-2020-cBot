@@ -9,30 +9,34 @@ package frc.robot.hardware;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Constants.IDs;
 
 /**
  * Add your docs here.
  */
-public class Chicken3 extends Subsystem {
-  
-  private WPI_TalonSRX outL = new WPI_TalonSRX(IDs.outtakeL.value);//Declares left outtake motor
-  private WPI_TalonSRX outR = new WPI_TalonSRX(IDs.outtakeR.value);//Declares right outtake motor
+public class ControlPanel extends Subsystem {
 
-  private Servo gateServo = new Servo(0);//Declares the servo used to stop the PowerCells from getting into the wheels before we want them to
+  private WPI_TalonSRX pivot = new WPI_TalonSRX(IDs.controlPanelPivot.value);
+  private WPI_TalonSRX theStack = new WPI_TalonSRX(IDs.controlPanelSpin.value);
 
-  public void outtakeOut(double speed){
-    outL.set(speed);
-    outR.set(-speed);
-    gateServo.setAngle(90);
-  }
-  public void outtakeStop(){
-    outL.set(0);
-    outR.set(0);
-    gateServo.setAngle(140);
-  }
   @Override
-  public void initDefaultCommand() {}
+  public void initDefaultCommand() {
+  }
+
+  public void pivotUp(double speed){
+    pivot.set(speed);
+  }
+
+  public void pivotStop(){
+    pivot.set(0);
+  }
+
+  public void stackOn(double speed){
+    theStack.set(speed);
+  }
+
+  public void stacKOff(){
+    theStack.set(0);
+  }
 }

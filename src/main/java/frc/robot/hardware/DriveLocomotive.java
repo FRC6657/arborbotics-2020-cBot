@@ -23,11 +23,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
-<<<<<<< HEAD:src/main/java/frc/robot/hardware/DriveTrain.java
-public class DriveTrain extends Subsystem {
-=======
 public class DriveLocomotive extends Subsystem {
->>>>>>> 1e42d657d7da3d028849b4fd7c4867cc1f422b22:src/main/java/frc/robot/hardware/DriveLocomotive.java
 
   public WPI_TalonSRX motorFL = new WPI_TalonSRX(IDs.frontLeftMotor.value);
   public WPI_TalonSRX motorFR = new WPI_TalonSRX(IDs.frontRightMotor.value);
@@ -127,23 +123,16 @@ public class DriveLocomotive extends Subsystem {
   }
   public void PIDTurnAngle(double angle){
 
-<<<<<<< HEAD:src/main/java/frc/robot/hardware/DriveTrain.java
-    navX.reset();
-=======
     //navX.reset();
->>>>>>> 1e42d657d7da3d028849b4fd7c4867cc1f422b22:src/main/java/frc/robot/hardware/DriveLocomotive.java
     //turnController.reset();
     //turnController.setPID(PID.TkP,PID.TkI,PID.TkD);
     //turnController.setSetpoint(angle);
     //turnController.enable();
-<<<<<<< HEAD:src/main/java/frc/robot/hardware/DriveTrain.java
-=======
 
   }
   public double getAngle(){
 
     return navX.getAngle();
->>>>>>> 1e42d657d7da3d028849b4fd7c4867cc1f422b22:src/main/java/frc/robot/hardware/DriveLocomotive.java
 
   }
   public void PIDTurnToAngle(double angle){
@@ -157,16 +146,6 @@ public class DriveLocomotive extends Subsystem {
 
   @Override
   public void initDefaultCommand() {}
-<<<<<<< HEAD:src/main/java/frc/robot/hardware/DriveTrain.java
-/*
-  @Override
-  public void pidWrite(double output) {
-
-    Drive(output,-output);
-
-  }
-*/
-=======
 
   /*
   @Override
@@ -176,5 +155,4 @@ public class DriveLocomotive extends Subsystem {
 
   }
   */
->>>>>>> 1e42d657d7da3d028849b4fd7c4867cc1f422b22:src/main/java/frc/robot/hardware/DriveLocomotive.java
 }

@@ -9,30 +9,29 @@ package frc.robot.hardware;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Constants.IDs;
 
 /**
  * Add your docs here.
  */
-public class Chicken3 extends Subsystem {
+public class Lifty extends Subsystem {
   
-  private WPI_TalonSRX outL = new WPI_TalonSRX(IDs.outtakeL.value);//Declares left outtake motor
-  private WPI_TalonSRX outR = new WPI_TalonSRX(IDs.outtakeR.value);//Declares right outtake motor
+  private WPI_TalonSRX liftMotor = new WPI_TalonSRX(IDs.liftMotor.value);
 
-  private Servo gateServo = new Servo(0);//Declares the servo used to stop the PowerCells from getting into the wheels before we want them to
+  public void liftUp(double speed){
+    liftMotor.set(speed);
+  }
 
-  public void outtakeOut(double speed){
-    outL.set(speed);
-    outR.set(-speed);
-    gateServo.setAngle(90);
+  public void liftDown(double speed){
+    liftMotor.set(-speed);
   }
-  public void outtakeStop(){
-    outL.set(0);
-    outR.set(0);
-    gateServo.setAngle(140);
+
+  public void stop(){
+    liftMotor.set(0);
   }
+
   @Override
-  public void initDefaultCommand() {}
+  public void initDefaultCommand() {
+  }
 }
