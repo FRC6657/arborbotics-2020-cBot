@@ -27,8 +27,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
+  // The robot's subsystems
   private final Agipotato s_Agipotato = new Agipotato();
+  private final ControlPanel s_ControlPanel = new ControlPanel();
   private final Drivetrain s_Drivetrain = new Drivetrain();
   private final Intake s_Intake = new Intake();
   private final Lift s_Lift = new Lift();
@@ -52,12 +53,6 @@ public class RobotContainer {
     () -> controller.getX(GenericHID.Hand.kLeft),
     () -> controller.getStickButton(GenericHID.Hand.kLeft)));
 
-    SmartDashboard.putData(s_Agipotato);
-    SmartDashboard.putData(s_Drivetrain);
-    SmartDashboard.putData(s_Intake);
-    SmartDashboard.putData(s_Lift);
-    SmartDashboard.putData(s_Outtake);
-
   }
 
   private void configureButtonBindings() {
@@ -65,6 +60,13 @@ public class RobotContainer {
     final JoystickButton a = new JoystickButton(controller, XboxController.Button.kA.value);
     final JoystickButton b = new JoystickButton(controller, XboxController.Button.kB.value);
     final JoystickButton x = new JoystickButton(controller, XboxController.Button.kX.value);
+    final JoystickButton y = new JoystickButton(controller, XboxController.Button.kY.value);
+    final JoystickButton lStickPress = new JoystickButton(controller, XboxController.Button.kStickLeft.value);
+    final JoystickButton rStickPress = new JoystickButton(controller, XboxController.Button.kStickRight.value);
+    final JoystickButton lBumper = new JoystickButton(controller, XboxController.Button.kBumperLeft.value);
+    final JoystickButton rBumper = new JoystickButton(controller, XboxController.Button.kBumperRight.value);
+    final JoystickButton back = new JoystickButton(controller, XboxController.Button.kBack.value);
+    final JoystickButton start = new JoystickButton(controller, XboxController.Button.kBack.value);
 
     a.whenHeld(new IntakePowercells(s_Intake));
     b.whenHeld(new OuttakePowercells(s_Outtake));
