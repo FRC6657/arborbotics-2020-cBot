@@ -10,35 +10,38 @@ package frc.robot.commands;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ControlPanel;
+import frc.robot.subsystems.Lift;
 
-public class PivotControlPanel extends CommandBase {
+public class LiftControl extends CommandBase {
 
-  private final ControlPanel CP;
-  private final double speed;
+  private final Lift lift;
+  private final DoubleSupplier speed;
 
-  public PivotControlPanel(ControlPanel CP, double speed) {
-
-    this.CP = CP;
+  public LiftControl(Lift lift, DoubleSupplier speed) {
+    
+    this.lift = lift;
     this.speed = speed;
 
-    addRequirements(CP);
-    
+    addRequirements(lift);
+  }
+
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    CP.Pivot(speed);
+    lift.LiftMove(speed.getAsDouble());
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    CP.Pivot(0);
-    
+    lift.LiftMove(0);
   }
 
   // Returns true when the command should end.

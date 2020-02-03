@@ -15,9 +15,9 @@ import frc.robot.subsystems.ControlPanel;
 public class SpinControlPanel extends CommandBase {
 
   private final ControlPanel CP;
-  private final DoubleSupplier speed;
+  private final double speed;
 
-  public SpinControlPanel(ControlPanel CP, DoubleSupplier speed) {
+  public SpinControlPanel(ControlPanel CP, double speed) {
 
     this.CP = CP;
     this.speed = speed;
@@ -30,7 +30,7 @@ public class SpinControlPanel extends CommandBase {
   @Override
   public void execute() {
 
-    CP.Spin(speed.getAsDouble());
+    CP.Spin(speed);
 
   }
 

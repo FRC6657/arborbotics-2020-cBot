@@ -24,13 +24,18 @@ public class OuttakePowercells extends CommandBase {
     addRequirements(outtakePowercells);
 
   }
+  @Override
+  public void initialize() {
+    super.initialize();
+    outtakePowercells.setServoAngle(10);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
     outtakePowercells.OuttakeOut(1);
-    outtakePowercells.setServoAngle(135);
+
 
   }
 

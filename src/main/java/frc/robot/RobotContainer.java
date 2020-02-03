@@ -7,13 +7,19 @@
 
 package frc.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoSink;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.Agipotate;
+import frc.robot.commands.CameraSwitching;
 import frc.robot.commands.IntakePowercells;
+import frc.robot.commands.LiftControl;
 import frc.robot.commands.OuttakePowercells;
+import frc.robot.commands.PivotControlPanel;
+import frc.robot.commands.SpinControlPanel;
 import frc.robot.commands.TeleopDrive;
 //import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.*;
@@ -34,11 +40,10 @@ public class RobotContainer {
   private final Intake s_Intake = new Intake();
   private final Lift s_Lift = new Lift();
   private final Outtake s_Outtake = new Outtake();
+  private final Cameras s_Cameras = new Cameras();
 
   private final XboxController controller = new XboxController(0);
-
-  //private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-
+  
 
 
   /**
@@ -52,6 +57,9 @@ public class RobotContainer {
     () -> -1 * controller.getY(GenericHID.Hand.kRight),
     () -> controller.getX(GenericHID.Hand.kLeft),
     () -> controller.getStickButton(GenericHID.Hand.kLeft)));
+
+    s_Lift.setDefaultCommand(new LiftControl(s_Lift,
+    () ->  0.5 * controller.getY(GenericHID.Hand.kRight)));
 
   }
 
@@ -67,11 +75,16 @@ public class RobotContainer {
     final JoystickButton rBumper = new JoystickButton(controller, XboxController.Button.kBumperRight.value);
     final JoystickButton back = new JoystickButton(controller, XboxController.Button.kBack.value);
     final JoystickButton start = new JoystickButton(controller, XboxController.Button.kBack.value);
-
-    a.whenHeld(new IntakePowercells(s_Intake));
-    b.whenHeld(new OuttakePowercells(s_Outtake));
-    x.whenHeld(new Agipotate(s_Agipotato));
     
+
+    lBumper.whenHeld(new IntakePowercells(s_Intake));
+    rBumper.whenHeld(new OuttakePowercells(s_Outtake));
+    rBumper.whenHeld(new Agipotate(s_Agipotato));
+    a.whenHeld(new PivotControlPanel(s_ControlPanel, -0.4).withTimeout(2));
+    y.whenHeld(new PivotControlPanel(s_ControlPanel, 0.4).withTimeout(1.8));
+    x.whenHeld(new SpinControlPanel(s_ControlPanel, -0.2));
+    b.whenHeld(new SpinControlPanel(s_ControlPanel, 0.2));
+    start.toggleWhenPressed(new CameraSwitching(s_Cameras));
 
 
   }
