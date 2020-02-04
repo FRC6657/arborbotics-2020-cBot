@@ -82,13 +82,14 @@ public class RobotContainer {
 
     lBumper.whenHeld(new IntakePowercells(s_Intake));
     rBumper.whenHeld(new OuttakePowercells(s_Outtake));
-    rBumper.toggleWhenActive(new ServoShifter(s_Outtake));
+    
     rBumper.whenHeld(new Agipotate(s_Agipotato));
     a.whenHeld(new PivotControlPanel(s_ControlPanel, -0.4).withTimeout(2));
     y.whenHeld(new PivotControlPanel(s_ControlPanel, 0.4).withTimeout(1.8));
     x.whenHeld(new SpinControlPanel(s_ControlPanel, -0.2));
     b.whenHeld(new SpinControlPanel(s_ControlPanel, 0.2));
     start.toggleWhenPressed(new CameraSwitching(s_Cameras));
+
 
   }
 

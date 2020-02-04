@@ -26,7 +26,6 @@ import frc.robot.commands.TeleopDrive;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -78,17 +77,18 @@ public class RobotContainer {
     final JoystickButton back = new JoystickButton(controller, XboxController.Button.kBack.value);
     final JoystickButton start = new JoystickButton(controller, XboxController.Button.kBack.value);
     
-    
 
     lBumper.whenHeld(new IntakePowercells(s_Intake));
     rBumper.whenHeld(new OuttakePowercells(s_Outtake));
-    rBumper.toggleWhenActive(new ServoShifter(s_Outtake));
+    rBumper.whenPressed(new ServoShifter(s_Outtake))
+    rBumper
     rBumper.whenHeld(new Agipotate(s_Agipotato));
     a.whenHeld(new PivotControlPanel(s_ControlPanel, -0.4).withTimeout(2));
     y.whenHeld(new PivotControlPanel(s_ControlPanel, 0.4).withTimeout(1.8));
     x.whenHeld(new SpinControlPanel(s_ControlPanel, -0.2));
     b.whenHeld(new SpinControlPanel(s_ControlPanel, 0.2));
     start.toggleWhenPressed(new CameraSwitching(s_Cameras));
+
 
   }
 
