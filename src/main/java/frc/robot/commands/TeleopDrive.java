@@ -16,16 +16,21 @@ import frc.robot.subsystems.Drivetrain;
 public class TeleopDrive extends CommandBase {
   
   private final Drivetrain drive;
-  private final DoubleSupplier speed;
+  private final DoubleSupplier gas;
+  private final DoubleSupplier brake;
   private final DoubleSupplier rotation;
   private final BooleanSupplier isQuickTurn;
+  private final double speed;
 
-  public TeleopDrive(Drivetrain drive, DoubleSupplier speed, DoubleSupplier rotation, BooleanSupplier isQuickTurn) {
+  public TeleopDrive(Drivetrain drive, DoubleSupplier gas, DoubleSupplier brake, DoubleSupplier rotation, BooleanSupplier isQuickTurn) {
     
     this.drive = drive;
-    this.speed = speed;
+    this.gas = gas;
+    this.brake = brake;
     this.rotation = rotation;
     this.isQuickTurn = isQuickTurn;
+
+    speed = gas.getAsDouble() - brake.getAsDouble();
 
     addRequirements(drive);
   }
@@ -33,7 +38,7 @@ public class TeleopDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drive.drive(speed.getAsDouble(),rotation.getAsDouble(), isQuickTurn.getAsBoolean());
+    drive.drive(speed, rotation.getAsDouble(), isQuickTurn.getAsBoolean());
   }
 
   // Called once the command ends or is interrupted.
