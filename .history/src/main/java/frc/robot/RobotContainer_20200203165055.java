@@ -80,7 +80,7 @@ public class RobotContainer {
     lBumper.whenHeld(new IntakePowercells(s_Intake));
     rBumper.whenHeld(new OuttakePowercells(s_Outtake));
     rBumper.whenPressed(new ServoShifter(s_Outtake));
-    //Add a when released stop ServoShifter
+    rBumper
     rBumper.whenHeld(new Agipotate(s_Agipotato));
     a.whenHeld(new PivotControlPanel(s_ControlPanel, -0.4).withTimeout(2));
     y.whenHeld(new PivotControlPanel(s_ControlPanel, 0.4).withTimeout(1.8));

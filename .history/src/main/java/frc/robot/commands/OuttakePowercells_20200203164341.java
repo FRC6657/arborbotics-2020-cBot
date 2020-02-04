@@ -42,6 +42,7 @@ public class OuttakePowercells extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     outtakePowercells.OuttakeStop();
+    outtakePowercells.setServoAngle(180);
   }
 
   // Returns true when the command should end.
