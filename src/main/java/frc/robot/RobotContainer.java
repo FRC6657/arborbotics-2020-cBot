@@ -54,12 +54,14 @@ public class RobotContainer {
     configureButtonBindings();
 
     s_Drivetrain.setDefaultCommand(new TeleopDrive(s_Drivetrain,
-    () -> -1 * controller.getY(GenericHID.Hand.kRight),
+    () -> controller.getTriggerAxis(GenericHID.Hand.kRight),
+    () -> controller.getTriggerAxis(GenericHID.Hand.kLeft),
     () -> controller.getX(GenericHID.Hand.kLeft),
     () -> controller.getStickButton(GenericHID.Hand.kLeft)));
 
+
     s_Lift.setDefaultCommand(new LiftControl(s_Lift,
-    () ->  0.5 * controller.getY(GenericHID.Hand.kRight)));
+    () ->  -0.75 * controller.getY(GenericHID.Hand.kRight)));
 
   }
 

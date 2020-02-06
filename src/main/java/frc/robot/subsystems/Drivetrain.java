@@ -24,7 +24,6 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 
 public class Drivetrain extends SubsystemBase {
 
@@ -37,6 +36,7 @@ public class Drivetrain extends SubsystemBase {
   private final SpeedControllerGroup rightMotors;
 
   private final DifferentialDrive driveBase;
+
 
   public Drivetrain() {
 
