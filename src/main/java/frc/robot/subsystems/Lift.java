@@ -7,18 +7,20 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Lift extends SubsystemBase {
 
-  private SpeedController Lift;
+  private WPI_TalonSRX Lift = new WPI_TalonSRX(6);
 
-  public Lift() {
+  public Lift(){
 
-    Lift = new WPI_TalonSRX(6);
+    Lift.setNeutralMode(NeutralMode.Brake);
 
   }
 
@@ -29,5 +31,10 @@ public class Lift extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {}
+  public void periodic() {
+
+
+    //Shuffleboard.getTab("SmartDashboard").add("Encoder: ", Lift.getSelectedSensorPosition());
+
+  }
 }

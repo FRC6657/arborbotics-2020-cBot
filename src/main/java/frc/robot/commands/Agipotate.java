@@ -26,6 +26,7 @@ public class Agipotate extends CommandBase {
   @Override
   public void execute() {
     Agipotate.Agipotate(1.0);
+    System.out.println("here");
   }
 
   // Called once the command ends or is interrupted.

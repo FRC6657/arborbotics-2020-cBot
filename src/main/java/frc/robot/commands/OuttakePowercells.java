@@ -34,7 +34,7 @@ public class OuttakePowercells extends CommandBase {
   public void execute() {
 
     outtakePowercells.OuttakeOut(1);
-
+    //System.out.println("Outtake");
 
   }
 

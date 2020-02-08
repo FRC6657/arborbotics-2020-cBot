@@ -4,7 +4,7 @@ package frc.robot.CustomClasses; // Change to whatever package you would like
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.*;
 
-public class XboxController extends Joystick {
+public class XCon extends Joystick {
 
     private static final double DEFAULT_THUMBSTICK_DEADZONE = 0.1; // Jiggle room for the thumbsticks
     private static final double DEFAULT_TRIGGER_DEADZONE = 0.01; // Jiggle room for the triggers
@@ -49,7 +49,7 @@ public class XboxController extends Joystick {
     public final Button back;
     public final Button start;
 
-    public XboxController(final int port) {
+    public XCon(final int port) {
         super(port);
 
         this.port = port;
@@ -70,7 +70,7 @@ public class XboxController extends Joystick {
         this.start = new JoystickButton(this.controller, START_BUTTON_ID);
     }
 
-    public XboxController() {
+    public XCon() {
         this(0);
     }
 
@@ -81,7 +81,7 @@ public class XboxController extends Joystick {
     public static enum DPAD {
         UP(0), UP_RIGHT(45), RIGHT(90), DOWN_RIGHT(135), DOWN(180), DOWN_LEFT(225), LEFT(270), UP_LEFT(315);
 
-        private int value;
+        public int value;
 
         DPAD(final int value) {
             this.value = value;
@@ -116,7 +116,7 @@ public class XboxController extends Joystick {
         private double xDeadZone;
         private double yDeadZone;
 
-        Thumbstick(final Joystick parent, final HAND hand) {
+        public Thumbstick(final Joystick parent, final HAND hand) {
 
             this.parent = parent;
             this.hand = hand;
@@ -139,6 +139,7 @@ public class XboxController extends Joystick {
 
             return createDeadZone(rawInput, xDeadZone);
         }
+
 
         private double rawY() {
             final double rawInput = -parent.getRawAxis(yAxisID);
@@ -245,7 +246,7 @@ public class XboxController extends Joystick {
         private double deadZone;
         private double sensitivity;
 
-        Trigger(final Joystick joystick, final HAND hand) {
+        public Trigger(final Joystick joystick, final HAND hand) {
 
             this.parent = joystick;
             this.hand = hand;
@@ -302,7 +303,7 @@ public class XboxController extends Joystick {
         public final Button left;
         public final Button upLeft;
 
-        DirectionalPad(final Joystick parent) {
+        public DirectionalPad(final Joystick parent) {
 
             this.parent = parent;
             this.up = new DPadButton(this, DPAD.UP);
@@ -313,6 +314,7 @@ public class XboxController extends Joystick {
             this.downLeft = new DPadButton(this, DPAD.DOWN_LEFT);
             this.left = new DPadButton(this, DPAD.LEFT);
             this.upLeft = new DPadButton(this, DPAD.UP_LEFT);
+            
         }
 
         public static class DPadButton extends Button {
@@ -320,7 +322,7 @@ public class XboxController extends Joystick {
             private final DPAD direction;
             private final DirectionalPad parent;
 
-            DPadButton(final DirectionalPad parent, final DPAD dPadDirection) {
+            public DPadButton(final DirectionalPad parent, final DPAD dPadDirection) {
 
                 this.direction = dPadDirection;
                 this.parent = parent;
@@ -334,8 +336,8 @@ public class XboxController extends Joystick {
 
         private int angle() {
             return parent.getPOV();
+            
         }
-
         @Override
         public boolean get() {
             return angle() != -1;

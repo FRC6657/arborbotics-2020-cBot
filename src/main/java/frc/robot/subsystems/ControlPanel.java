@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.SpeedController;
@@ -14,13 +15,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ControlPanel extends SubsystemBase {
 
-  private SpeedController CPivot;
-  private SpeedController CSpin;
+  private WPI_TalonSRX CPivot;
+  private WPI_TalonSRX CSpin;
 
   public ControlPanel() {
 
     CPivot = new WPI_TalonSRX(10);
     CSpin = new WPI_TalonSRX(11);
+
+    CPivot.setNeutralMode(NeutralMode.Brake);
+    CSpin.setNeutralMode(NeutralMode.Brake);
 
   }
 

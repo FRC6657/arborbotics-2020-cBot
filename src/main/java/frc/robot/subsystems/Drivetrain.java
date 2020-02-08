@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
@@ -27,10 +28,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drivetrain extends SubsystemBase {
 
-  private final SpeedController frontLeftMotor;
-  private final SpeedController backLeftMotor;
-  private final SpeedController frontRightMotor;
-  private final SpeedController backRightMotor;
+  private final WPI_TalonSRX frontLeftMotor;
+  private final WPI_VictorSPX backLeftMotor;
+  private final WPI_TalonSRX frontRightMotor;
+  private final WPI_VictorSPX backRightMotor;
 
   private final SpeedControllerGroup leftMotors;
   private final SpeedControllerGroup rightMotors;
@@ -44,6 +45,11 @@ public class Drivetrain extends SubsystemBase {
     frontRightMotor = new WPI_TalonSRX(3);
     backLeftMotor = new WPI_VictorSPX(2);
     backRightMotor = new WPI_VictorSPX(4);
+
+    frontLeftMotor.setNeutralMode(NeutralMode.Coast);
+    backLeftMotor.setNeutralMode(NeutralMode.Coast);
+    frontRightMotor.setNeutralMode(NeutralMode.Coast);
+    backRightMotor.setNeutralMode(NeutralMode.Coast);
 
     leftMotors = new SpeedControllerGroup(frontLeftMotor,backLeftMotor);
     rightMotors = new SpeedControllerGroup(frontRightMotor,backRightMotor);
@@ -59,6 +65,8 @@ public class Drivetrain extends SubsystemBase {
 
   @Override
   public void periodic() {
+
+    
 
   }
 }

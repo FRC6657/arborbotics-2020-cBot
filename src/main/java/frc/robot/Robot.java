@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSink;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -24,6 +25,7 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
+  public static SendableChooser<String> profileChooser = new SendableChooser<>();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -33,6 +35,11 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     
 
+    //profileChooser.addOption("Andrew", "Andrew");
+    //profileChooser.addOption("Single", "Single");
+    //profileChooser.addOption("Double", "Double");
+
+    System.out.println("Robot Init");
 
     m_robotContainer = new RobotContainer();
   }

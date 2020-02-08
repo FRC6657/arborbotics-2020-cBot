@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Servo;
@@ -15,8 +16,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Outtake extends SubsystemBase {
 
-  private SpeedController outtakeLeft;
-  private SpeedController outtakeRight;
+  private WPI_TalonSRX outtakeLeft;
+  private WPI_TalonSRX outtakeRight;
   private Servo gate;
 
   public Outtake() {
@@ -24,6 +25,9 @@ public class Outtake extends SubsystemBase {
     outtakeLeft = new WPI_TalonSRX(7);
     outtakeRight = new WPI_TalonSRX(8);
     gate = new Servo(0);
+
+    outtakeLeft.setNeutralMode(NeutralMode.Coast);
+    outtakeRight.setNeutralMode(NeutralMode.Coast);
 
   }
 
