@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 
 public class Drivetrain extends SubsystemBase {
 
@@ -36,7 +37,7 @@ public class Drivetrain extends SubsystemBase {
   private final SpeedControllerGroup leftMotors;
   private final SpeedControllerGroup rightMotors;
 
-  private final DifferentialDrive driveBase;
+  //private final DifferentialDrive driveBase;
 
 
   public Drivetrain() {
@@ -54,19 +55,30 @@ public class Drivetrain extends SubsystemBase {
     leftMotors = new SpeedControllerGroup(frontLeftMotor,backLeftMotor);
     rightMotors = new SpeedControllerGroup(frontRightMotor,backRightMotor);
 
-    driveBase = new DifferentialDrive(leftMotors, rightMotors);
-    driveBase.setRightSideInverted(true);
+    //driveBase = new DifferentialDrive(leftMotors, rightMotors);
+    //driveBase.setRightSideInverted(true);
 
   }
 
   public void drive(double xSpeed, double zRotation, boolean isQuickTurn) {
-    driveBase.curvatureDrive(xSpeed, zRotation, isQuickTurn);
+    //driveBase.curvatureDrive(xSpeed, zRotation, isQuickTurn);
+
+    double leftPower = xSpeed + zRotation;
+    double rightPower = -(xSpeed - zRotation);
+
+    if (isQuickTurn){
+
+      leftPower = zRotation;
+      rightPower = -zRotation;
+
+    }
+
+    leftMotors.set(leftPower);
+    rightMotors.set(rightPower);
+
   }
 
   @Override
   public void periodic() {
-
-    
-
-  }
+}
 }

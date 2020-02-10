@@ -27,6 +27,7 @@ public class OuttakePowercells extends CommandBase {
   @Override
   public void initialize() {
     super.initialize();
+    outtakePowercells.setServoAngle(135);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -34,7 +35,10 @@ public class OuttakePowercells extends CommandBase {
   public void execute() {
 
     outtakePowercells.OuttakeOut(1);
-    //System.out.println("Outtake");
+
+
+
+    System.out.println("Outtake");
 
   }
 
@@ -42,6 +46,9 @@ public class OuttakePowercells extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     outtakePowercells.OuttakeStop();
+
+    outtakePowercells.setServoAngle(180);
+
   }
 
   // Returns true when the command should end.

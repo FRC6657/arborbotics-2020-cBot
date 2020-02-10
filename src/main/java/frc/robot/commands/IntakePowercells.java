@@ -28,7 +28,7 @@ public class IntakePowercells extends CommandBase {
   @Override
   public void execute() {
 
-    intakePowercells.IntakeIn(0.7f);
+    intakePowercells.IntakeIn(0.6f);
 
   }
 

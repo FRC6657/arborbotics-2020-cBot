@@ -9,8 +9,12 @@ package frc.robot;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSink;
+import edu.wpi.cscore.VideoMode.PixelFormat;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -33,13 +37,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    
 
-    //profileChooser.addOption("Andrew", "Andrew");
-    //profileChooser.addOption("Single", "Single");
-    //profileChooser.addOption("Double", "Double");
+    UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 
-    System.out.println("Robot Init");
+    camera.setVideoMode(PixelFormat.kMJPEG, 400, 300, 10);
+    Shuffleboard.getTab("Smartdashboard").add("Video",camera);
 
     m_robotContainer = new RobotContainer();
   }

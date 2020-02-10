@@ -36,7 +36,7 @@ public class Outtake extends SubsystemBase {
     outtakeLeft.set(-speed);
     outtakeRight.set(-speed);
 
-    gate.setAngle(135);
+//    gate.setAngle(135);
 
   }
 
