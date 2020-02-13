@@ -62,16 +62,14 @@ public class RobotContainer {
   @SuppressWarnings("unused")
   public RobotContainer() {
     configureButtonBindings();
-    //THIS WORKS™ \/
+    //THIS DoenstWork™ \/
 ////*
 
     if (DriverProfile == "Andrew") {
-      
       s_Lift.setDefaultCommand(new LiftControl(s_Lift,
       () -> deadBandApplicator(controller.getRawAxis(5), Constants.stickDeadband)));
 
       s_Drivetrain.setDefaultCommand(new TeleopDrive(s_Drivetrain, (controller.getTriggerAxis(Hand.kRight) - controller.getTriggerAxis(Hand.kLeft)),controller.getX(Hand.kLeft),false));
-     
     }
     if (DriverProfile == "Single"){
       s_Drivetrain.setDefaultCommand(new TeleopDriveStick(s_Drivetrain,
@@ -166,7 +164,6 @@ public class RobotContainer {
     }
     if(DriverProfile == "Double"){
 
-      
       lBumper.whenHeld(new IntakePowercells(s_Intake));
       rBumper.whenHeld(new OuttakePowercells(s_Outtake));
       dPadRight.whenHeld(new Agipotate(s_Agipotato));
