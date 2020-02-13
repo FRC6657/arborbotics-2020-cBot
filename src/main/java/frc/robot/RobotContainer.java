@@ -70,6 +70,8 @@ public class RobotContainer {
       () -> deadBandApplicator(controller.getRawAxis(5), Constants.stickDeadband)));
 
       s_Drivetrain.setDefaultCommand(new TeleopDrive(s_Drivetrain, (controller.getTriggerAxis(Hand.kRight) - controller.getTriggerAxis(Hand.kLeft)),controller.getX(Hand.kLeft),false));
+      
+
     }
     if (DriverProfile == "Single"){
       s_Drivetrain.setDefaultCommand(new TeleopDriveStick(s_Drivetrain,
@@ -143,12 +145,12 @@ public class RobotContainer {
 
       dPadLeft.whenHeld(new IntakeOuttake(s_Intake));
 
-      dPadUp.toggleWhenPressed(new HighGear(this,0.75));
-      dPadDown.toggleWhenPressed(new LowGear(this,0.25));
-      dPadUp.cancelWhenPressed(new HighGear(this,0.25));
-      dPadDown.cancelWhenPressed(new HighGear(this, 0.75));
+      //dPadUp.toggleWhenPressed(new HighGear(this,0.75));
+      //dPadDown.toggleWhenPressed(new LowGear(this,0.25));
+      //dPadUp.cancelWhenPressed(new HighGear(this,0.25));
+      //dPadDown.cancelWhenPressed(new HighGear(this, 0.75));
 
-      dPadUp.and(dPadDown).whenInactive(new NormalGear(this));
+      //dPadUp.and(dPadDown).whenInactive(new NormalGear(this));
 
     }
     if(DriverProfile == "Single"){

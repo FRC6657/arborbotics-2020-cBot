@@ -36,9 +36,7 @@ public class TeleopDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //drive.CDrive(xSpeed, rotation, isQuickTurn);
-    System.out.println("Speed: " + xSpeed);
-    System.out.println("Rotation : " + rotation);
+    drive.CDrive(xSpeed, rotation, isQuickTurn);
   }
 
   // Called once the command ends or is interrupted.
