@@ -7,39 +7,36 @@
 
 package frc.robot.commands;
 
-import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
+import frc.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Drivetrain;
 
-public class TeleopDrive extends CommandBase {
-  
-  private final Drivetrain drive;
-  private final DoubleSupplier xSpeed;
-  private final DoubleSupplier rotation;
-  private final BooleanSupplier isQuickTurn;
+public class IntakeOuttake extends CommandBase {
 
-  public TeleopDrive(Drivetrain drive, DoubleSupplier xSpeed, DoubleSupplier rotation, BooleanSupplier isQuickTurn) {
-    
-    this.drive = drive;
-    this.xSpeed = xSpeed;
-    this.rotation = rotation;
-    this.isQuickTurn = isQuickTurn;
+  private final Intake intakePowercells;
 
-    addRequirements(drive);
+  public IntakeOuttake(Intake intakePowercells) {
+   
+    this.intakePowercells = intakePowercells;
+
+    addRequirements(intakePowercells);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drive.CDrive(xSpeed.getAsDouble(), rotation.getAsDouble(), isQuickTurn.getAsBoolean());
+
+    intakePowercells.OuttakeIn(1f);
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    drive.CDrive(0, 0, false);
+    intakePowercells.IntakeIn(0);
+    
   }
 
   // Returns true when the command should end.

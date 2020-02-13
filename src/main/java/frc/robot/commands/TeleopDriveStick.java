@@ -13,19 +13,17 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
-public class TeleopDrive extends CommandBase {
+public class TeleopDriveStick extends CommandBase {
   
   private final Drivetrain drive;
   private final DoubleSupplier xSpeed;
   private final DoubleSupplier rotation;
-  private final BooleanSupplier isQuickTurn;
 
-  public TeleopDrive(Drivetrain drive, DoubleSupplier xSpeed, DoubleSupplier rotation, BooleanSupplier isQuickTurn) {
+  public TeleopDriveStick(Drivetrain drive, DoubleSupplier xSpeed, DoubleSupplier rotation) {
     
     this.drive = drive;
     this.xSpeed = xSpeed;
     this.rotation = rotation;
-    this.isQuickTurn = isQuickTurn;
 
     addRequirements(drive);
   }
@@ -33,13 +31,13 @@ public class TeleopDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drive.CDrive(xSpeed.getAsDouble(), rotation.getAsDouble(), isQuickTurn.getAsBoolean());
+    drive.SDrive(xSpeed.getAsDouble(), rotation.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    drive.CDrive(0, 0, false);
+    drive.SDrive(0, 0);
   }
 
   // Returns true when the command should end.

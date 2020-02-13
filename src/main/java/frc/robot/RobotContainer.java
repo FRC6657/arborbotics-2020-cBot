@@ -7,33 +7,33 @@
 
 package frc.robot;
 
-import java.rmi.dgc.DGC;
-
-import com.fasterxml.jackson.databind.cfg.DeserializerFactoryConfig;
-
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.cscore.VideoSink;
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.XboxController.Button;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.CustomClasses.ACCTWEMAS;
 import frc.robot.CustomClasses.DPad;
 import frc.robot.CustomClasses.DPad.Direction;
 import frc.robot.commands.Agipotate;
+import frc.robot.commands.HighGear;
+import frc.robot.commands.IntakeOuttake;
 import frc.robot.commands.IntakePowercells;
 import frc.robot.commands.LiftControl;
+import frc.robot.commands.LiftMove;
+import frc.robot.commands.LowGear;
+import frc.robot.commands.NormalGear;
 import frc.robot.commands.OuttakePowercells;
 import frc.robot.commands.PivotControlPanel;
 import frc.robot.commands.SpinControlPanel;
 import frc.robot.commands.TeleopDrive;
+import frc.robot.commands.TeleopDriveStick;
 //import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.*;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.subsystems.Agipotato;
+import frc.robot.subsystems.ControlPanel;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Lift;
+import frc.robot.subsystems.Outtake;
 
 
 /**
@@ -52,28 +52,56 @@ public class RobotContainer {
   private final Outtake s_Outtake = new Outtake();
 
   private final Joystick joyStick = new Joystick(0);
-
+  private final XboxController controller = new XboxController(1);
   private final ACCTWEMAS XboxController = new ACCTWEMAS(1);
+  private final String DriverProfile = "Andrew";
+  public double speed;
 
+  @SuppressWarnings("unused")
   public RobotContainer() {
-    // Configure the button bindings
     configureButtonBindings();
+    //THIS WORKS™ \/
+////*
 
-    s_Drivetrain.setDefaultCommand(new TeleopDrive(s_Drivetrain, 
-    XboxController.getTrigger(ACCTWEMAS.Side.RIGHT), 
-    XboxController.getTrigger(ACCTWEMAS.Side.LEFT), 
-    XboxController.getJoystick(ACCTWEMAS.Side.RIGHT, ACCTWEMAS.Axis.X), 
-    XboxController.getButton(ACCTWEMAS.Button.R_JOYSTICK)));
+    if (DriverProfile == "Andrew") {
+      
+      s_Drivetrain.setDefaultCommand(new TeleopDrive(s_Drivetrain,
+       () -> (speed * deadBandApplicator(controller.getRawAxis(3),Constants.triggerDeadband)) - (speed * deadBandApplicator(controller.getRawAxis(2),Constants.triggerDeadband)),
+        () -> speed * deadBandApplicator(controller.getRawAxis(4), Constants.stickDeadband),
+         () -> controller.getRawButton(12)));
+      
+      s_Lift.setDefaultCommand(new LiftControl(s_Lift,
+       () -> deadBandApplicator(controller.getRawAxis(1), Constants.stickDeadband)));
+      
+    }
+    if (DriverProfile == "Single"){
+      s_Drivetrain.setDefaultCommand(new TeleopDriveStick(s_Drivetrain,
+        () -> 0.5 * deadBandApplicator(joyStick.getRawAxis(1),0.3),
+          () -> 0.5 * deadBandApplicator(joyStick.getRawAxis(3),0.3)));
+    }
+    if (DriverProfile == "Double"){
+      s_Drivetrain.setDefaultCommand(new TeleopDriveStick(s_Drivetrain,
+        () -> 0.5 * deadBandApplicator(joyStick.getRawAxis(1),0.3),
+          () -> 0.5 * deadBandApplicator(joyStick.getRawAxis(3),0.3)));
+    }
 
-    //s_Drivetrain.setDefaultCommand(new TeleopDrive(s_Drivetrain, () -> XboxController.getRawAxis(3), () -> XboxController.getRawAxis(2), () -> XboxController.getRawAxis(4), () -> XboxController.getRawButton(4)));
+//*/
+
+
+    //THIS MOST LIKELY WONT \/
+/*
+    s_Drivetrain.setDefaultCommand(new TeleopDrive(s_Drivetrain,
+    () -> 0.25 * XboxController.getJoystick(ACCTWEMAS.Side.LEFT, ACCTWEMAS.Axis.Y),
+    () -> 0.25 * XboxController.getJoystick(ACCTWEMAS.Side.RIGHT, ACCTWEMAS.Axis.X),
+    () -> XboxController.getButton(ACCTWEMAS.Button.R_JOYSTICK)));
+
 
     s_Lift.setDefaultCommand(new LiftControl(s_Lift,
     -0.75 * XboxController.getJoystick(ACCTWEMAS.Side.LEFT, ACCTWEMAS.Axis.Y)));
-
-    //s_Lift.setDefaultCommand(new LiftControl(s_Lift, () -> -0.75 * XboxController.getRawAxis(5)));
+*/
 
   }
-
+  @SuppressWarnings("unused")
   private void configureButtonBindings() {
 
     System.out.println("Binds Configured");
@@ -106,13 +134,60 @@ public class RobotContainer {
     final JoystickButton _11 = new JoystickButton(joyStick, 11);
     final JoystickButton _12 = new JoystickButton(joyStick, 12);
 
-    lBumper.whenHeld(new IntakePowercells(s_Intake));
-    rBumper.whenHeld(new OuttakePowercells(s_Outtake));
-    rBumper.whenHeld(new Agipotate(s_Agipotato));
-    a.whenHeld(new PivotControlPanel(s_ControlPanel, -0.4).withTimeout(2));
-    y.whenHeld(new PivotControlPanel(s_ControlPanel, 0.4).withTimeout(1.8));
-    x.whenHeld(new SpinControlPanel(s_ControlPanel, -0.2));
-    b.whenHeld(new SpinControlPanel(s_ControlPanel, 0.2));
+    if (DriverProfile == "Andrew"){
+
+      lBumper.whenHeld(new IntakePowercells(s_Intake));
+      rBumper.whenHeld(new OuttakePowercells(s_Outtake));
+      dPadRight.whenHeld(new Agipotate(s_Agipotato));
+      a.whenHeld(new PivotControlPanel(s_ControlPanel, -0.4).withTimeout(2));
+      y.whenHeld(new PivotControlPanel(s_ControlPanel, 0.4).withTimeout(1.8));
+      x.whenHeld(new SpinControlPanel(s_ControlPanel, -0.2));
+      b.whenHeld(new SpinControlPanel(s_ControlPanel, 0.2));
+
+      dPadRight.whenHeld(new IntakeOuttake(s_Intake));
+
+      dPadUp.toggleWhenPressed(new HighGear(this,0.75));
+      dPadDown.toggleWhenPressed(new LowGear(this,0.25));
+      dPadUp.cancelWhenPressed(new HighGear(this,0.25));
+      dPadDown.cancelWhenPressed(new HighGear(this, 0.75));
+
+      dPadUp.and(dPadDown).whenInactive(new NormalGear(this));
+
+    }
+    if(DriverProfile == "Single"){
+
+      trigger.whenHeld(new OuttakePowercells(s_Outtake));
+      trigger.whenHeld(new Agipotate(s_Agipotato));
+      side.whenHeld(new IntakePowercells(s_Intake));
+      _12.whenHeld(new PivotControlPanel(s_ControlPanel, -0.4).withTimeout(2));
+      _11.whenHeld(new PivotControlPanel(s_ControlPanel, 0.4).withTimeout(1.8));
+      _10.whenHeld(new SpinControlPanel(s_ControlPanel, -0.2));
+      _9.whenHeld(new SpinControlPanel(s_ControlPanel, 0.2));
+
+    }
+    if(DriverProfile == "Double"){
+
+      
+      lBumper.whenHeld(new IntakePowercells(s_Intake));
+      rBumper.whenHeld(new OuttakePowercells(s_Outtake));
+      dPadRight.whenHeld(new Agipotate(s_Agipotato));
+      a.whenHeld(new PivotControlPanel(s_ControlPanel, -0.4).withTimeout(2));
+      y.whenHeld(new PivotControlPanel(s_ControlPanel, 0.4).withTimeout(1.8));
+      x.whenHeld(new SpinControlPanel(s_ControlPanel, -0.2));
+      b.whenHeld(new SpinControlPanel(s_ControlPanel, 0.2));
+
+      dPadUp.whenHeld(new LiftMove(s_Lift, 0.2));
+      dPadDown.whenHeld(new LiftMove(s_Lift, -0.2));
+
+    }
+
+  }
+
+  public double deadBandApplicator(double input, double deadband){
+
+    if(Math.abs(input) < deadband){return 0;}
+    if(Math.abs(input) > deadband){return input;}
+    else{System.out.println("Deadband Exceded");return input;}
 
   }
 

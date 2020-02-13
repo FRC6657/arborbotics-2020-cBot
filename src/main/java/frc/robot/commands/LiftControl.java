@@ -15,9 +15,9 @@ import frc.robot.subsystems.Lift;
 public class LiftControl extends CommandBase {
 
   private final Lift lift;
-  private final double speed;
+  private final DoubleSupplier speed;
 
-  public LiftControl(Lift lift, double speed) {
+  public LiftControl(Lift lift, DoubleSupplier speed) {
     
     this.lift = lift;
     this.speed = speed;
@@ -34,7 +34,7 @@ public class LiftControl extends CommandBase {
   @Override
   public void execute() {
 
-    lift.LiftMove(speed);
+    lift.LiftMove(speed.getAsDouble());
 
   }
 

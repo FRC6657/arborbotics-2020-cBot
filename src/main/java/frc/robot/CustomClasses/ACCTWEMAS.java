@@ -12,9 +12,10 @@ package frc.robot.CustomClasses;
 
 /* Imports */
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import frc.robot.Constants;
 
-public class ACCTWEMAS extends Joystick{
+public class ACCTWEMAS extends Joystick {
     private final Joystick mController;
 
     public enum Side {
@@ -65,26 +66,19 @@ public class ACCTWEMAS extends Joystick{
         }
         return 0;
     }
-
     public boolean getTriggerPressed(Side side) {
         return mController.getRawAxis(side == Side.LEFT ? 2 : 3) > Constants.triggerDeadband;
     }
-
     public boolean getButton(Button button) {
         return mController.getRawButton(button.id);
     }
-
     public int getDPad() {
         return mController.getPOV();
     }
-
     public void setRumble(boolean on) {
         mController.setRumble(RumbleType.kRightRumble, on ? 1 : 0);
     }
-
-    private static double handleDeadband(double value, double deadband) {
+    private double handleDeadband(double value, double deadband) {
         return (Math.abs(value) > Math.abs(deadband)) ? value : 0;
-    }
-
-    
+    }   
 }
