@@ -37,7 +37,7 @@ public class Drivetrain extends SubsystemBase {
   private final SpeedControllerGroup leftMotors;
   private final SpeedControllerGroup rightMotors;
 
-  //private final DifferentialDrive driveBase;
+  private final DifferentialDrive driveBase;
 
 
   public Drivetrain() {
@@ -55,17 +55,13 @@ public class Drivetrain extends SubsystemBase {
     leftMotors = new SpeedControllerGroup(frontLeftMotor,backLeftMotor);
     rightMotors = new SpeedControllerGroup(frontRightMotor,backRightMotor);
 
-    //driveBase = new DifferentialDrive(leftMotors, rightMotors);
-    //driveBase.setRightSideInverted(true);
+    driveBase = new DifferentialDrive(leftMotors, rightMotors);
+    driveBase.setRightSideInverted(true);
 
   }
 
   public void CDrive(double xSpeed, double zRotation, boolean isQuickTurn) {
-
-
-    System.out.println(xSpeed);
-    System.out.println(zRotation);
-
+/*
     double leftPower = xSpeed + zRotation;
     double rightPower = -(xSpeed - zRotation);
 
@@ -73,7 +69,9 @@ public class Drivetrain extends SubsystemBase {
       backLeftMotor.set(leftPower);
       frontRightMotor.set(rightPower);
       backRightMotor.set(rightPower);
+*/
 
+      driveBase.curvatureDrive(xSpeed, zRotation, isQuickTurn);
   }
 
   public void SDrive(double xSpeed, double zRotation) {
