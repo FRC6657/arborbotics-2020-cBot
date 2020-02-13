@@ -22,13 +22,7 @@ public class Lift extends SubsystemBase {
 
   }
 
-  public void LiftUp(double speed){
-
-    Lift.set(-speed);
-
-  }
-
-  public void LiftDown(double speed){
+  public void LiftMove(double speed){
 
     Lift.set(speed);
 
