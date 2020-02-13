@@ -24,7 +24,7 @@ public class Outtake extends SubsystemBase {
 
     outtakeLeft = new WPI_TalonSRX(7);
     outtakeRight = new WPI_TalonSRX(8);
-    gate = new Servo(0);
+    gate = new Servo(9);
 
     outtakeLeft.setNeutralMode(NeutralMode.Coast);
     outtakeRight.setNeutralMode(NeutralMode.Coast);

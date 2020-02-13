@@ -65,14 +65,17 @@ public class RobotContainer {
 
     if (DriverProfile == "Andrew") {
       
-      s_Drivetrain.setDefaultCommand(new TeleopDrive(s_Drivetrain,
-       () -> (speed * deadBandApplicator(controller.getRawAxis(3),Constants.triggerDeadband)) - (speed * deadBandApplicator(controller.getRawAxis(2),Constants.triggerDeadband)),
-        () -> speed * deadBandApplicator(controller.getRawAxis(4), Constants.stickDeadband),
-         () -> controller.getRawButton(12)));
-      
       s_Lift.setDefaultCommand(new LiftControl(s_Lift,
-       () -> deadBandApplicator(controller.getRawAxis(1), Constants.stickDeadband)));
-      
+      () -> deadBandApplicator(controller.getRawAxis(5), Constants.stickDeadband)));
+
+      s_Drivetrain.setDefaultCommand(new TeleopDrive(s_Drivetrain,
+       (speed * deadBandApplicator(controller.getRawAxis(3),Constants.triggerDeadband)) - (speed * deadBandApplicator(controller.getRawAxis(2),Constants.triggerDeadband)),
+        (speed * deadBandApplicator(controller.getRawAxis(0), Constants.stickDeadband)),
+         controller.getRawButton(10)));
+
+         System.out.println("Speed: " + controller.getRawAxis(3));
+         System.out.println("Rotation : " + controller.getRawAxis(0));
+     
     }
     if (DriverProfile == "Single"){
       s_Drivetrain.setDefaultCommand(new TeleopDriveStick(s_Drivetrain,
@@ -144,7 +147,7 @@ public class RobotContainer {
       x.whenHeld(new SpinControlPanel(s_ControlPanel, -0.2));
       b.whenHeld(new SpinControlPanel(s_ControlPanel, 0.2));
 
-      dPadRight.whenHeld(new IntakeOuttake(s_Intake));
+      dPadLeft.whenHeld(new IntakeOuttake(s_Intake));
 
       dPadUp.toggleWhenPressed(new HighGear(this,0.75));
       dPadDown.toggleWhenPressed(new LowGear(this,0.25));
