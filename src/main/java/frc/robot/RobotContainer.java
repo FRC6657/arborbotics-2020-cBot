@@ -5,6 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+//Breaking Everything Warning
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
@@ -18,18 +19,14 @@ import frc.robot.CustomClasses.ACCTWEMAS;
 import frc.robot.CustomClasses.DPad;
 import frc.robot.CustomClasses.DPad.Direction;
 import frc.robot.commands.Agipotate;
-import frc.robot.commands.HighGear;
 import frc.robot.commands.IntakeOuttake;
 import frc.robot.commands.IntakePowercells;
 import frc.robot.commands.LiftControl;
 import frc.robot.commands.LiftMove;
-import frc.robot.commands.LowGear;
-import frc.robot.commands.NormalGear;
 import frc.robot.commands.OuttakePowercells;
 import frc.robot.commands.PivotControlPanel;
 import frc.robot.commands.SpinControlPanel;
 import frc.robot.commands.TeleopDrive;
-//import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.Agipotato;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.Drivetrain;
@@ -59,6 +56,7 @@ public class RobotContainer {
   private final String DriverProfile = "Test";
   public double speed;
 
+@SuppressWarnings("unused")
   public RobotContainer() {
     configureButtonBindings();
     //THIS WORKS™ \/
@@ -82,7 +80,7 @@ public class RobotContainer {
 //*/
 
   }
-  //@SuppressWarnings("unused")
+  @SuppressWarnings("unused")
   private void configureButtonBindings() {
 
     System.out.println("Binds Configured");
@@ -155,12 +153,11 @@ public class RobotContainer {
   }
 
   public class Auto extends SequentialCommandGroup {
-
     public Auto() {
       addCommands(
           
-      new OuttakePowercells(s_Outtake).withTimeout(4),
-      new IntakePowercells(s_Intake).withTimeout(4),
+      new OuttakePowercells(s_Outtake).withTimeout(2),
+      new Agipotate(s_Agipotato,()->1.0).withTimeout(4),
       new OuttakePowercells(s_Outtake).withTimeout(2)
       
       );
