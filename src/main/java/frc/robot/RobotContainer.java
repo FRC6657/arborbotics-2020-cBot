@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.CustomClasses.ACCTWEMAS;
 import frc.robot.CustomClasses.DPad;
@@ -28,7 +29,6 @@ import frc.robot.commands.OuttakePowercells;
 import frc.robot.commands.PivotControlPanel;
 import frc.robot.commands.SpinControlPanel;
 import frc.robot.commands.TeleopDrive;
-import frc.robot.commands.TeleopDriveStick;
 //import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.Agipotato;
 import frc.robot.subsystems.ControlPanel;
@@ -56,51 +56,33 @@ public class RobotContainer {
   private final Joystick joyStick = new Joystick(0);
   private final XboxController controller = new XboxController(1);
   private final ACCTWEMAS XboxController = new ACCTWEMAS(1);
-  private final String DriverProfile = "Andrew";
+  private final String DriverProfile = "Test";
   public double speed;
 
-  @SuppressWarnings("unused")
   public RobotContainer() {
     configureButtonBindings();
-    //THIS DoenstWork™ \/
+    //THIS WORKS™ \/
 ////*
 
-    if (DriverProfile == "Andrew") {
-      s_Lift.setDefaultCommand(new LiftControl(s_Lift,
-      () -> deadBandApplicator(controller.getRawAxis(5), Constants.stickDeadband)));
-
-      s_Drivetrain.setDefaultCommand(new TeleopDrive(s_Drivetrain, (controller.getTriggerAxis(Hand.kRight) - controller.getTriggerAxis(Hand.kLeft)),controller.getX(Hand.kLeft),false));
-      
-
-    }
-    if (DriverProfile == "Single"){
-      s_Drivetrain.setDefaultCommand(new TeleopDriveStick(s_Drivetrain,
-        () -> 0.5 * deadBandApplicator(joyStick.getRawAxis(1),0.3),
-          () -> 0.5 * deadBandApplicator(joyStick.getRawAxis(3),0.3)));
-    }
-    if (DriverProfile == "Double"){
-      s_Drivetrain.setDefaultCommand(new TeleopDriveStick(s_Drivetrain,
-        () -> 0.5 * deadBandApplicator(joyStick.getRawAxis(1),0.3),
-          () -> 0.5 * deadBandApplicator(joyStick.getRawAxis(3),0.3)));
-    }
+///*
+      if(DriverProfile == "Test"){
+        s_Drivetrain.setDefaultCommand(new TeleopDrive(s_Drivetrain,
+         () -> ((deadBandApplicator(-0.35 * controller.getTriggerAxis(Hand.kRight),0.1)) - (deadBandApplicator((-0.35 * controller.getTriggerAxis(Hand.kLeft)),0.1))),
+          () -> (deadBandApplicator(0.35 *controller.getX(GenericHID.Hand.kRight),0.1))));
+      }
+      s_Lift.setDefaultCommand(new LiftControl(s_Lift, () -> -deadBandApplicator(controller.getY(GenericHID.Hand.kLeft),0.1)));
+      ///*
+      if(DriverProfile == "Main"){
+        s_Drivetrain.setDefaultCommand(new TeleopDrive(s_Drivetrain,
+         () -> 0.65 * deadBandApplicator(joyStick.getRawAxis(1), 0.2),
+          () -> 0.65 * deadBandApplicator(joyStick.getRawAxis(2), 0.2)));
+      }
+      //*/
 
 //*/
 
-
-    //THIS MOST LIKELY WONT \/
-/*
-    s_Drivetrain.setDefaultCommand(new TeleopDrive(s_Drivetrain,
-    () -> 0.25 * XboxController.getJoystick(ACCTWEMAS.Side.LEFT, ACCTWEMAS.Axis.Y),
-    () -> 0.25 * XboxController.getJoystick(ACCTWEMAS.Side.RIGHT, ACCTWEMAS.Axis.X),
-    () -> XboxController.getButton(ACCTWEMAS.Button.R_JOYSTICK)));
-
-
-    s_Lift.setDefaultCommand(new LiftControl(s_Lift,
-    -0.75 * XboxController.getJoystick(ACCTWEMAS.Side.LEFT, ACCTWEMAS.Axis.Y)));
-*/
-
   }
-  @SuppressWarnings("unused")
+  //@SuppressWarnings("unused")
   private void configureButtonBindings() {
 
     System.out.println("Binds Configured");
@@ -122,10 +104,10 @@ public class RobotContainer {
 
     final JoystickButton trigger = new JoystickButton(joyStick, 1);
     final JoystickButton side = new JoystickButton(joyStick, 2);
-    final JoystickButton topLeft = new JoystickButton(joyStick, 3);
-    final JoystickButton topRight = new JoystickButton(joyStick, 4);
-    final JoystickButton bottomLeft = new JoystickButton(joyStick, 5);
-    final JoystickButton bottomRight = new JoystickButton(joyStick, 6);
+    final JoystickButton topLeft = new JoystickButton(joyStick, 5);
+    final JoystickButton topRight = new JoystickButton(joyStick, 6);
+    final JoystickButton bottomLeft = new JoystickButton(joyStick, 3);
+    final JoystickButton bottomRight = new JoystickButton(joyStick, 4);
     final JoystickButton _7 = new JoystickButton(joyStick, 7);
     final JoystickButton _8 = new JoystickButton(joyStick, 8);
     final JoystickButton _9 = new JoystickButton(joyStick, 9);
@@ -133,49 +115,32 @@ public class RobotContainer {
     final JoystickButton _11 = new JoystickButton(joyStick, 11);
     final JoystickButton _12 = new JoystickButton(joyStick, 12);
 
-    if (DriverProfile == "Andrew"){
+    if (DriverProfile == "Test"){
 
       lBumper.whenHeld(new IntakePowercells(s_Intake));
       rBumper.whenHeld(new OuttakePowercells(s_Outtake));
-      dPadRight.whenHeld(new Agipotate(s_Agipotato));
+      dPadRight.whenHeld(new Agipotate(s_Agipotato,()-> 1.0));
+      dPadLeft.whenHeld(new Agipotate(s_Agipotato, () -> -1.0));
       a.whenHeld(new PivotControlPanel(s_ControlPanel, -0.4).withTimeout(2));
       y.whenHeld(new PivotControlPanel(s_ControlPanel, 0.4).withTimeout(1.8));
       x.whenHeld(new SpinControlPanel(s_ControlPanel, -0.2));
       b.whenHeld(new SpinControlPanel(s_ControlPanel, 0.2));
 
-      dPadLeft.whenHeld(new IntakeOuttake(s_Intake));
-
-      //dPadUp.toggleWhenPressed(new HighGear(this,0.75));
-      //dPadDown.toggleWhenPressed(new LowGear(this,0.25));
-      //dPadUp.cancelWhenPressed(new HighGear(this,0.25));
-      //dPadDown.cancelWhenPressed(new HighGear(this, 0.75));
-
-      //dPadUp.and(dPadDown).whenInactive(new NormalGear(this));
-
+      dPadDown.whenHeld(new IntakeOuttake(s_Intake));
     }
-    if(DriverProfile == "Single"){
-
-      trigger.whenHeld(new OuttakePowercells(s_Outtake));
-      trigger.whenHeld(new Agipotate(s_Agipotato));
-      side.whenHeld(new IntakePowercells(s_Intake));
-      _12.whenHeld(new PivotControlPanel(s_ControlPanel, -0.4).withTimeout(2));
-      _11.whenHeld(new PivotControlPanel(s_ControlPanel, 0.4).withTimeout(1.8));
-      _10.whenHeld(new SpinControlPanel(s_ControlPanel, -0.2));
-      _9.whenHeld(new SpinControlPanel(s_ControlPanel, 0.2));
-
-    }
-    if(DriverProfile == "Double"){
+    if(DriverProfile == "Main"){
 
       lBumper.whenHeld(new IntakePowercells(s_Intake));
       rBumper.whenHeld(new OuttakePowercells(s_Outtake));
-      dPadRight.whenHeld(new Agipotate(s_Agipotato));
+      dPadRight.whenHeld(new Agipotate(s_Agipotato, () -> 1.0));
+      dPadLeft.whenHeld(new Agipotate(s_Agipotato, () -> -1.0));
       a.whenHeld(new PivotControlPanel(s_ControlPanel, -0.4).withTimeout(2));
       y.whenHeld(new PivotControlPanel(s_ControlPanel, 0.4).withTimeout(1.8));
       x.whenHeld(new SpinControlPanel(s_ControlPanel, -0.2));
       b.whenHeld(new SpinControlPanel(s_ControlPanel, 0.2));
 
-      dPadUp.whenHeld(new LiftMove(s_Lift, 0.2));
-      dPadDown.whenHeld(new LiftMove(s_Lift, -0.2));
+      dPadUp.whenHeld(new LiftMove(s_Lift, 0.75));
+      dPadDown.whenHeld(new LiftMove(s_Lift, -0.75));
 
     }
 
@@ -189,8 +154,21 @@ public class RobotContainer {
 
   }
 
+  public class Auto extends SequentialCommandGroup {
+
+    public Auto() {
+      addCommands(
+          
+      new OuttakePowercells(s_Outtake).withTimeout(4),
+      new IntakePowercells(s_Intake).withTimeout(4),
+      new OuttakePowercells(s_Outtake).withTimeout(2)
+      
+      );
+    }
+  }  
+
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return null;// m_autoCommand;
+    return new Auto();
   }
-}
+ }
+

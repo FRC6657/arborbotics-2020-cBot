@@ -7,16 +7,20 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Agipotato;
 
 public class Agipotate extends CommandBase {
 
   private final Agipotato Agipotate;
+  private final DoubleSupplier Speed;
 
-  public Agipotate(Agipotato Agipotate) {
+  public Agipotate(Agipotato Agipotate, DoubleSupplier Speed) {
 
     this.Agipotate = Agipotate;
+    this.Speed = Speed;
 
     addRequirements(Agipotate);
 
@@ -25,7 +29,7 @@ public class Agipotate extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Agipotate.Agipotate(1.0);
+    Agipotate.Agipotate(Speed.getAsDouble());
     System.out.println("here");
   }
 

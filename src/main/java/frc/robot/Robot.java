@@ -41,7 +41,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-/*
+
     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
     UsbCamera camera2 = CameraServer.getInstance().startAutomaticCapture(1);
 
@@ -49,7 +49,7 @@ public class Robot extends TimedRobot {
     Shuffleboard.getTab("Smartdashboard").add("Video", camera);
     camera2.setVideoMode(PixelFormat.kMJPEG, 400, 300, 10);
     Shuffleboard.getTab("Smartdashboard").add("Video2", camera2);
-    */
+    
     m_robotContainer = new RobotContainer();
   }
 

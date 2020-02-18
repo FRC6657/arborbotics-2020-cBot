@@ -61,26 +61,14 @@ public class Drivetrain extends SubsystemBase {
   
   }
 
-  public void CDrive(double xSpeed, double zRotation, boolean isQuickTurn) {
+  public void Drive(double xSpeed, double zRotation) {
     
-     double leftPower = xSpeed + zRotation; double rightPower = -(xSpeed -
-     zRotation);
+     double leftPower = xSpeed + zRotation; 
+     double rightPower = -(xSpeed - zRotation);
       
      frontLeftMotor.set(leftPower); backLeftMotor.set(leftPower);
      frontRightMotor.set(rightPower); backRightMotor.set(rightPower);
      
-
-    //driveBase.curvatureDrive(xSpeed, zRotation, isQuickTurn);
-  }
-
-  public void SDrive(double xSpeed, double zRotation) {
-
-    double leftPower = xSpeed + zRotation;
-    double rightPower = -(xSpeed - zRotation);
-
-    leftMotors.set(leftPower);
-    rightMotors.set(rightPower);
-
   }
 
   @Override
