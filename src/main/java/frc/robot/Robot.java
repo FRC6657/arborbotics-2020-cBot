@@ -11,8 +11,10 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSink;
 import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -35,10 +37,6 @@ public class Robot extends TimedRobot {
 
   public static SendableChooser<String> profileChooser = new SendableChooser<>();
 
-  /**
-   * This function is run when the robot is first started up and should be used
-   * for any initialization code.
-   */
   @Override
   public void robotInit() {
 
@@ -55,16 +53,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-
-    //Shuffleboard.getTab("Data").add("Controller Vals", RobotContainer.getControllerVals());
-
-
     CommandScheduler.getInstance().run();
   }
-
-  /**
-   * This function is called once each time the robot enters Disabled mode.
-   */
   @Override
   public void disabledInit() {
   }
@@ -72,10 +62,6 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
   }
-
-  /**
-   * This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
-   */
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
@@ -110,6 +96,39 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
+    if (RobotContainer.DriverProfile == "Test"){
+      SmartDashboard.putNumber("Drive Axis", RobotContainer.getControllerTriggerVal(Hand.kRight));
+      SmartDashboard.putNumber("Brake Axis", RobotContainer.getControllerTriggerVal(Hand.kLeft));
+      SmartDashboard.putNumber("Turn Axis", RobotContainer.getControllerVal(Hand.kRight, "X"));
+      SmartDashboard.putNumber("Lift Axis", RobotContainer.getControllerVal(Hand.kLeft, "Y"));
+    }
+
+
+    String gameData;
+    gameData = DriverStation.getInstance().getGameSpecificMessage();
+    if(gameData.length() > 0)
+    {
+      switch (gameData.charAt(0))
+      {
+        case 'B' :
+          //Blue case code
+          break;
+        case 'G' :
+          //Green case code
+          break;
+        case 'R' :
+          //Red case code
+          break;
+        case 'Y' :
+          //Yellow case code
+          break;
+        default :
+          //This is corrupt data
+          break;
+      }
+    } else {
+      //Code for no data received yet
+    }
   }
 
   @Override

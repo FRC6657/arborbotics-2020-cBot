@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-//Breaking Everything Warning
+//War
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
@@ -51,35 +51,38 @@ public class RobotContainer {
   private final Outtake s_Outtake = new Outtake();
 
   private final Joystick joyStick = new Joystick(0);
-  private final XboxController controller = new XboxController(1);
+  private final static XboxController controller = new XboxController(1);
   private final ACCTWEMAS XboxController = new ACCTWEMAS(1);
-  private final String DriverProfile = "Test";
+  public final static String DriverProfile = "Test";
   public double speed;
 
-@SuppressWarnings("unused")
+  @SuppressWarnings("unused")
   public RobotContainer() {
     configureButtonBindings();
-    //THIS WORKS™ \/
-////*
+    // THIS WORKS™ \/
+    //// *
 
-///*
-      if(DriverProfile == "Test"){
-        s_Drivetrain.setDefaultCommand(new TeleopDrive(s_Drivetrain,
-         () -> ((deadBandApplicator(-0.35 * controller.getTriggerAxis(Hand.kRight),0.1)) - (deadBandApplicator((-0.35 * controller.getTriggerAxis(Hand.kLeft)),0.1))),
-          () -> (deadBandApplicator(0.35 *controller.getX(GenericHID.Hand.kRight),0.1))));
-      }
-      s_Lift.setDefaultCommand(new LiftControl(s_Lift, () -> -deadBandApplicator(controller.getY(GenericHID.Hand.kLeft),0.1)));
-      ///*
-      if(DriverProfile == "Main"){
-        s_Drivetrain.setDefaultCommand(new TeleopDrive(s_Drivetrain,
-         () -> 0.65 * deadBandApplicator(joyStick.getRawAxis(1), 0.2),
-          () -> 0.65 * deadBandApplicator(joyStick.getRawAxis(2), 0.2)));
-      }
-      //*/
+    /// *
+    if (DriverProfile == "Test") {
+      s_Drivetrain.setDefaultCommand(new TeleopDrive(s_Drivetrain,
+          () -> ((deadBandApplicator(-0.35 * controller.getTriggerAxis(Hand.kRight), 0.1))
+              - (deadBandApplicator((-0.35 * controller.getTriggerAxis(Hand.kLeft)), 0.1))),
+          () -> (deadBandApplicator(0.35 * controller.getX(GenericHID.Hand.kRight), 0.1))));
+    }
+    s_Lift.setDefaultCommand(
+        new LiftControl(s_Lift, () -> -deadBandApplicator(controller.getY(GenericHID.Hand.kLeft), 0.1), () -> 1.0));
+    /// *
+    if (DriverProfile == "Main") {
+      s_Drivetrain
+          .setDefaultCommand(new TeleopDrive(s_Drivetrain, () -> 0.65 * deadBandApplicator(joyStick.getRawAxis(1), 0.2),
+              () -> 0.65 * deadBandApplicator(joyStick.getRawAxis(2), 0.2)));
+    }
+    // */
 
-//*/
+    // */
 
   }
+
   @SuppressWarnings("unused")
   private void configureButtonBindings() {
 
@@ -113,11 +116,11 @@ public class RobotContainer {
     final JoystickButton _11 = new JoystickButton(joyStick, 11);
     final JoystickButton _12 = new JoystickButton(joyStick, 12);
 
-    if (DriverProfile == "Test"){
+    if (DriverProfile == "Test") {
 
       lBumper.whenHeld(new IntakePowercells(s_Intake));
       rBumper.whenHeld(new OuttakePowercells(s_Outtake));
-      dPadRight.whenHeld(new Agipotate(s_Agipotato,()-> 1.0));
+      dPadRight.whenHeld(new Agipotate(s_Agipotato, () -> 1.0));
       dPadLeft.whenHeld(new Agipotate(s_Agipotato, () -> -1.0));
       a.whenHeld(new PivotControlPanel(s_ControlPanel, -0.4).withTimeout(2));
       y.whenHeld(new PivotControlPanel(s_ControlPanel, 0.4).withTimeout(1.8));
@@ -126,7 +129,7 @@ public class RobotContainer {
 
       dPadDown.whenHeld(new IntakeOuttake(s_Intake));
     }
-    if(DriverProfile == "Main"){
+    if (DriverProfile == "Main") {
 
       lBumper.whenHeld(new IntakePowercells(s_Intake));
       rBumper.whenHeld(new OuttakePowercells(s_Outtake));
@@ -144,11 +147,33 @@ public class RobotContainer {
 
   }
 
-  public double deadBandApplicator(double input, double deadband){
+  public double deadBandApplicator(double input, double deadband) {
 
-    if(Math.abs(input) < deadband){return 0;}
-    if(Math.abs(input) > deadband){return input;}
-    else{System.out.println("Deadband Exceded");return input;}
+    if (Math.abs(input) < deadband) {
+      return 0;
+    }
+    if (Math.abs(input) > deadband) {
+      return input;
+    } else {
+      System.out.println("Deadband Exceded");
+      return input;
+    }
+
+  }
+
+  public static double getControllerVal(int axis) {return controller.getRawAxis(axis);}
+  public static double getControllerVal(Hand hand, String axis) {
+
+    if(axis == "X"){return controller.getX(hand);}
+    if(axis == "Y"){return controller.getY(hand);}
+    else{System.out.println("Invalid Axis Given In RobotController.getControllerVal(hand, string)"); return 0.0;}
+
+  }
+  public static double getControllerTriggerVal(Hand hand) {return controller.getTriggerAxis(hand);}
+
+  public double getJoystickAxis(int axis){
+
+    return joyStick.getRawAxis(axis);
 
   }
 

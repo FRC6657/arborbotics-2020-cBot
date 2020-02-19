@@ -30,6 +30,12 @@ public class Lift extends SubsystemBase {
 
   }
 
+  public void getLiftPosition(){
+
+    Lift.getSelectedSensorPosition();
+
+  }
+
   @Override
   public void periodic() {
 

@@ -14,13 +14,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class IntakeOuttake extends CommandBase {
 
-  private final Intake intakePowercells;
+  private final Intake intakeOuttake;
 
-  public IntakeOuttake(Intake intakePowercells) {
+  public IntakeOuttake(Intake intakeOuttake) {
    
-    this.intakePowercells = intakePowercells;
+    this.intakeOuttake = intakeOuttake;
 
-    addRequirements(intakePowercells);
+    addRequirements(intakeOuttake);
 
   }
 
@@ -28,14 +28,14 @@ public class IntakeOuttake extends CommandBase {
   @Override
   public void execute() {
 
-    intakePowercells.OuttakeIn(1f);
+    intakeOuttake.IntakeIn(-0.4f);
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intakePowercells.IntakeIn(0);
+    intakeOuttake.IntakeIn(0);
     
   }
 
