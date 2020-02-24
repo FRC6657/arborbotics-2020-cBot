@@ -10,14 +10,15 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.CustomClasses.ACCTWEMAS;
-import frc.robot.CustomClasses.DPad;
-import frc.robot.CustomClasses.DPad.Direction;
+import frc.robot.custom_classes.ACCTWEMAS;
+import frc.robot.custom_classes.DPad;
+import frc.robot.custom_classes.DPad.Direction;
 import frc.robot.commands.Agipotate;
 import frc.robot.commands.IntakeOuttake;
 import frc.robot.commands.IntakePowercells;
@@ -34,14 +35,16 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Outtake;
 
-
 /**
- * This class is where the bulk of the robot should be declared.  Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
- * (including subsystems, commands, and button mappings) should be declared here.
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a "declarative" paradigm, very little robot logic should
+ * actually be handled in the {@link Robot} periodic methods (other than the
+ * scheduler calls). Instead, the structure of the robot (including subsystems,
+ * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+
+  public static PowerDistributionPanel PDP = new PowerDistributionPanel();
   // The robot's subsystems
   private final Agipotato s_Agipotato = new Agipotato();
   private final ControlPanel s_ControlPanel = new ControlPanel();
@@ -53,34 +56,27 @@ public class RobotContainer {
   private final Joystick joyStick = new Joystick(0);
   private final static XboxController controller = new XboxController(1);
   private final ACCTWEMAS XboxController = new ACCTWEMAS(1);
+
   public final static String DriverProfile = "Test";
+
   public double speed;
 
   @SuppressWarnings("unused")
   public RobotContainer() {
     configureButtonBindings();
     // THIS WORKS™ \/
-    //// *
 
-    /// *
     if (DriverProfile == "Test") {
       s_Drivetrain.setDefaultCommand(new TeleopDrive(s_Drivetrain,
-          () -> ((deadBandApplicator(-0.35 * controller.getTriggerAxis(Hand.kRight), 0.1))
-              - (deadBandApplicator((-0.35 * controller.getTriggerAxis(Hand.kLeft)), 0.1))),
-          () -> (deadBandApplicator(0.35 * controller.getX(GenericHID.Hand.kRight), 0.1))));
+          () -> ((deadBandApplicator(-0.8 * controller.getTriggerAxis(Hand.kRight), 0.2)) - (deadBandApplicator((-0.8 * controller.getTriggerAxis(Hand.kLeft)), 0.2))),
+          () -> (deadBandApplicator(0.6 * controller.getX(GenericHID.Hand.kRight), 0.1))));
     }
     s_Lift.setDefaultCommand(
-        new LiftControl(s_Lift, () -> -deadBandApplicator(controller.getY(GenericHID.Hand.kLeft), 0.1), () -> 1.0));
-    /// *
+        new LiftControl(s_Lift, () -> -deadBandApplicator(controller.getY(GenericHID.Hand.kLeft), 0.2)));
     if (DriverProfile == "Main") {
-      s_Drivetrain
-          .setDefaultCommand(new TeleopDrive(s_Drivetrain, () -> 0.65 * deadBandApplicator(joyStick.getRawAxis(1), 0.2),
+      s_Drivetrain.setDefaultCommand(new TeleopDrive(s_Drivetrain, () -> 0.65 * deadBandApplicator(joyStick.getRawAxis(1), 0.2),
               () -> 0.65 * deadBandApplicator(joyStick.getRawAxis(2), 0.2)));
     }
-    // */
-
-    // */
-
   }
 
   @SuppressWarnings("unused")
@@ -127,7 +123,7 @@ public class RobotContainer {
       x.whenHeld(new SpinControlPanel(s_ControlPanel, -0.2));
       b.whenHeld(new SpinControlPanel(s_ControlPanel, 0.2));
 
-      dPadDown.whenHeld(new IntakeOuttake(s_Intake));
+      dPadDown.whenHeld(new IntakeOuttake(s_Intake).withTimeout(0.05));
     }
     if (DriverProfile == "Main") {
 
@@ -144,7 +140,6 @@ public class RobotContainer {
       dPadDown.whenHeld(new LiftMove(s_Lift, -0.75));
 
     }
-
   }
 
   public double deadBandApplicator(double input, double deadband) {
@@ -161,36 +156,44 @@ public class RobotContainer {
 
   }
 
-  public static double getControllerVal(int axis) {return controller.getRawAxis(axis);}
+  public static double getControllerVal(int axis) {
+    return controller.getRawAxis(axis);
+  }
+
   public static double getControllerVal(Hand hand, String axis) {
 
-    if(axis == "X"){return controller.getX(hand);}
-    if(axis == "Y"){return controller.getY(hand);}
-    else{System.out.println("Invalid Axis Given In RobotController.getControllerVal(hand, string)"); return 0.0;}
+    if (axis == "X") {
+      return controller.getX(hand);
+    }
+    if (axis == "Y") {
+      return controller.getY(hand);
+    } else {
+      System.out.println("Invalid Axis Given In RobotController.getControllerVal(hand, string)");
+      return 0.0;
+    }
 
   }
+
   public static double getControllerTriggerVal(Hand hand) {return controller.getTriggerAxis(hand);}
+  public double getJoystickAxis(int axis) {return joyStick.getRawAxis(axis);}
 
-  public double getJoystickAxis(int axis){
-
-    return joyStick.getRawAxis(axis);
-
-  }
-
-  public class Auto extends SequentialCommandGroup {
-    public Auto() {
+  public class mainAuto extends SequentialCommandGroup {
+    public mainAuto() {
       addCommands(
-          
-      new OuttakePowercells(s_Outtake).withTimeout(2),
-      new Agipotate(s_Agipotato,()->1.0).withTimeout(4),
-      new OuttakePowercells(s_Outtake).withTimeout(2)
-      
+
+          new OuttakePowercells(s_Outtake).withTimeout(1),
+          new Agipotate(s_Agipotato, () -> 0).withTimeout(3),
+          new Agipotate(s_Agipotato, () -> 1.0).withTimeout(2), 
+          new OuttakePowercells(s_Outtake).withTimeout(1),
+          new IntakePowercells(s_Intake).withTimeout(1), 
+          new Agipotate(s_Agipotato, () -> -1.0).withTimeout(2),
+          new OuttakePowercells(s_Outtake).withTimeout(1)
+
       );
     }
-  }  
+  }
 
   public Command getAutonomousCommand() {
-    return new Auto();
+    return new mainAuto();
   }
- }
-
+}

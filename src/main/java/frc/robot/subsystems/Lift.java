@@ -10,31 +10,30 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Lift extends SubsystemBase {
 
-  private WPI_TalonSRX Lift = new WPI_TalonSRX(6);
+  private static WPI_TalonSRX Lift = new WPI_TalonSRX(6);
 
-  public Lift(){
+  public Lift() {
 
     Lift.setNeutralMode(NeutralMode.Brake);
 
   }
 
-  public void LiftMove(double speed){
+  public void LiftMove(double speed) {
 
     Lift.set(speed);
 
   }
 
-  public void getLiftPosition(){
+  public static double getLiftPosition() {
 
-    Lift.getSelectedSensorPosition();
+    return Lift.getSelectedSensorPosition();
 
   }
+
 
   @Override
   public void periodic() {

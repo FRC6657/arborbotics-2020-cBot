@@ -7,21 +7,14 @@
 
 package frc.robot;
 
+import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
-import edu.wpi.cscore.VideoSink;
-import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.RobotContainer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -37,19 +30,41 @@ public class Robot extends TimedRobot {
 
   public static SendableChooser<String> profileChooser = new SendableChooser<>();
 
+  UsbCamera camera1;
+  UsbCamera camera2;
+
+  MjpegServer server1;
+  MjpegServer server2;
+
   @Override
-  public void robotInit() {
+	public void robotInit() {
 
-    UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
-    UsbCamera camera2 = CameraServer.getInstance().startAutomaticCapture(1);
+    CameraServer instance1  = CameraServer.getInstance();
+    CameraServer instance2 = CameraServer.getInstance();
 
-    camera.setVideoMode(PixelFormat.kMJPEG, 400, 300, 10);
-    Shuffleboard.getTab("Smartdashboard").add("Video", camera);
-    camera2.setVideoMode(PixelFormat.kMJPEG, 400, 300, 10);
-    Shuffleboard.getTab("Smartdashboard").add("Video2", camera2);
-    
+    camera1 = new UsbCamera("Outtake Camera", 0);
+    camera2 = new UsbCamera("Intake Camera", 1);
+    instance1.addCamera(camera1);
+    instance2.addCamera(camera2);
+    server1 = instance1.addServer("server_OuttakeCamera");
+    server2 = instance2.addServer("server_IntakeCamera");
+    server1.setSource(camera1);
+    server2.setSource(camera2);
+    server1.getProperty("compression").set(80);
+    server2.getProperty("compression").set(80);
+    server1.getProperty("default_compression").set(80);
+    server2.getProperty("default_compression").set(80);
+    server1.setResolution(400, 300);
+    server2.setResolution(400, 300);
+    server1.setFPS(10);
+    server2.setFPS(10);
+
+    Shuffleboard.getTab("Main").add(camera1).withPosition(1, 2).withSize(6, 5);
+    Shuffleboard.getTab("Main").add(camera2).withPosition(8, 2).withSize(6, 5);
+
     m_robotContainer = new RobotContainer();
-  }
+
+}
 
   @Override
   public void robotPeriodic() {
@@ -96,39 +111,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    if (RobotContainer.DriverProfile == "Test"){
-      SmartDashboard.putNumber("Drive Axis", RobotContainer.getControllerTriggerVal(Hand.kRight));
-      SmartDashboard.putNumber("Brake Axis", RobotContainer.getControllerTriggerVal(Hand.kLeft));
-      SmartDashboard.putNumber("Turn Axis", RobotContainer.getControllerVal(Hand.kRight, "X"));
-      SmartDashboard.putNumber("Lift Axis", RobotContainer.getControllerVal(Hand.kLeft, "Y"));
-    }
-
-
-    String gameData;
-    gameData = DriverStation.getInstance().getGameSpecificMessage();
-    if(gameData.length() > 0)
-    {
-      switch (gameData.charAt(0))
-      {
-        case 'B' :
-          //Blue case code
-          break;
-        case 'G' :
-          //Green case code
-          break;
-        case 'R' :
-          //Red case code
-          break;
-        case 'Y' :
-          //Yellow case code
-          break;
-        default :
-          //This is corrupt data
-          break;
-      }
-    } else {
-      //Code for no data received yet
-    }
   }
 
   @Override

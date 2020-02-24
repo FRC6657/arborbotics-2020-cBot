@@ -8,7 +8,6 @@
 
 package frc.robot.commands;
 
-import java.util.function.DoubleSupplier;
 import frc.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -27,7 +26,7 @@ public class OuttakePowercells extends CommandBase {
   @Override
   public void initialize() {
     super.initialize();
-    outtakePowercells.setServoAngle(135);
+    outtakePowercells.setServoAngle(170);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -35,8 +34,6 @@ public class OuttakePowercells extends CommandBase {
   public void execute() {
 
     outtakePowercells.OuttakeOut(1);
-
-
 
     System.out.println("Outtake");
 

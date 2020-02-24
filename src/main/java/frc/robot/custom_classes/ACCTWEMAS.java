@@ -1,4 +1,4 @@
-package frc.robot.CustomClasses;
+package frc.robot.custom_classes;
 
 //Andys
 //Controller
@@ -12,7 +12,6 @@ package frc.robot.CustomClasses;
 
 /* Imports */
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import frc.robot.Constants;
 
 public class ACCTWEMAS extends Joystick {

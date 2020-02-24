@@ -16,14 +16,14 @@ public class LiftControl extends CommandBase {
 
   private final Lift lift;
   private final DoubleSupplier speed;
-  private final DoubleSupplier liftPosition;
+  //private final DoubleSupplier liftPosition;
 
-  public LiftControl(Lift lift, DoubleSupplier speed, DoubleSupplier liftPosition) {
+  public LiftControl(Lift lift, DoubleSupplier speed /*,DoubleSupplier liftPosition*/) {
     
     this.lift = lift;
     this.speed = speed;
 
-    this.liftPosition = liftPosition;
+    //this.liftPosition = liftPosition;
 
     addRequirements(lift);
   }
