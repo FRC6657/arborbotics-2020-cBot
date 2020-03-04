@@ -20,6 +20,7 @@ public class Drivetrain extends SubsystemBase {
   private final WPI_TalonSRX frontRightMotor;
   private final WPI_VictorSPX backRightMotor;
 
+  private int reverse;
 
   public Drivetrain() {
 
@@ -33,6 +34,8 @@ public class Drivetrain extends SubsystemBase {
     frontRightMotor.setNeutralMode(NeutralMode.Brake);
     backRightMotor.setNeutralMode(NeutralMode.Brake);
 
+    reverse = 1;
+
   }
 
   public void Drive(double xSpeed, double zRotation) {
@@ -40,13 +43,22 @@ public class Drivetrain extends SubsystemBase {
     double leftPower = xSpeed + zRotation;
     double rightPower = -(xSpeed - zRotation);
 
-    frontLeftMotor.set(leftPower);
-    backLeftMotor.set(leftPower);
-    frontRightMotor.set(rightPower);
-    backRightMotor.set(rightPower);
+    frontLeftMotor.set(reverse * leftPower);
+    backLeftMotor.set(reverse * leftPower);
+    frontRightMotor.set(reverse * rightPower);
+    backRightMotor.set(reverse * rightPower);
 
   }
 
+  public void switchReverse() {
+    reverse = -reverse;
+  }
+
+  public double getReverse() {
+    return reverse;
+  }
+
   @Override
-  public void periodic(){}
+  public void periodic() {
+  }
 }

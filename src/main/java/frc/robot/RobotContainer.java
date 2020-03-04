@@ -30,6 +30,7 @@ import frc.robot.commands.OuttakePowercells;
 import frc.robot.commands.OuttakeServo;
 import frc.robot.commands.PivotControlPanel;
 import frc.robot.commands.SpinControlPanel;
+import frc.robot.commands.SwitchDriveDirection;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.subsystems.Agipotato;
 import frc.robot.subsystems.Camera_Intake;
@@ -159,6 +160,7 @@ public class RobotContainer {
 
       _12.toggleWhenPressed(new OuttakeServo(s_Camera_Outtake));
       _11.toggleWhenPressed(new IntakeServo(s_Camera_Intake));
+      _10.whenPressed(new SwitchDriveDirection(s_Drivetrain));
 
       start.whenHeld(new IntakeOuttake(s_Intake).withTimeout(0.05));
 
