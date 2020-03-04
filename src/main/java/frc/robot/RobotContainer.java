@@ -20,15 +20,20 @@ import frc.robot.custom_classes.ACCTWEMAS;
 import frc.robot.custom_classes.DPad;
 import frc.robot.custom_classes.DPad.Direction;
 import frc.robot.commands.Agipotate;
+import frc.robot.commands.DriveCommand;
 import frc.robot.commands.IntakeOuttake;
 import frc.robot.commands.IntakePowercells;
+import frc.robot.commands.IntakeServo;
 import frc.robot.commands.LiftControl;
 import frc.robot.commands.LiftMove;
 import frc.robot.commands.OuttakePowercells;
+import frc.robot.commands.OuttakeServo;
 import frc.robot.commands.PivotControlPanel;
 import frc.robot.commands.SpinControlPanel;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.subsystems.Agipotato;
+import frc.robot.subsystems.Camera_Intake;
+import frc.robot.subsystems.Camera_Outtake;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
@@ -52,12 +57,17 @@ public class RobotContainer {
   private final Intake s_Intake = new Intake();
   private final Lift s_Lift = new Lift();
   private final Outtake s_Outtake = new Outtake();
+  private final Camera_Intake s_Camera_Intake = new Camera_Intake();
+  private final Camera_Outtake s_Camera_Outtake = new Camera_Outtake();
 
   private final Joystick joyStick = new Joystick(0);
   private final static XboxController controller = new XboxController(1);
   private final ACCTWEMAS XboxController = new ACCTWEMAS(1);
 
   public final static String DriverProfile = "Test";
+
+  public boolean outtakeCameraPos = true;
+  public boolean intakeCameraPos = true;
 
   public double speed;
 
@@ -114,8 +124,8 @@ public class RobotContainer {
 
     if (DriverProfile == "Test") {
 
-      lBumper.whenHeld(new IntakePowercells(s_Intake));
-      rBumper.whenHeld(new OuttakePowercells(s_Outtake));
+      //lBumper.whenHeld(new IntakePowercells(s_Intake));
+      //rBumper.whenHeld(new OuttakePowercells(s_Outtake));
       dPadRight.whenHeld(new Agipotate(s_Agipotato, () -> 1.0));
       dPadLeft.whenHeld(new Agipotate(s_Agipotato, () -> -1.0));
       a.whenHeld(new PivotControlPanel(s_ControlPanel, -0.4).withTimeout(2));
@@ -124,6 +134,15 @@ public class RobotContainer {
       b.whenHeld(new SpinControlPanel(s_ControlPanel, 0.2));
 
       dPadDown.whenHeld(new IntakeOuttake(s_Intake).withTimeout(0.05));
+
+      //rBumper.toggleWhenPressed(new OuttakeServo(s_Camera_Servos));
+      //lBumper.toggleWhenPressed(new IntakeServo(s_Camera_Servos));
+/*
+      start.whenHeld(new ChangeOuttakeCameraState(s_Camera_Servos, true));
+      back.whenHeld(new ChangeOuttakeCameraState(s_Camera_Servos, false));
+      _9.whenHeld(new ChangeIntakeCameraState(s_Camera_Servos, true));
+      _10.whenHeld(new ChangeIntakeCameraState(s_Camera_Servos, false));
+*/
     }
     if (DriverProfile == "Main") {
 
@@ -135,9 +154,13 @@ public class RobotContainer {
       y.whenHeld(new PivotControlPanel(s_ControlPanel, 0.4).withTimeout(1.8));
       x.whenHeld(new SpinControlPanel(s_ControlPanel, -0.2));
       b.whenHeld(new SpinControlPanel(s_ControlPanel, 0.2));
-
       dPadUp.whenHeld(new LiftMove(s_Lift, 0.75));
       dPadDown.whenHeld(new LiftMove(s_Lift, -0.75));
+
+      _12.toggleWhenPressed(new OuttakeServo(s_Camera_Outtake));
+      _11.toggleWhenPressed(new IntakeServo(s_Camera_Intake));
+
+      start.whenHeld(new IntakeOuttake(s_Intake).withTimeout(0.05));
 
     }
   }
@@ -181,14 +204,28 @@ public class RobotContainer {
     public mainAuto() {
       addCommands(
 
+          new DriveCommand(s_Drivetrain, 0.4, 0).withTimeout(2),
+          new Agipotate(s_Agipotato, ()->0.0).withTimeout(0.1),
+          new DriveCommand(s_Drivetrain, 0, -0.3).withTimeout(1.4),
+
+        
           new OuttakePowercells(s_Outtake).withTimeout(1),
-          new Agipotate(s_Agipotato, () -> 0).withTimeout(3),
+          new Agipotate(s_Agipotato, () -> 0).withTimeout(3),//Janky Wait
           new Agipotate(s_Agipotato, () -> 1.0).withTimeout(2), 
-          new OuttakePowercells(s_Outtake).withTimeout(1),
-          new IntakePowercells(s_Intake).withTimeout(1), 
+          new OuttakePowercells(s_Outtake).withTimeout(3),
+          new IntakePowercells(s_Intake).withTimeout(3),
           new Agipotate(s_Agipotato, () -> -1.0).withTimeout(2),
           new OuttakePowercells(s_Outtake).withTimeout(1)
 
+/*
+          new DriveCommand(s_Drivetrain, -0.4, 0).withTimeout(2.2),
+          new Agipotate(s_Agipotato, ()->0.0).withTimeout(0.1),
+          new DriveCommand(s_Drivetrain, 0, -0.4).withTimeout(0.65),
+          new Agipotate(s_Agipotato, ()->0.0).withTimeout(0.1),
+          new DriveCommand(s_Drivetrain, -0.4, 0).withTimeout(2.6)
+          .alongWith(new IntakePowercells(s_Intake).withTimeout(2.6))
+
+*/
       );
     }
   }

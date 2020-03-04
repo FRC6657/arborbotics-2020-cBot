@@ -1,4 +1,3 @@
-/**
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
@@ -8,44 +7,37 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.*;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Drivetrain;
 
-public class OuttakePowercells extends CommandBase {
+public class DriveCommand extends CommandBase {
 
-  private final Outtake outtakePowercells;
+  Drivetrain drivetrain;
+  double speed;
+  double rotation;
 
-  public OuttakePowercells(Outtake outtakePowercells) {
-
-    this.outtakePowercells = outtakePowercells;
-
-    addRequirements(outtakePowercells);
-
+  public DriveCommand(Drivetrain drivetrain, double speed, double rotation) {
+    this.drivetrain = drivetrain;
+    this.speed = speed;
+    this.rotation = rotation;
+    addRequirements(drivetrain);
   }
+
+  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    super.initialize();
-    outtakePowercells.setServoAngle(115);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    outtakePowercells.OuttakeOut(0.75);
-
-    System.out.println("Outtake");
-
+    drivetrain.Drive(speed, rotation);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    outtakePowercells.OuttakeStop();
-
-    outtakePowercells.setServoAngle(167);
-
+    drivetrain.Drive(0, 0);
   }
 
   // Returns true when the command should end.

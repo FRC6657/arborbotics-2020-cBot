@@ -39,28 +39,28 @@ public class Robot extends TimedRobot {
   @Override
 	public void robotInit() {
 
-    CameraServer instance1  = CameraServer.getInstance();
-    CameraServer instance2 = CameraServer.getInstance();
+      CameraServer instance1  = CameraServer.getInstance();
+      CameraServer instance2 = CameraServer.getInstance();
 
-    camera1 = new UsbCamera("Outtake Camera", 0);
-    camera2 = new UsbCamera("Intake Camera", 1);
-    instance1.addCamera(camera1);
-    instance2.addCamera(camera2);
-    server1 = instance1.addServer("server_OuttakeCamera");
-    server2 = instance2.addServer("server_IntakeCamera");
-    server1.setSource(camera1);
-    server2.setSource(camera2);
-    server1.getProperty("compression").set(80);
-    server2.getProperty("compression").set(80);
-    server1.getProperty("default_compression").set(80);
-    server2.getProperty("default_compression").set(80);
-    server1.setResolution(400, 300);
-    server2.setResolution(400, 300);
-    server1.setFPS(10);
-    server2.setFPS(10);
+      camera1 = new UsbCamera("Outtake Camera", 0);
+      camera2 = new UsbCamera("Intake Camera", 1);
+      instance1.addCamera(camera1);
+      instance2.addCamera(camera2);
+      server1 = instance1.addServer("server_OuttakeCamera");
+      server2 = instance2.addServer("server_IntakeCamera");
+      server1.setSource(camera1);
+      server2.setSource(camera2);
+      server1.getProperty("compression").set(80);
+      server2.getProperty("compression").set(80);
+      server1.getProperty("default_compression").set(80);
+      server2.getProperty("default_compression").set(80);
+      server1.setResolution(400, 300);
+      server2.setResolution(400, 300);
+      server1.setFPS(10);
+      server2.setFPS(10);
 
-    Shuffleboard.getTab("Main").add(camera1).withPosition(1, 2).withSize(6, 5);
-    Shuffleboard.getTab("Main").add(camera2).withPosition(8, 2).withSize(6, 5);
+      Shuffleboard.getTab("Main").add(camera1).withPosition(1, 2).withSize(6, 5);
+      Shuffleboard.getTab("Main").add(camera2).withPosition(8, 2).withSize(6, 5);
 
     m_robotContainer = new RobotContainer();
 

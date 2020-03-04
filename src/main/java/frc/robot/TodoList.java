@@ -8,12 +8,14 @@
 package frc.robot;
 
 /**
- * Add your docs here.
+ * This is just a todo list
  */
 public class TodoList {
 
     //TODO:Make everything run off constants
     //TODO:Make an actual wait command
-    //
+    //TODO:Comment Everything
+    //TODO:Information readouts on shuffleboard
+    //TODO:Capability to change speed mid match
 
 }

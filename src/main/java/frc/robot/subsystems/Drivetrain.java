@@ -28,10 +28,10 @@ public class Drivetrain extends SubsystemBase {
     backLeftMotor = new WPI_VictorSPX(2);
     backRightMotor = new WPI_VictorSPX(4);
 
-    frontLeftMotor.setNeutralMode(NeutralMode.Coast);
-    backLeftMotor.setNeutralMode(NeutralMode.Coast);
-    frontRightMotor.setNeutralMode(NeutralMode.Coast);
-    backRightMotor.setNeutralMode(NeutralMode.Coast);
+    frontLeftMotor.setNeutralMode(NeutralMode.Brake);
+    backLeftMotor.setNeutralMode(NeutralMode.Brake);
+    frontRightMotor.setNeutralMode(NeutralMode.Brake);
+    backRightMotor.setNeutralMode(NeutralMode.Brake);
 
   }
 
