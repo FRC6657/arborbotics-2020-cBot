@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
@@ -162,6 +163,13 @@ public class Robot extends TimedRobot {
         distanceAjust = KpDist * distanceError - constantForce;
       }
 
+      /**
+       * Smart Dashboard Prints
+       */
+      SmartDashboard.putNumber("Distance Error: ", distanceError);
+      SmartDashboard.putNumber("Distance Ajust: ", distanceAjust);
+      SmartDashboard.putNumber("Rotation Error: ", rotationError);
+      SmartDashboard.putNumber("Rotation Ajust: ", rotationAjust);
 
       // Output the power signals to a arcade drivetrain
       m_drive.arcadeDrive(distanceAjust, rotationAjust);
