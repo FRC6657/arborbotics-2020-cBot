@@ -45,6 +45,7 @@ public class Robot extends TimedRobot {
    * "Shooter Vision" under "chameleon-vision"
    */
   NetworkTable table;
+  NetworkTableEntry pipelineEntry;
 
   /*
    * targetX represents the horizontal angle targetY represents the vertical angle
@@ -82,6 +83,12 @@ public class Robot extends TimedRobot {
   double rotationAjust;
   double distanceAjust;
 
+  /**
+   * This is where the pipelines values are held
+   */
+  int DriverMode = 0; //No Vision Modifications Pure Camera Stream
+  int RobotBait = 1; //Vision to track the robot bait sign
+
   @Override
   public void robotInit() {
     // Initilazition of robot drivetrain and controller
@@ -97,6 +104,7 @@ public class Robot extends TimedRobot {
 
     // Points "table" to the NetworkTable database called "chameleon-vision"
     table = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("Shooter Vision");
+    pipelineEntry = table.getEntry("pipeline");
 
     // Points to the database value named "yaw" and "pitch"
     targetX = table.getEntry("yaw");
@@ -114,7 +122,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {}
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {setPipeline(RobotBait);}
 
   @Override
   public void teleopPeriodic() {
@@ -165,4 +173,6 @@ public class Robot extends TimedRobot {
   public void testInit() {CommandScheduler.getInstance().cancelAll();}
   @Override
   public void testPeriodic() {}
+
+  public void setPipeline(int index){pipelineEntry.setNumber(index);}
 }
