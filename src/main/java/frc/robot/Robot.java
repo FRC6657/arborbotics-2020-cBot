@@ -135,19 +135,25 @@ public class Robot extends TimedRobot {
        * angleTolerance Constant power is added to the direction the control loop
        * wants to turn (to overcome friction)
        */
-      if (rotationError > angleTolerance)
+      if (rotationError > angleTolerance){
         rotationAjust = KpRot * rotationError + constantForce;
-      else if (rotationError < angleTolerance)
+      }
+      else if (rotationError < angleTolerance){
         rotationAjust = KpRot * rotationError - constantForce;
+      }
+      
       /*
        * Proportional (to targetY) control loop for distance Deadzone of
        * distanceTolerance Constant power is added to the direction the control loop
        * wants to turn (to overcome friction)
        */
-      if (distanceError > distanceTolerance)
+      if (distanceError > distanceTolerance){
         distanceAjust = KpDist * distanceError + constantForce;
-      else if (distanceError < distanceTolerance)
+      }
+      else if (distanceError < distanceTolerance){
         distanceAjust = KpDist * distanceError - constantForce;
+      }
+
 
       // Output the power signals to a arcade drivetrain
       m_drive.arcadeDrive(distanceAjust, rotationAjust);
