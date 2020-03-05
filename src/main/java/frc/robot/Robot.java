@@ -78,8 +78,8 @@ public class Robot extends TimedRobot {
   double constantForce = 0.05;
 
   /*
-   * rotationAjust is rotational signal for the drivetrain 
-   * distanceAjust is forward signal for the drivetrain
+   * rotationAjust is rotational signal for the drivetrain distanceAjust is
+   * forward signal for the drivetrain
    */
   double rotationAjust;
   double distanceAjust;
@@ -87,8 +87,8 @@ public class Robot extends TimedRobot {
   /**
    * This is where the pipelines values are held
    */
-  int DriverMode = 0; //No Vision Modifications Pure Camera Stream
-  int RobotBait = 1; //Vision to track the robot bait sign
+  int DriverMode = 0; // No Vision Modifications Pure Camera Stream
+  int RobotBait = 1; // Vision to track the robot bait sign
 
   @Override
   public void robotInit() {
@@ -105,6 +105,8 @@ public class Robot extends TimedRobot {
 
     // Points "table" to the NetworkTable database called "chameleon-vision"
     table = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("Shooter Vision");
+    // Gets the current pipeline entry so it can be edited to select the desired
+    // pipeline.
     pipelineEntry = table.getEntry("pipeline");
 
     // Points to the database value named "yaw" and "pitch"
@@ -113,17 +115,32 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void robotPeriodic() {CommandScheduler.getInstance().run();}
+  public void robotPeriodic() {
+    CommandScheduler.getInstance().run();
+  }
+
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+  }
+
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+  }
+
   @Override
   public void autonomousInit() {}
+
   @Override
   public void autonomousPeriodic() {}
+
   @Override
-  public void teleopInit() {setPipeline(RobotBait);}
+  public void teleopInit() {
+    /**
+     *Sets the vision pipeline to the desired pipeline when Teleop Starts
+     *Pipeline selection happens here to make viewing the camera feed easier 
+    */
+    setPipeline(RobotBait);
+  }
 
   @Override
   public void teleopPeriodic() {
@@ -138,31 +155,29 @@ public class Robot extends TimedRobot {
        */
       rotationError = targetX.getDouble(0.0);
       distanceError = targetY.getDouble(0.0);
-
       /*
        * Proportional (to targetX) control loop for rotation Deadzone of
        * angleTolerance Constant power is added to the direction the control loop
        * wants to turn (to overcome friction)
        */
-      if (rotationError > angleTolerance){
+      if (rotationError > angleTolerance) {
         rotationAjust = KpRot * rotationError + constantForce;
-      }
-      else if (rotationError < angleTolerance){
+      } else if (rotationError < angleTolerance) {
         rotationAjust = KpRot * rotationError - constantForce;
       }
-      
+
       /*
        * Proportional (to targetY) control loop for distance Deadzone of
        * distanceTolerance Constant power is added to the direction the control loop
        * wants to turn (to overcome friction)
        */
-      if (distanceError > distanceTolerance){
+      /*
+      if (distanceError > distanceTolerance) {
         distanceAjust = KpDist * distanceError + constantForce;
-      }
-      else if (distanceError < distanceTolerance){
+      } else if (distanceError < distanceTolerance) {
         distanceAjust = KpDist * distanceError - constantForce;
       }
-
+      */
       /**
        * Smart Dashboard Prints
        */
@@ -172,15 +187,22 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("Rotation Ajust: ", rotationAjust);
 
       // Output the power signals to a arcade drivetrain
-      m_drive.arcadeDrive(distanceAjust, rotationAjust);
+      m_drive.arcadeDrive(0, rotationAjust);
     }
 
   }
 
   @Override
-  public void testInit() {CommandScheduler.getInstance().cancelAll();}
-  @Override
-  public void testPeriodic() {}
+  public void testInit() {
+    CommandScheduler.getInstance().cancelAll();
+  }
 
-  public void setPipeline(int index){pipelineEntry.setNumber(index);}
+  @Override
+  public void testPeriodic() {
+  }
+
+  public void setPipeline(int index) {
+    //Sets the "pipeline" database entry to a given value which selects the desired vision pipeline
+    pipelineEntry.setNumber(index);
+  }
 }
