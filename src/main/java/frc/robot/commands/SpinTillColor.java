@@ -1,4 +1,3 @@
-/**
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
@@ -8,49 +7,54 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.*;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.ColorThings;
+import frc.robot.subsystems.ControlPanel;
 
-public class OuttakePowercells extends CommandBase {
+public class SpinTillColor extends CommandBase {
 
-  private final Outtake outtakePowercells;
+  ControlPanel s_controlpanel;
+  ColorThings s_colorthings;
+  int loops = 0;
 
-  public OuttakePowercells(Outtake outtakePowercells) {
+  public SpinTillColor(ControlPanel s_controlpanel, ColorThings s_colorthings) {
+    this.s_colorthings = s_colorthings;
+    this.s_controlpanel = s_controlpanel;
 
-    this.outtakePowercells = outtakePowercells;
-
-    addRequirements(outtakePowercells);
-
+    addRequirements(s_colorthings, s_controlpanel);
   }
+
+  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    super.initialize();
-    outtakePowercells.setServoAngle(115);
+
+
+    System.out.println("Color Command");
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    outtakePowercells.OuttakeOut(0.8);
+    //s_colorthings.setBlinkin(0.75);
+    s_controlpanel.Spin(0.4);
 
-    System.out.println("Outtake");
+    if(s_colorthings.getColorString().equals(s_colorthings.getMatchData())){isFinished();}
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    outtakePowercells.OuttakeStop();
+    s_controlpanel.Spin(0);
 
-    outtakePowercells.setServoAngle(167);
-
+    //s_colorthings.setBlinkin(-0.99);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

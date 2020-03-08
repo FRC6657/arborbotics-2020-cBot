@@ -30,11 +30,14 @@ import frc.robot.commands.OuttakePowercells;
 import frc.robot.commands.OuttakeServo;
 import frc.robot.commands.PivotControlPanel;
 import frc.robot.commands.SpinControlPanel;
+import frc.robot.commands.SpinTillColor;
 import frc.robot.commands.SwitchDriveDirection;
 import frc.robot.commands.TeleopDrive;
+import frc.robot.commands.TurnCommand;
 import frc.robot.subsystems.Agipotato;
 import frc.robot.subsystems.Camera_Intake;
 import frc.robot.subsystems.Camera_Outtake;
+import frc.robot.subsystems.ColorThings;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
@@ -60,12 +63,13 @@ public class RobotContainer {
   private final Outtake s_Outtake = new Outtake();
   private final Camera_Intake s_Camera_Intake = new Camera_Intake();
   private final Camera_Outtake s_Camera_Outtake = new Camera_Outtake();
+  private final ColorThings s_colorthings = new ColorThings();
 
   private final Joystick joyStick = new Joystick(0);
   private final static XboxController controller = new XboxController(1);
   private final ACCTWEMAS XboxController = new ACCTWEMAS(1);
 
-  public final static String DriverProfile = "Test";
+  public final static String DriverProfile = "Main";
 
   public boolean outtakeCameraPos = true;
   public boolean intakeCameraPos = true;
@@ -135,6 +139,9 @@ public class RobotContainer {
       b.whenHeld(new SpinControlPanel(s_ControlPanel, 0.2));
 
       dPadDown.whenHeld(new IntakeOuttake(s_Intake).withTimeout(0.05));
+      dPadUp.toggleWhenPressed(new SpinTillColor(s_ControlPanel, s_colorthings));
+
+      
 
       //rBumper.toggleWhenPressed(new OuttakeServo(s_Camera_Servos));
       //lBumper.toggleWhenPressed(new IntakeServo(s_Camera_Servos));
@@ -161,6 +168,7 @@ public class RobotContainer {
       _12.toggleWhenPressed(new OuttakeServo(s_Camera_Outtake));
       _11.toggleWhenPressed(new IntakeServo(s_Camera_Intake));
       _10.whenPressed(new SwitchDriveDirection(s_Drivetrain));
+      _9.toggleWhenPressed(new SpinTillColor(s_ControlPanel, s_colorthings));
 
       start.whenHeld(new IntakeOuttake(s_Intake).withTimeout(0.05));
 
@@ -206,28 +214,37 @@ public class RobotContainer {
     public mainAuto() {
       addCommands(
 
-          new DriveCommand(s_Drivetrain, 0.4, 0).withTimeout(2),
+          new DriveCommand(s_Drivetrain, 0.4, 0).withTimeout(3),
           new Agipotate(s_Agipotato, ()->0.0).withTimeout(0.1),
-          new DriveCommand(s_Drivetrain, 0, -0.3).withTimeout(1.4),
+          new TurnCommand(-0.4, s_Drivetrain).withTimeout(0.85),
 
-        
+          new Agipotate(s_Agipotato, ()-> 0).withTimeout(0.5),
+
           new OuttakePowercells(s_Outtake).withTimeout(1),
-          new Agipotate(s_Agipotato, () -> 0).withTimeout(3),//Janky Wait
-          new Agipotate(s_Agipotato, () -> 1.0).withTimeout(2), 
-          new OuttakePowercells(s_Outtake).withTimeout(3),
+          new Agipotate(s_Agipotato, () -> 0).withTimeout(2),//Janky Wait
+          new Agipotate(s_Agipotato, () -> -1.0).withTimeout(2), 
+          new OuttakePowercells(s_Outtake).withTimeout(1),
+          new IntakeOuttake(s_Intake).withTimeout(0.05),
           new IntakePowercells(s_Intake).withTimeout(3),
           new Agipotate(s_Agipotato, () -> -1.0).withTimeout(2),
-          new OuttakePowercells(s_Outtake).withTimeout(1)
+          new OuttakePowercells(s_Outtake).withTimeout(2)
+      );
+    }
+  }
+  public class JustShoot extends SequentialCommandGroup {
+    public JustShoot() {
+      addCommands(
 
-/*
-          new DriveCommand(s_Drivetrain, -0.4, 0).withTimeout(2.2),
-          new Agipotate(s_Agipotato, ()->0.0).withTimeout(0.1),
-          new DriveCommand(s_Drivetrain, 0, -0.4).withTimeout(0.65),
-          new Agipotate(s_Agipotato, ()->0.0).withTimeout(0.1),
-          new DriveCommand(s_Drivetrain, -0.4, 0).withTimeout(2.6)
-          .alongWith(new IntakePowercells(s_Intake).withTimeout(2.6))
+          new OuttakePowercells(s_Outtake).withTimeout(1),
+          new Agipotate(s_Agipotato, () -> 0).withTimeout(2),//Janky Wait
+          new Agipotate(s_Agipotato, () -> -1.0).withTimeout(2),
+          new Agipotate(s_Agipotato, () -> 0).withTimeout(1),
+          new OuttakePowercells(s_Outtake).withTimeout(1),
+          new IntakeOuttake(s_Intake).withTimeout(0.05),
+          new IntakePowercells(s_Intake).withTimeout(3),
+          new Agipotate(s_Agipotato, () -> -1.0).withTimeout(2),
+          new OuttakePowercells(s_Outtake).withTimeout(2)
 
-*/
       );
     }
   }
