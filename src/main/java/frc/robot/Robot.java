@@ -187,7 +187,7 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("Rotation Ajust: ", rotationAjust);
 
       // Output the power signals to a arcade drivetrain
-      //m_drive.arcadeDrive(0, rotationAjust);
+      //m_drive.arcadeDrive(distanceAdjust, rotationAjust);
     }
 
   }
