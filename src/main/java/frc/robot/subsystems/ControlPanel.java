@@ -26,7 +26,6 @@ public class ControlPanel extends SubsystemBase {
 
     CPivot = new WPI_TalonSRX(10);
     CSpin = new WPI_TalonSRX(11);
-    //colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
 
     CPivot.setNeutralMode(NeutralMode.Brake);
     CSpin.setNeutralMode(NeutralMode.Brake);
@@ -40,26 +39,13 @@ public class ControlPanel extends SubsystemBase {
   }
   public void Pivot(double speed){
 
-    CPivot.set(speed);
+    CPivot.set(CPivot.getSupplyCurrent());
 
   }
 
   @Override
   public void periodic() {
-    /*
-    double IR = colorSensor.getIR();
-
-    Color detectedColor = colorSensor.getColor();
-
-    SmartDashboard.putNumber("Red", detectedColor.red);
-    SmartDashboard.putNumber("Green", detectedColor.green);
-    SmartDashboard.putNumber("Blue", detectedColor.blue);
-    SmartDashboard.putNumber("IR", IR);
-
-    int proximity = colorSensor.getProximity();
-
-    SmartDashboard.putNumber("Proximity", proximity);
-    */
+    
 
   }
 }
