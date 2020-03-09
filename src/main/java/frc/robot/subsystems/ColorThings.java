@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ColorConstants;
 
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
@@ -28,22 +29,25 @@ public class ColorThings extends SubsystemBase {
   private ColorSensorV3 m_colorsensor;
 
   private final ColorMatch m_colorMatcher = new ColorMatch();
-  private final Color kBlueTarget = ColorMatch.makeColor(.125, .422, .455);
-  private final Color kGreenTarget = ColorMatch.makeColor(.167, .578, .256);
-  private final Color kRedTarget = ColorMatch.makeColor(.533, .338, .128);
-  private final Color kYellowTarget = ColorMatch.makeColor(.316, .561, .122);
+  private final Color kRedTarget = ColorConstants.RED_TARGET;
+  private final Color kGreenTarget = ColorConstants.GREEN_TARGET;
+  private final Color kBlueTarget = ColorConstants.BLUE_TARGET;
+  private final Color kYellowTarget = ColorConstants.YELLOW_TARGET;
+  private final Color kLoweredTarget = ColorConstants.LOWERED_TARGET;
 
   private String colorString = "No Color";
 
   public ColorThings() {
     if (RobotBase.isReal()) {
       m_colorsensor = new ColorSensorV3(Port.kOnboard);
-      m_blinkin = new VictorSP(6);
+      m_blinkin = new VictorSP(ColorConstants.BLINKIN_PWM);
 
       m_colorMatcher.addColorMatch(kBlueTarget);
       m_colorMatcher.addColorMatch(kGreenTarget);
       m_colorMatcher.addColorMatch(kRedTarget);
       m_colorMatcher.addColorMatch(kYellowTarget);
+      m_colorMatcher.addColorMatch(kLoweredTarget);
+
     }
   }
 
@@ -56,21 +60,34 @@ public class ColorThings extends SubsystemBase {
 
     // Color String Represents the color the fms is seing. This assumed The sensor
     // is in the middle front of the panel.
-    if (match.color == kBlueTarget) {
-      colorString = "R";
-      m_blinkin.set(blinkin_colors.SOLID_RED.color);
-    } else if (match.color == kRedTarget) {
+    if (match.color.equals(kRedTarget)) {
+      
       colorString = "B";
       m_blinkin.set(blinkin_colors.SOLID_DARK_BLUE.color);
-    } else if (match.color == kGreenTarget) {
+
+    } else if (match.color.equals(kGreenTarget)) {
+
       colorString = "Y";
       m_blinkin.set(blinkin_colors.SOLID_GOLD.color);
-    } else if (match.color == kYellowTarget) {
+
+    } else if (match.color.equals(kBlueTarget)) {
+      
+      colorString = "R";
+      m_blinkin.set(blinkin_colors.SOLID_DARK_RED.color);
+
+    } else if (match.color.equals(kYellowTarget)) {
+
       colorString = "G";
       m_blinkin.set(blinkin_colors.SOLID_DARK_GREEN.color);
+
+    } else if (match.color.equals(kLoweredTarget)){
+
+      colorString = "L";
+      m_blinkin.set(blinkin_colors.RAINBOW_PALETTE.color);
+
     } else {
       colorString = "Unknown";
-      m_blinkin.set(blinkin_colors.RAINBOW_PALETTE.color);
+      m_blinkin.set(blinkin_colors.SOLID_WHITE.color);
     }
 
     SmartDashboard.putNumber("Red", detectedColor.red);

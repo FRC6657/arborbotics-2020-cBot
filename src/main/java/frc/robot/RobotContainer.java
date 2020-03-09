@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.custom_classes.ACCTWEMAS;
 import frc.robot.custom_classes.DPad;
+import frc.robot.custom_classes.Scalar;
 import frc.robot.custom_classes.DPad.Direction;
 import frc.robot.Constants.AgitatorConstants;
 import frc.robot.Constants.ControlPanelConstants;
@@ -99,8 +100,8 @@ public class RobotContainer {
     if (DriverProfile == "Main") {
 
       s_Drivetrain.setDefaultCommand(new TeleopDrive(s_Drivetrain, 
-              () -> DriveConstants.DRIVE_MULTIPLIER * deadBandApplicator(joyStick.getRawAxis(DriveConstants.DRIVE_AXIS), DriveConstants.STICK_DEADBAND),
-              () -> DriveConstants.TURN_MULTIPLIER * deadBandApplicator(joyStick.getRawAxis(DriveConstants.TURN_AXIS), DriveConstants.TWIST_DEADBAND)));
+              () -> Scalar.scaleDouble(joyStick.getThrottle(), -1, 1, 0, 1) * (DriveConstants.DRIVE_MULTIPLIER * deadBandApplicator(joyStick.getRawAxis(DriveConstants.DRIVE_AXIS), DriveConstants.STICK_DEADBAND)),
+              () -> Scalar.scaleDouble(joyStick.getThrottle(), -1, 1, 0, 1) * (DriveConstants.TURN_MULTIPLIER * deadBandApplicator(joyStick.getRawAxis(DriveConstants.TURN_AXIS), DriveConstants.TWIST_DEADBAND))));
 
     }
   }

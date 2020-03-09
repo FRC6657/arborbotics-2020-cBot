@@ -12,9 +12,7 @@ package frc.robot;
  */
 public class TodoList {
 
-    //TODO:Make an actual wait command
     //TODO:Comment Everything
     //TODO:Information readouts on shuffleboard
-    //TODO:Capability to change speed mid match
 
 }

@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ControlPanelConstants;
 
 public class ControlPanel extends SubsystemBase {
 
@@ -19,8 +20,8 @@ public class ControlPanel extends SubsystemBase {
 
   public ControlPanel() {
     if (RobotBase.isReal()) {
-      CPivot = new WPI_TalonSRX(10);
-      CSpin = new WPI_TalonSRX(11);
+      CPivot = new WPI_TalonSRX(ControlPanelConstants.PIVOT_ID);
+      CSpin = new WPI_TalonSRX(ControlPanelConstants.SPIN_ID);
 
       CPivot.setNeutralMode(NeutralMode.Brake);
       CSpin.setNeutralMode(NeutralMode.Brake);

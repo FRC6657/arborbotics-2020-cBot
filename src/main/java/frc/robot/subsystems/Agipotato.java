@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.AgitatorConstants;
 
 public class Agipotato extends SubsystemBase {
 
@@ -18,7 +19,7 @@ public class Agipotato extends SubsystemBase {
 
   public Agipotato() {
     if(RobotBase.isReal()){
-      Agipotato = new WPI_TalonSRX(9);
+      Agipotato = new WPI_TalonSRX(AgitatorConstants.ID);
     }
   }
 
