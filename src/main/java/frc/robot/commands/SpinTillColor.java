@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.ControlPanelConstants;
 import frc.robot.subsystems.ColorThings;
 import frc.robot.subsystems.ControlPanel;
 
@@ -28,17 +29,13 @@ public class SpinTillColor extends CommandBase {
   @Override
   public void initialize() {
 
-
-    System.out.println("Color Command");
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    //s_colorthings.setBlinkin(0.75);
-    s_controlpanel.Spin(0.4);
+    s_controlpanel.spin(ControlPanelConstants.ROTATE_SPEED);
 
     if(s_colorthings.getColorString().equals(s_colorthings.getMatchData())){isFinished();}
 
@@ -47,9 +44,7 @@ public class SpinTillColor extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    s_controlpanel.Spin(0);
-
-    //s_colorthings.setBlinkin(-0.99);
+    s_controlpanel.spin(0);
   }
 
   // Returns true when the command should end.

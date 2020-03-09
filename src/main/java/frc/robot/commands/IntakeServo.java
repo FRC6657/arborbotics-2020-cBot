@@ -8,7 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
+import frc.robot.Constants.ServoConstants;
 import frc.robot.subsystems.Camera_Intake;
 
 public class IntakeServo extends CommandBase {
@@ -24,8 +24,7 @@ public class IntakeServo extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    servo.setIntakeCameraServo(Constants.lift_servo_pos);
-    System.out.println("Fire Pos");
+    servo.setIntakeCameraServo(ServoConstants.LIFT_ANGLE);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -37,8 +36,7 @@ public class IntakeServo extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    servo.setIntakeCameraServo(Constants.intake_servo_pos);
-    System.out.println("Line Pos");
+    servo.setIntakeCameraServo(ServoConstants.INTAKE_ANGLE);
   }
 
   // Returns true when the command should end.

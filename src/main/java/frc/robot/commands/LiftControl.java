@@ -37,14 +37,14 @@ public class LiftControl extends CommandBase {
   @Override
   public void execute() {
 
-    lift.LiftMove(speed.getAsDouble());
+    lift.liftMove(speed.getAsDouble());
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    lift.LiftMove(0);
+    lift.liftMove(0);
   }
 
   // Returns true when the command should end.

@@ -19,6 +19,12 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.custom_classes.ACCTWEMAS;
 import frc.robot.custom_classes.DPad;
 import frc.robot.custom_classes.DPad.Direction;
+import frc.robot.Constants.AgitatorConstants;
+import frc.robot.Constants.ControlPanelConstants;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.JoystickButtons;
+import frc.robot.Constants.LiftConstants;
 import frc.robot.commands.Agipotate;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.IntakeOuttake;
@@ -83,14 +89,18 @@ public class RobotContainer {
 
     if (DriverProfile == "Test") {
       s_Drivetrain.setDefaultCommand(new TeleopDrive(s_Drivetrain,
-          () -> ((deadBandApplicator(-0.8 * controller.getTriggerAxis(Hand.kRight), 0.2)) - (deadBandApplicator((-0.8 * controller.getTriggerAxis(Hand.kLeft)), 0.2))),
-          () -> (deadBandApplicator(0.6 * controller.getX(GenericHID.Hand.kRight), 0.1))));
+          () -> ((deadBandApplicator(-DriveConstants.DRIVE_MULTIPLIER * controller.getTriggerAxis(Hand.kRight), DriveConstants.TRIGGER_DEADBAND))
+             - (deadBandApplicator((-DriveConstants.TURN_MULTIPLIER * controller.getTriggerAxis(Hand.kLeft)), DriveConstants.TRIGGER_DEADBAND))),
+          () -> (deadBandApplicator(DriveConstants.TURN_MULTIPLIER * controller.getX(GenericHID.Hand.kRight), DriveConstants.STICK_DEADBAND))));
     }
     s_Lift.setDefaultCommand(
-        new LiftControl(s_Lift, () -> -deadBandApplicator(controller.getY(GenericHID.Hand.kLeft), 0.2)));
+        new LiftControl(s_Lift, () -> -deadBandApplicator(controller.getY(GenericHID.Hand.kLeft), DriveConstants.STICK_DEADBAND)));
     if (DriverProfile == "Main") {
-      s_Drivetrain.setDefaultCommand(new TeleopDrive(s_Drivetrain, () -> 0.65 * deadBandApplicator(joyStick.getRawAxis(1), 0.2),
-              () -> 0.65 * deadBandApplicator(joyStick.getRawAxis(2), 0.2)));
+
+      s_Drivetrain.setDefaultCommand(new TeleopDrive(s_Drivetrain, 
+              () -> DriveConstants.DRIVE_MULTIPLIER * deadBandApplicator(joyStick.getRawAxis(DriveConstants.DRIVE_AXIS), DriveConstants.STICK_DEADBAND),
+              () -> DriveConstants.TURN_MULTIPLIER * deadBandApplicator(joyStick.getRawAxis(DriveConstants.TURN_AXIS), DriveConstants.TWIST_DEADBAND)));
+
     }
   }
 
@@ -114,31 +124,31 @@ public class RobotContainer {
     final DPad dPadLeft = new DPad(XboxController, Direction.Left);
     final DPad dPadRight = new DPad(XboxController, Direction.Right);
 
-    final JoystickButton trigger = new JoystickButton(joyStick, 1);
-    final JoystickButton side = new JoystickButton(joyStick, 2);
-    final JoystickButton topLeft = new JoystickButton(joyStick, 5);
-    final JoystickButton topRight = new JoystickButton(joyStick, 6);
-    final JoystickButton bottomLeft = new JoystickButton(joyStick, 3);
-    final JoystickButton bottomRight = new JoystickButton(joyStick, 4);
-    final JoystickButton _7 = new JoystickButton(joyStick, 7);
-    final JoystickButton _8 = new JoystickButton(joyStick, 8);
-    final JoystickButton _9 = new JoystickButton(joyStick, 9);
-    final JoystickButton _10 = new JoystickButton(joyStick, 10);
-    final JoystickButton _11 = new JoystickButton(joyStick, 11);
-    final JoystickButton _12 = new JoystickButton(joyStick, 12);
+    final JoystickButton trigger = new JoystickButton(joyStick, JoystickButtons.TRIGGER);
+    final JoystickButton side = new JoystickButton(joyStick, JoystickButtons.SIDE);
+    final JoystickButton topLeft = new JoystickButton(joyStick, JoystickButtons.TOP_LEFT);
+    final JoystickButton topRight = new JoystickButton(joyStick, JoystickButtons.TOP_RIGHT);
+    final JoystickButton bottomLeft = new JoystickButton(joyStick, JoystickButtons.BOTTOM_LEFT);
+    final JoystickButton bottomRight = new JoystickButton(joyStick, JoystickButtons.BOTTOM_RIGHT);
+    final JoystickButton _7 = new JoystickButton(joyStick, JoystickButtons._7);
+    final JoystickButton _8 = new JoystickButton(joyStick, JoystickButtons._8);
+    final JoystickButton _9 = new JoystickButton(joyStick, JoystickButtons._9);
+    final JoystickButton _10 = new JoystickButton(joyStick, JoystickButtons._10);
+    final JoystickButton _11 = new JoystickButton(joyStick, JoystickButtons._11);
+    final JoystickButton _12 = new JoystickButton(joyStick, JoystickButtons._12);
 
     if (DriverProfile == "Test") {
 
       //lBumper.whenHeld(new IntakePowercells(s_Intake));
       //rBumper.whenHeld(new OuttakePowercells(s_Outtake));
-      dPadRight.whenHeld(new Agipotate(s_Agipotato, () -> 1.0));
-      dPadLeft.whenHeld(new Agipotate(s_Agipotato, () -> -1.0));
-      a.whenHeld(new PivotControlPanel(s_ControlPanel, -0.4).withTimeout(2));
-      y.whenHeld(new PivotControlPanel(s_ControlPanel, 0.4).withTimeout(1.8));
-      x.whenHeld(new SpinControlPanel(s_ControlPanel, -0.2));
-      b.whenHeld(new SpinControlPanel(s_ControlPanel, 0.2));
+      dPadRight.whenHeld(new Agipotate(s_Agipotato, () -> AgitatorConstants.SPEED));
+      dPadLeft.whenHeld(new Agipotate(s_Agipotato, () -> -AgitatorConstants.SPEED));
+      a.whenHeld(new PivotControlPanel(s_ControlPanel, -ControlPanelConstants.PIVOT_SPEED).withTimeout(2));
+      y.whenHeld(new PivotControlPanel(s_ControlPanel, ControlPanelConstants.PIVOT_SPEED).withTimeout(1.8));
+      x.whenHeld(new SpinControlPanel(s_ControlPanel, -ControlPanelConstants.ROTATE_SPEED));
+      b.whenHeld(new SpinControlPanel(s_ControlPanel, ControlPanelConstants.ROTATE_SPEED));
 
-      dPadDown.whenHeld(new IntakeOuttake(s_Intake).withTimeout(0.05));
+      dPadDown.whenHeld(new IntakeOuttake(s_Intake, IntakeConstants.SPEED).withTimeout(0.05));
       dPadUp.toggleWhenPressed(new SpinTillColor(s_ControlPanel, s_colorthings));
 
       
@@ -154,23 +164,23 @@ public class RobotContainer {
     }
     if (DriverProfile == "Main") {
 
-      lBumper.whenHeld(new IntakePowercells(s_Intake));
+      lBumper.whenHeld(new IntakePowercells(s_Intake, IntakeConstants.SPEED));
       rBumper.whenHeld(new OuttakePowercells(s_Outtake));
-      dPadRight.whenHeld(new Agipotate(s_Agipotato, () -> 1.0));
-      dPadLeft.whenHeld(new Agipotate(s_Agipotato, () -> -1.0));
-      a.whenHeld(new PivotControlPanel(s_ControlPanel, -0.4).withTimeout(2));
-      y.whenHeld(new PivotControlPanel(s_ControlPanel, 0.4).withTimeout(1.8));
-      x.whenHeld(new SpinControlPanel(s_ControlPanel, -0.2));
-      b.whenHeld(new SpinControlPanel(s_ControlPanel, 0.2));
-      dPadUp.whenHeld(new LiftMove(s_Lift, 0.75));
-      dPadDown.whenHeld(new LiftMove(s_Lift, -0.75));
+      dPadRight.whenHeld(new Agipotate(s_Agipotato, () -> AgitatorConstants.SPEED));
+      dPadLeft.whenHeld(new Agipotate(s_Agipotato, () -> -AgitatorConstants.SPEED));
+      a.whenHeld(new PivotControlPanel(s_ControlPanel, -ControlPanelConstants.PIVOT_SPEED).withTimeout(2));
+      y.whenHeld(new PivotControlPanel(s_ControlPanel, ControlPanelConstants.PIVOT_SPEED).withTimeout(1.8));
+      x.whenHeld(new SpinControlPanel(s_ControlPanel, -ControlPanelConstants.ROTATE_SPEED));
+      b.whenHeld(new SpinControlPanel(s_ControlPanel, ControlPanelConstants.ROTATE_SPEED));
+      dPadUp.whenHeld(new LiftMove(s_Lift, LiftConstants.SPEED));
+      dPadDown.whenHeld(new LiftMove(s_Lift, LiftConstants.SPEED));
 
       _12.toggleWhenPressed(new OuttakeServo(s_Camera_Outtake));
       _11.toggleWhenPressed(new IntakeServo(s_Camera_Intake));
       _10.whenPressed(new SwitchDriveDirection(s_Drivetrain));
       _9.toggleWhenPressed(new SpinTillColor(s_ControlPanel, s_colorthings));
 
-      start.whenHeld(new IntakeOuttake(s_Intake).withTimeout(0.05));
+      start.whenHeld(new IntakeOuttake(s_Intake,IntakeConstants.SPEED).withTimeout(0.05));
 
     }
   }
@@ -224,8 +234,8 @@ public class RobotContainer {
           new Agipotate(s_Agipotato, () -> 0).withTimeout(2),//Janky Wait
           new Agipotate(s_Agipotato, () -> -1.0).withTimeout(2), 
           new OuttakePowercells(s_Outtake).withTimeout(1),
-          new IntakeOuttake(s_Intake).withTimeout(0.05),
-          new IntakePowercells(s_Intake).withTimeout(3),
+          new IntakeOuttake(s_Intake,IntakeConstants.SPEED).withTimeout(0.05),
+          new IntakePowercells(s_Intake,IntakeConstants.SPEED).withTimeout(3),
           new Agipotate(s_Agipotato, () -> -1.0).withTimeout(2),
           new OuttakePowercells(s_Outtake).withTimeout(2)
       );
@@ -240,8 +250,8 @@ public class RobotContainer {
           new Agipotate(s_Agipotato, () -> -1.0).withTimeout(2),
           new Agipotate(s_Agipotato, () -> 0).withTimeout(1),
           new OuttakePowercells(s_Outtake).withTimeout(1),
-          new IntakeOuttake(s_Intake).withTimeout(0.05),
-          new IntakePowercells(s_Intake).withTimeout(3),
+          new IntakeOuttake(s_Intake,IntakeConstants.SPEED).withTimeout(0.05),
+          new IntakePowercells(s_Intake, IntakeConstants.SPEED).withTimeout(3),
           new Agipotate(s_Agipotato, () -> -1.0).withTimeout(2),
           new OuttakePowercells(s_Outtake).withTimeout(2)
 

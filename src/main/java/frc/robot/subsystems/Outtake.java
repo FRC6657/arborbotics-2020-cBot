@@ -10,8 +10,10 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ServoConstants;
 
 public class Outtake extends SubsystemBase {
 
@@ -20,39 +22,38 @@ public class Outtake extends SubsystemBase {
   private Servo gate;
 
   public Outtake() {
+    if (RobotBase.isReal()) {
+      outtakeLeft = new WPI_TalonSRX(7);
+      outtakeRight = new WPI_TalonSRX(8);
+      gate = new Servo(ServoConstants.GATE_PWM);
 
-    outtakeLeft = new WPI_TalonSRX(7);
-    outtakeRight = new WPI_TalonSRX(8);
-    gate = new Servo(9);
-
-    outtakeLeft.setNeutralMode(NeutralMode.Coast);
-    outtakeRight.setNeutralMode(NeutralMode.Coast);
-
+      outtakeLeft.setNeutralMode(NeutralMode.Coast);
+      outtakeRight.setNeutralMode(NeutralMode.Coast);
+    }
   }
 
-  public void OuttakeOut(double speed){
+  public void outtakeOut(double speed) {
 
     outtakeLeft.set(-speed);
     outtakeRight.set(-speed);
 
-//    gate.setAngle(135);
-
   }
 
-  public void OuttakeIn(double speed){
+  public void outtakeIn(double speed) {
 
     outtakeLeft.set(speed);
     outtakeRight.set(speed);
 
   }
 
-  public void OuttakeStop(){
+  public void outtakeStop() {
 
     outtakeLeft.set(0);
     outtakeRight.set(0);
 
   }
-  public void setServoAngle(double angle){
+
+  public void setServoAngle(double angle) {
 
     gate.setAngle(angle);
 

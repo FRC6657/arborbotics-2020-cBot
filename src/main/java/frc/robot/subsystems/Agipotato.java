@@ -9,20 +9,21 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Agipotato extends SubsystemBase {
 
-  private final SpeedController Agipotato;
+  private WPI_TalonSRX Agipotato;
 
   public Agipotato() {
-
-    Agipotato = new WPI_TalonSRX(9);
-
+    if(RobotBase.isReal()){
+      Agipotato = new WPI_TalonSRX(9);
+    }
   }
 
-  public void Agipotate(double speed){
+  public void agipotate(double speed){
 
     Agipotato.set(speed);
 

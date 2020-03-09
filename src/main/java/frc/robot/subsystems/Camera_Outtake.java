@@ -9,6 +9,8 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.OuttakeConstants;
+import frc.robot.Constants.ServoConstants;
 
 public class Camera_Outtake extends SubsystemBase {
 
@@ -16,17 +18,16 @@ public class Camera_Outtake extends SubsystemBase {
 
   public Camera_Outtake() {
 
-    outtakeServo = new Servo(8);
+    outtakeServo = new Servo(ServoConstants.OUTTAKE_CAMERA_PWM);
 
   }
 
   public void setOuttakeCameraServo(double angle){
     outtakeServo.setAngle(angle);
-   System.out.println("outtakeServoFunction");
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+
   }
 }

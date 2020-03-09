@@ -36,13 +36,13 @@ public class LiftMove extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    lift.LiftMove(speed);
+    lift.liftMove(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    lift.LiftMove(0);
+    lift.liftMove(0);
   }
 
   // Returns true when the command should end.

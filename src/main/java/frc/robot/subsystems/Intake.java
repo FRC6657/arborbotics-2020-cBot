@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.IntakeConstants;
 
 public class Intake extends SubsystemBase {
 
@@ -19,19 +20,19 @@ public class Intake extends SubsystemBase {
 
   public Intake() {
     if(RobotBase.isReal()){
-    Intake = new WPI_TalonSRX(5);
+      Intake = new WPI_TalonSRX(IntakeConstants.ID);
 
-    Intake.setNeutralMode(NeutralMode.Brake);
+      Intake.setNeutralMode(NeutralMode.Brake);
     }
   }
 
-  public void IntakeIn(double speed){
+  public void intakeIn(double speed){
 
     Intake.set(speed);
 
   }
 
-  public void OuttakeIn(double speed){
+  public void outtakeIn(double speed){
 
     Intake.set(-speed);
 

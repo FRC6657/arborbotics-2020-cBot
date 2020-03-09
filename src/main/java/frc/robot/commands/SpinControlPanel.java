@@ -29,14 +29,14 @@ public class SpinControlPanel extends CommandBase {
   @Override
   public void execute() {
 
-    CP.Spin(speed);
+    CP.spin(speed);
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    CP.Spin(0);
+    CP.spin(0);
   }
 
   // Returns true when the command should end.

@@ -29,14 +29,13 @@ public class Agipotate extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Agipotate.Agipotate(Speed.getAsDouble());
-    System.out.println("here");
+    Agipotate.agipotate(Speed.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Agipotate.Agipotate(0);
+    Agipotate.agipotate(0);
   }
 
   // Returns true when the command should end.

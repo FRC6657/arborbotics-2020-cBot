@@ -31,14 +31,14 @@ public class TurnCommand extends CommandBase {
   @Override
   public void execute() {
 
-    s_drivetrain.BadDrive(turnspeed, -turnspeed);
+    s_drivetrain.pureDrive(turnspeed, -turnspeed);
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    s_drivetrain.BadDrive(0, 0);
+    s_drivetrain.pureDrive(0, 0);
   }
 
   // Returns true when the command should end.

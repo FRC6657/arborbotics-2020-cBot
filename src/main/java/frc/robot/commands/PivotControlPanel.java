@@ -29,14 +29,14 @@ public class PivotControlPanel extends CommandBase {
   @Override
   public void execute() {
 
-    CP.Pivot(speed);
+    CP.pivot(speed);
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    CP.Pivot(0);
+    CP.pivot(0);
     
   }
 

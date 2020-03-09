@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -14,10 +15,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class IntakeOuttake extends CommandBase {
 
   private final Intake intakeOuttake;
-
-  public IntakeOuttake(Intake intakeOuttake) {
+  private final double speed;
+  public IntakeOuttake(Intake intakeOuttake,double speed) {
    
     this.intakeOuttake = intakeOuttake;
+    this.speed = speed;
 
     addRequirements(intakeOuttake);
 
@@ -27,14 +29,14 @@ public class IntakeOuttake extends CommandBase {
   @Override
   public void execute() {
 
-    intakeOuttake.IntakeIn(-0.4f);
+    intakeOuttake.intakeIn(speed);
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intakeOuttake.IntakeIn(0);
+    intakeOuttake.intakeIn(0);
     
   }
 

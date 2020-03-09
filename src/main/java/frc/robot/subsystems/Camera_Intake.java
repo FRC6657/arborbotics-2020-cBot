@@ -7,22 +7,23 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ServoConstants;
 
 public class Camera_Intake extends SubsystemBase {
 
   private Servo intakeServo;
 
   public Camera_Intake() {
-
-    intakeServo = new Servo(7);
-
+    if(RobotBase.isReal()){
+      intakeServo = new Servo(ServoConstants.INTAKE_CAMERA_PWM);
+    }
   }
 
   public void setIntakeCameraServo(double angle){
   intakeServo.setAngle(angle);
-   System.out.println("outtakeServoFunction");
   }
 
   @Override

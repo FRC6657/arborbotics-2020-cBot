@@ -14,10 +14,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class IntakePowercells extends CommandBase {
 
   private final Intake intakePowercells;
+  private final double speed;
 
-  public IntakePowercells(Intake intakePowercells) {
+  public IntakePowercells(Intake intakePowercells,double speed) {
    
     this.intakePowercells = intakePowercells;
+    this.speed = speed;
 
     addRequirements(intakePowercells);
 
@@ -27,14 +29,14 @@ public class IntakePowercells extends CommandBase {
   @Override
   public void execute() {
 
-    intakePowercells.IntakeIn(0.6f);
+    intakePowercells.intakeIn(speed);
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intakePowercells.IntakeIn(0);
+    intakePowercells.intakeIn(0);
     
   }
 

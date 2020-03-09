@@ -12,7 +12,7 @@ package frc.robot.custom_classes;
 
 /* Imports */
 import edu.wpi.first.wpilibj.Joystick;
-import frc.robot.Constants;
+import frc.robot.Constants.DriveConstants;
 
 public class ACCTWEMAS extends Joystick {
     private final Joystick mController;
@@ -42,7 +42,7 @@ public class ACCTWEMAS extends Joystick {
 
     public double getJoystick(Side side, Axis axis) {
 
-        double deadband = Constants.stickDeadband;
+        double deadband = DriveConstants.STICK_DEADBAND;
 
         boolean left = side == Side.LEFT;
         boolean y = axis == Axis.Y;
@@ -53,7 +53,7 @@ public class ACCTWEMAS extends Joystick {
 
     public double getTrigger(Side side) {
 
-        double deadband = Constants.triggerDeadband;
+        double deadband = DriveConstants.TRIGGER_DEADBAND;
         Side Side = side;
 
         if (Side == ACCTWEMAS.Side.LEFT) {
@@ -66,7 +66,7 @@ public class ACCTWEMAS extends Joystick {
         return 0;
     }
     public boolean getTriggerPressed(Side side) {
-        return mController.getRawAxis(side == Side.LEFT ? 2 : 3) > Constants.triggerDeadband;
+        return mController.getRawAxis(side == Side.LEFT ? 2 : 3) > DriveConstants.TRIGGER_DEADBAND;
     }
     public boolean getButton(Button button) {
         return mController.getRawButton(button.id);

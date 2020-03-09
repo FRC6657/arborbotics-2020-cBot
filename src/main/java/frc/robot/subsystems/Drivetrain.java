@@ -11,50 +11,63 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.DriveConstants;
 
 public class Drivetrain extends SubsystemBase {
 
-  private final WPI_TalonSRX frontLeftMotor;
-  private final WPI_VictorSPX backLeftMotor;
-  private final WPI_TalonSRX frontRightMotor;
-  private final WPI_VictorSPX backRightMotor;
+  private WPI_TalonSRX m_frontLeft;
+  private WPI_VictorSPX m_backLeft;
+  private WPI_TalonSRX m_frontRight;
+  private WPI_VictorSPX m_backRight;
+
+  private SpeedControllerGroup m_leftmotors;
+  private SpeedControllerGroup m_rightmotors;
 
   private int reverse;
 
   public Drivetrain() {
+    if (RobotBase.isReal()) {
+      m_frontLeft = new WPI_TalonSRX(DriveConstants.FRONT_LEFT_ID);
+      m_frontRight = new WPI_TalonSRX(DriveConstants.FRONT_RIGHT_ID);
+      m_backLeft = new WPI_VictorSPX(DriveConstants.BACK_LEFT_ID);
+      m_backRight = new WPI_VictorSPX(DriveConstants.BACK_RIGHT_ID);
 
-    frontLeftMotor = new WPI_TalonSRX(1);
-    frontRightMotor = new WPI_TalonSRX(3);
-    backLeftMotor = new WPI_VictorSPX(2);
-    backRightMotor = new WPI_VictorSPX(4);
+      m_frontLeft.setNeutralMode(NeutralMode.Coast);
+      m_backLeft.setNeutralMode(NeutralMode.Coast);
+      m_frontRight.setNeutralMode(NeutralMode.Coast);
+      m_backRight.setNeutralMode(NeutralMode.Coast);
 
-    frontLeftMotor.setNeutralMode(NeutralMode.Coast);
-    backLeftMotor.setNeutralMode(NeutralMode.Coast);
-    frontRightMotor.setNeutralMode(NeutralMode.Coast);
-    backRightMotor.setNeutralMode(NeutralMode.Coast);
+      m_leftmotors = new SpeedControllerGroup(m_frontLeft, m_backLeft);
+      m_rightmotors = new SpeedControllerGroup(m_frontRight, m_backRight);
 
-    reverse = 1;
-
+      reverse = 1;
+    }
   }
 
-  public void Drive(double xSpeed, double zRotation) {
+  public void comboDrive(double xSpeed, double zRotation) {
 
     double leftPower = xSpeed + zRotation;
     double rightPower = -(xSpeed - zRotation);
 
-    frontLeftMotor.set(reverse * leftPower);
-    backLeftMotor.set(reverse * leftPower);
-    frontRightMotor.set(reverse * (rightPower + 0.1));
-    backRightMotor.set(reverse * (rightPower + 0.1));
+    m_leftmotors.set(reverse * leftPower);
+    m_rightmotors.set(reverse * (rightPower + DriveConstants.DRIFT_AJUST));
 
   }
-  public void BadDrive(double left, double right){
 
-    frontLeftMotor.set(left);
-    frontRightMotor.set(-right);
-    backLeftMotor.set(left);
-    backRightMotor.set(-right);
+  public void pureDrive(double left, double right) {
+
+    m_leftmotors.set(left);
+    m_rightmotors.set(-right);
+
+  }
+
+  public void voltDrive(double left_volts, double right_volts) {
+
+    m_leftmotors.setVoltage(left_volts);
+    m_rightmotors.setVoltage(right_volts);
 
   }
 

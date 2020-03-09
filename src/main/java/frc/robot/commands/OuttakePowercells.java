@@ -8,6 +8,8 @@
 
 package frc.robot.commands;
 
+import frc.robot.Constants.OuttakeConstants;
+import frc.robot.Constants.ServoConstants;
 import frc.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -25,26 +27,25 @@ public class OuttakePowercells extends CommandBase {
   }
   @Override
   public void initialize() {
-    super.initialize();
-    outtakePowercells.setServoAngle(115);
+
+    outtakePowercells.setServoAngle(ServoConstants.GATE_UP_ANGLE);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    outtakePowercells.OuttakeOut(0.8);
-
-    System.out.println("Outtake");
+    outtakePowercells.outtakeOut(OuttakeConstants.SPEED);
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    outtakePowercells.OuttakeStop();
+    outtakePowercells.outtakeStop();
 
-    outtakePowercells.setServoAngle(167);
+    outtakePowercells.setServoAngle(ServoConstants.GATE_DOWN_ANGLE);
 
   }
 

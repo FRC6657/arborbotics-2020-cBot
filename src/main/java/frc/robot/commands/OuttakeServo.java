@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.Constants.ServoConstants;
 import frc.robot.subsystems.Camera_Outtake;
 
 public class OuttakeServo extends CommandBase {
@@ -24,8 +25,9 @@ public class OuttakeServo extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    servo.setOuttakeCameraServo(Constants.fire_servo_pos);
-    System.out.println("Fire Pos");
+    
+    servo.setOuttakeCameraServo(ServoConstants.FIRE_ANGLE);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -37,8 +39,9 @@ public class OuttakeServo extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    servo.setOuttakeCameraServo(Constants.line_servo_pos);
-    System.out.println("Line Pos");
+
+    servo.setOuttakeCameraServo(ServoConstants.LINE_ANGLE);
+
   }
 
   // Returns true when the command should end.
