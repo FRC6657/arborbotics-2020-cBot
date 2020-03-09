@@ -58,26 +58,26 @@ public class ColorThings extends SubsystemBase {
     if (match.color == kBlueTarget) {
       colorString = "R";
       //colorString = "B";
-      m_blinkin.set(.61);
+      m_blinkin.set(blinkin_colors.SOLID_RED.color);
       //m_blinkin.set(0.87);
     } else if (match.color == kRedTarget) {
       colorString = "B";
       //colorString = "R";
-      m_blinkin.set(.87);
+      m_blinkin.set(blinkin_colors.SOLID_DARK_BLUE.color);
       //m_blinkin.set(.61);
     } else if (match.color == kGreenTarget) {
       colorString = "Y";
       //colorString = "G";
-      m_blinkin.set(.69);
+      m_blinkin.set(blinkin_colors.SOLID_GOLD.color);
       //m_blinkin.set(.75);
     } else if (match.color == kYellowTarget) {
       colorString = "G";
       //colorString = "Y";
-      m_blinkin.set(.75);
+      m_blinkin.set(blinkin_colors.SOLID_DARK_GREEN.color);
       //m_blinkin.set(.69);
     } else {
       colorString = "Unknown";
-      m_blinkin.set(-.99);
+      m_blinkin.set(blinkin_colors.RAINBOW_PALETTE.color);
     }
 
     SmartDashboard.putNumber("Red", detectedColor.red);
