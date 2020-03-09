@@ -9,19 +9,13 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-//import com.revrobotics.ColorSensorV3;
-
-import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ControlPanel extends SubsystemBase {
 
   private WPI_TalonSRX CPivot;
   private WPI_TalonSRX CSpin;
-  // private ColorSensorV3 colorSensor;
 
   public ControlPanel() {
     if (RobotBase.isReal()) {

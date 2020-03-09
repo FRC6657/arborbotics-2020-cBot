@@ -9,7 +9,6 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.OuttakeConstants;
 import frc.robot.Constants.ServoConstants;
 
 public class Camera_Outtake extends SubsystemBase {

@@ -7,36 +7,29 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.*;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class IntakeOuttake extends CommandBase {
+public class Wait extends CommandBase {
+  /**
+   * Creates a new Wait.
+   */
+  public Wait() {
+    // Use addRequirements() here to declare subsystem dependencies.
+  }
 
-  private final Intake intakeOuttake;
-  private final double speed;
-  public IntakeOuttake(Intake intakeOuttake,double speed) {
-   
-    this.intakeOuttake = intakeOuttake;
-    this.speed = speed;
-
-    addRequirements(intakeOuttake);
-
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    intakeOuttake.intakeIn(speed);
-
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intakeOuttake.intakeIn(0);
-    
   }
 
   // Returns true when the command should end.

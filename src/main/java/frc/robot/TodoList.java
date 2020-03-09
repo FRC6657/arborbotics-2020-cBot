@@ -12,7 +12,6 @@ package frc.robot;
  */
 public class TodoList {
 
-    //TODO:Make everything run off constants
     //TODO:Make an actual wait command
     //TODO:Comment Everything
     //TODO:Information readouts on shuffleboard

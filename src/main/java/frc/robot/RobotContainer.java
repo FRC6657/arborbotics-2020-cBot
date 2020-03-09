@@ -40,6 +40,7 @@ import frc.robot.commands.SpinTillColor;
 import frc.robot.commands.SwitchDriveDirection;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.commands.TurnCommand;
+import frc.robot.commands.Wait;
 import frc.robot.subsystems.Agipotato;
 import frc.robot.subsystems.Camera_Intake;
 import frc.robot.subsystems.Camera_Outtake;
@@ -225,13 +226,11 @@ public class RobotContainer {
       addCommands(
 
           new DriveCommand(s_Drivetrain, 0.4, 0).withTimeout(3),
-          new Agipotate(s_Agipotato, ()->0.0).withTimeout(0.1),
+          new Wait().withTimeout(0.1),
           new TurnCommand(-0.4, s_Drivetrain).withTimeout(0.85),
-
-          new Agipotate(s_Agipotato, ()-> 0).withTimeout(0.5),
-
+          new Wait().withTimeout(0.5),
           new OuttakePowercells(s_Outtake).withTimeout(1),
-          new Agipotate(s_Agipotato, () -> 0).withTimeout(2),//Janky Wait
+          new Wait().withTimeout(2),
           new Agipotate(s_Agipotato, () -> -1.0).withTimeout(2), 
           new OuttakePowercells(s_Outtake).withTimeout(1),
           new IntakeOuttake(s_Intake,IntakeConstants.SPEED).withTimeout(0.05),
@@ -246,9 +245,9 @@ public class RobotContainer {
       addCommands(
 
           new OuttakePowercells(s_Outtake).withTimeout(1),
-          new Agipotate(s_Agipotato, () -> 0).withTimeout(2),//Janky Wait
+          new Wait().withTimeout(2),//Janky Wait
           new Agipotate(s_Agipotato, () -> -1.0).withTimeout(2),
-          new Agipotate(s_Agipotato, () -> 0).withTimeout(1),
+          new Wait().withTimeout(1),
           new OuttakePowercells(s_Outtake).withTimeout(1),
           new IntakeOuttake(s_Intake,IntakeConstants.SPEED).withTimeout(0.05),
           new IntakePowercells(s_Intake, IntakeConstants.SPEED).withTimeout(3),
