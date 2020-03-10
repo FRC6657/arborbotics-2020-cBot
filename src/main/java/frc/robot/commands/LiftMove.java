@@ -34,8 +34,6 @@ public class LiftMove extends CommandBase {
 
   }
 
-
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
 
@@ -43,19 +41,16 @@ public class LiftMove extends CommandBase {
 
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     lift.liftMove(speed);
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     lift.liftMove(0);
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

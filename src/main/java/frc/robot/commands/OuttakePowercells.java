@@ -43,7 +43,6 @@ public class OuttakePowercells extends CommandBase {
 
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
@@ -51,7 +50,6 @@ public class OuttakePowercells extends CommandBase {
 
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     outtakePowercells.outtakeStop();
@@ -60,7 +58,6 @@ public class OuttakePowercells extends CommandBase {
 
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

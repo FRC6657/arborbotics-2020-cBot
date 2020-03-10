@@ -175,6 +175,8 @@ public class ColorThings extends SubsystemBase {
  
       matchColor();
       loops = 0;
+      System.out.println(colorString);
+
     }
   }
 }
