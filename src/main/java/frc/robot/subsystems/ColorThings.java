@@ -52,7 +52,7 @@ public class ColorThings extends SubsystemBase {
       m_colorsensor = new ColorSensorV3(Port.kOnboard);
 
       //Assigns a PWM port to the blinkin
-      m_blinkin = new VictorSP(6);
+      m_blinkin = new VictorSP(ColorConstants.BLINKIN_PWM);
 
       //Adds the targets to the matcher
       m_colorMatcher.addColorMatch(kBlueTarget);
@@ -170,12 +170,16 @@ public class ColorThings extends SubsystemBase {
   @Override
   public void periodic() {
     loops += 1;
+
+    setBlinkin(0.57);
+
     //Prevents rio lag
     if(loops == 10){
  
-      matchColor();
+      //matchColor();
       loops = 0;
-      System.out.println(colorString);
+
+
 
     }
   }

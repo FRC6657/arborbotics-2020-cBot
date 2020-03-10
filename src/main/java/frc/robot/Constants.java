@@ -9,7 +9,7 @@ public class Constants {
     public static final class ColorConstants{
 
         //Blinkins PWM Channel
-        public static final int BLINKIN_PWM = 0;
+        public static final int BLINKIN_PWM = 7;
 
         //Color Targets
         public static final Color RED_TARGET = ColorMatch.makeColor(.533, .338, .128);
@@ -76,7 +76,7 @@ public class Constants {
         //Servo PWM Channels
         public static final int GATE_PWM = 9;
         public static final int OUTTAKE_CAMERA_PWM = 8;
-        public static final int INTAKE_CAMERA_PWM = 7;
+        public static final int INTAKE_CAMERA_PWM = 6;
 
     }
 
