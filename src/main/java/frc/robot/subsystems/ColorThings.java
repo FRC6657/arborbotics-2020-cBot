@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.I2C.Port;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,7 +24,7 @@ import com.revrobotics.ColorSensorV3;
 public class ColorThings extends SubsystemBase {
 
   //Blinkin acts like a motor controller
-  private Spark m_blinkin = new Spark(0);
+  private VictorSP m_blinkin;
   
   //Color Sensor
   private ColorSensorV3 m_colorsensor;
@@ -50,6 +51,9 @@ public class ColorThings extends SubsystemBase {
       //Assigns the color sensor to the i2c port
       m_colorsensor = new ColorSensorV3(Port.kOnboard);
 
+      //Assigns a PWM port to the blinkin
+      m_blinkin = new VictorSP(6);
+
       //Adds the targets to the matcher
       m_colorMatcher.addColorMatch(kBlueTarget);
       m_colorMatcher.addColorMatch(kGreenTarget);
@@ -67,36 +71,41 @@ public class ColorThings extends SubsystemBase {
     ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
 
     // Color String Represents the color the fms is seing. This assumed The sensor is in the middle front of the panel.
-    if (match.color.equals(kRedTarget)) {
+    if (match.color == kRedTarget) {
 
       colorString = "B";
-      m_blinkin.set(blinkin_colors.SOLID_DARK_BLUE.color);
-
-    } else if (match.color.equals(kGreenTarget)) {
+      //m_blinkin.set(blinkin_colors.SOLID_DARK_BLUE.color);
+      m_blinkin.set(0.85);
+    } else if (match.color == kGreenTarget) {
 
       colorString = "Y";
-      m_blinkin.set(blinkin_colors.SOLID_GOLD.color);
+      //m_blinkin.set(blinkin_colors.SOLID_GOLD.color);
+      m_blinkin.set(0.67);
 
-    } else if (match.color.equals(kBlueTarget)) {
+    } else if (match.color == kBlueTarget) {
 
       colorString = "R";
-      m_blinkin.set(blinkin_colors.SOLID_DARK_RED.color);
+      //m_blinkin.set(blinkin_colors.SOLID_DARK_RED.color);
+      m_blinkin.set(0.59);
 
-    } else if (match.color.equals(kYellowTarget)) {
+    } else if (match.color == kYellowTarget) {
 
       colorString = "G";
-      m_blinkin.set(blinkin_colors.SOLID_DARK_GREEN.color);
+      //m_blinkin.set(blinkin_colors.SOLID_DARK_GREEN.color);
+      m_blinkin.set(0.75);
 
     } 
     else if (match.color.equals(kLoweredTarget)) {
 
       colorString = "L";
-      m_blinkin.set(blinkin_colors.RAINBOW_PALETTE.color);
+      //m_blinkin.set(blinkin_colors.RAINBOW_PALETTE.color);
+      m_blinkin.set(-0.99);
 
     } 
     else {
       colorString = "Unknown";
-      m_blinkin.set(blinkin_colors.SOLID_WHITE.color);
+      //m_blinkin.set(blinkin_colors.SOLID_WHITE.color);
+      m_blinkin.set(0.85);
     }
 
       //SmartDashboard Prints
@@ -163,6 +172,7 @@ public class ColorThings extends SubsystemBase {
     loops += 1;
     //Prevents rio lag
     if(loops == 10){
+ 
       matchColor();
       loops = 0;
     }
