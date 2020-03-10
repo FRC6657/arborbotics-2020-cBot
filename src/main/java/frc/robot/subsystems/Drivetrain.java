@@ -53,7 +53,7 @@ public class Drivetrain extends SubsystemBase {
     double rightPower = -(xSpeed - zRotation);
 
     m_leftmotors.set(reverse * leftPower);
-    m_rightmotors.set(reverse * (rightPower + DriveConstants.DRIFT_AJUST));
+    m_rightmotors.set(reverse * (rightPower/* + DriveConstants.DRIFT_AJUST*/));
 
   }
 

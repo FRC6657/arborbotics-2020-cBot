@@ -8,13 +8,22 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PWMSpeedController;
+import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ColorConstants;
+
+import java.util.Map;
 
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
@@ -25,7 +34,7 @@ public class ColorThings extends SubsystemBase {
    * Creates a new ColorThings.
    */
 
-  private VictorSP m_blinkin;
+  private VictorSP m_blinkin = new VictorSP(0); 
   private ColorSensorV3 m_colorsensor;
 
   private final ColorMatch m_colorMatcher = new ColorMatch();
@@ -38,9 +47,8 @@ public class ColorThings extends SubsystemBase {
   private String colorString = "No Color";
 
   public ColorThings() {
-    if (RobotBase.isReal()) {
+    
       m_colorsensor = new ColorSensorV3(Port.kOnboard);
-      m_blinkin = new VictorSP(ColorConstants.BLINKIN_PWM);
 
       m_colorMatcher.addColorMatch(kBlueTarget);
       m_colorMatcher.addColorMatch(kGreenTarget);
@@ -48,7 +56,6 @@ public class ColorThings extends SubsystemBase {
       m_colorMatcher.addColorMatch(kYellowTarget);
       m_colorMatcher.addColorMatch(kLoweredTarget);
 
-    }
   }
 
   public void matchColor() {
@@ -61,7 +68,7 @@ public class ColorThings extends SubsystemBase {
     // Color String Represents the color the fms is seing. This assumed The sensor
     // is in the middle front of the panel.
     if (match.color.equals(kRedTarget)) {
-      
+
       colorString = "B";
       m_blinkin.set(blinkin_colors.SOLID_DARK_BLUE.color);
 
@@ -71,7 +78,7 @@ public class ColorThings extends SubsystemBase {
       m_blinkin.set(blinkin_colors.SOLID_GOLD.color);
 
     } else if (match.color.equals(kBlueTarget)) {
-      
+
       colorString = "R";
       m_blinkin.set(blinkin_colors.SOLID_DARK_RED.color);
 
@@ -80,23 +87,27 @@ public class ColorThings extends SubsystemBase {
       colorString = "G";
       m_blinkin.set(blinkin_colors.SOLID_DARK_GREEN.color);
 
-    } else if (match.color.equals(kLoweredTarget)){
+    } 
+    else if (match.color.equals(kLoweredTarget)) {
 
       colorString = "L";
       m_blinkin.set(blinkin_colors.RAINBOW_PALETTE.color);
 
-    } else {
+    } 
+    else {
       colorString = "Unknown";
       m_blinkin.set(blinkin_colors.SOLID_WHITE.color);
     }
 
-    SmartDashboard.putNumber("Red", detectedColor.red);
-    SmartDashboard.putNumber("Green", detectedColor.green);
-    SmartDashboard.putNumber("Blue", detectedColor.blue);
-    SmartDashboard.putNumber("Confidence", match.confidence);
-    SmartDashboard.putString("Detected Color", colorString);
-    SmartDashboard.putString("Match Data", getMatchData());
+    
+      SmartDashboard.putNumber("Red", detectedColor.red);
+      SmartDashboard.putNumber("Green", detectedColor.green);
+      SmartDashboard.putNumber("Blue", detectedColor.blue);
+      SmartDashboard.putNumber("Confidence", match.confidence);
+      SmartDashboard.putString("Detected Color", colorString);
+      SmartDashboard.putString("Match Data", getMatchData());
 
+    
   }
 
   public String getMatchData() {
@@ -124,8 +135,8 @@ public class ColorThings extends SubsystemBase {
     LIGHT_CHASE_RED(-31), LIGHT_CHASE_BLUE(-29), LIGHT_CHASE_GRAY(-27), HEARTBEAT_RED(-25), HEARTBEAT_BLUE(-23),
     HEARTBEAT_WHITE(-21), HEARTBEAT_GRAY(-19), BREATH_RED(-17), BREATH_BLUE(-15), BREATH_GRAY(-13), STROBE_RED(-11),
     STROBE_BLUE(-9), STROBE_GOLD(-7), STROBE_WHITE(-5), COLOR_1_END_TO_END_BLACK_TO_BLACK(-3),
-    COLOR_1_LARSON_SCANNER(-1),COLOR_1_LIGHT_CHASE(1), COLOR_1_HEARTBEAT_SLOW(3), COLOR_1_HEARBEAT_MEDIUM(5), COLOR_1_HEARTBEAT_FAST(7),
-    COLOR_1_BREATH_SLOW(9), COLOR_1_BREATH_FAST(11), COLOR_1_SHOT(13), COLOR_1_STROBE(15),
+    COLOR_1_LARSON_SCANNER(-1), COLOR_1_LIGHT_CHASE(1), COLOR_1_HEARTBEAT_SLOW(3), COLOR_1_HEARBEAT_MEDIUM(5),
+    COLOR_1_HEARTBEAT_FAST(7), COLOR_1_BREATH_SLOW(9), COLOR_1_BREATH_FAST(11), COLOR_1_SHOT(13), COLOR_1_STROBE(15),
     COLOR_2_END_TO_END_BLACK_TO_BLACK(17), COLOR_2_LARSON_SCANNER(19), COLOR_2_LIGHT_CHASE(21),
     COLOR_2_HEARTBEAT_SLOW(23), COLOR_2_HEARBEAT_MEDIUM(25), COLOR_2_HEARTBEAT_FAST(27), COLOR_2_BREATH_SLOW(29),
     COLOR_2_BREATH_FAST(31), COLOR_2_SHOT(33), COLOR_2_STROBE(35), COLOR_1_COLOR_2_SPARKLE_C1_ON_C2(37),
@@ -146,7 +157,7 @@ public class ColorThings extends SubsystemBase {
 
   @Override
   public void periodic() {
-    
+
     matchColor();
 
   }

@@ -8,13 +8,13 @@ public class Constants {
 
     public static final class ColorConstants{
 
-        public static final int BLINKIN_PWM = 6;
+        public static final int BLINKIN_PWM = 0;
 
         public static final Color RED_TARGET = ColorMatch.makeColor(.533, .338, .128);
         public static final Color GREEN_TARGET = ColorMatch.makeColor(.167, .578, .256);
         public static final Color BLUE_TARGET = ColorMatch.makeColor(.125, .422, .455);
         public static final Color YELLOW_TARGET = ColorMatch.makeColor(.316, .561, .122);
-        public static final Color LOWERED_TARGET = null;
+        public static final Color LOWERED_TARGET = ColorMatch.makeColor(.258, .484, .258);
 
     }
 

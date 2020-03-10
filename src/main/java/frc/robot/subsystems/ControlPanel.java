@@ -7,9 +7,15 @@
 
 package frc.robot.subsystems;
 
+import java.util.Map;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ControlPanelConstants;
 
@@ -19,12 +25,15 @@ public class ControlPanel extends SubsystemBase {
   private WPI_TalonSRX CSpin;
 
   public ControlPanel() {
+
     if (RobotBase.isReal()) {
       CPivot = new WPI_TalonSRX(ControlPanelConstants.PIVOT_ID);
       CSpin = new WPI_TalonSRX(ControlPanelConstants.SPIN_ID);
 
       CPivot.setNeutralMode(NeutralMode.Brake);
       CSpin.setNeutralMode(NeutralMode.Brake);
+
+      
     }
   }
 
@@ -36,11 +45,14 @@ public class ControlPanel extends SubsystemBase {
 
   public void pivot(double speed) {
 
-    CPivot.set(CPivot.getSupplyCurrent());
+    CPivot.set(speed);
 
   }
 
   @Override
   public void periodic() {
+
+    SmartDashboard.putNumber("Spin Encoder: ", CSpin.getSelectedSensorPosition());
+
   }
 }
