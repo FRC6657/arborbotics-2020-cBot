@@ -10,31 +10,28 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 
 public class Intake extends SubsystemBase {
 
   private WPI_TalonSRX Intake;
-
+  /**
+   * 
+   * Intake Subsystem
+   * 
+   */
   public Intake() {
-    if(RobotBase.isReal()){
+
       Intake = new WPI_TalonSRX(IntakeConstants.ID);
 
       Intake.setNeutralMode(NeutralMode.Brake);
-    }
-  }
 
-  public void intakeIn(double speed){
+  }
+  //Runs intake
+  public void intake(double speed){
 
     Intake.set(speed);
-
-  }
-
-  public void outtakeIn(double speed){
-
-    Intake.set(-speed);
 
   }
 

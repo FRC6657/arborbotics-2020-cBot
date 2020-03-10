@@ -10,9 +10,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Wait extends CommandBase {
+
   /**
-   * Creates a new Wait.
+   * This command Waits... what more do you want from me...
+   * 
+   * @author Andrew Card
    */
+
   public Wait() {
     // Use addRequirements() here to declare subsystem dependencies.
   }

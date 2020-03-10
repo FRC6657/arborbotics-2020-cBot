@@ -7,39 +7,47 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.*;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Drivetrain;
 
-public class IntakeOuttake extends CommandBase {
+public class AutoDriveCommand extends CommandBase {
 
-  private final Intake intakeOuttake;
-  private final double speed;
-  public IntakeOuttake(Intake intakeOuttake,double speed) {
-   
-    this.intakeOuttake = intakeOuttake;
+  Drivetrain drivetrain;
+  double speed;
+  double rotation;
+
+  /**
+   * This command runs the Drivetrain during Autonomous
+   *
+   * @param drivetrain the Drivetrain Subsystem
+   * @param speed the desired forward speed of the robot
+   * @param rotation the desired turning speed of the robot
+   * @see Drivetrain
+   * 
+   * @author Andrew Card
+   */
+
+  public AutoDriveCommand(Drivetrain drivetrain, double speed, double rotation) {
+    this.drivetrain = drivetrain;
     this.speed = speed;
-
-    addRequirements(intakeOuttake);
-
+    this.rotation = rotation;
+    addRequirements(drivetrain);
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void initialize() {
+  }
+
   @Override
   public void execute() {
-
-    intakeOuttake.intakeIn(speed);
-
+    drivetrain.autoDrive(speed, rotation);
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intakeOuttake.intakeIn(0);
-    
+    drivetrain.voltDrive(0, 0);
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

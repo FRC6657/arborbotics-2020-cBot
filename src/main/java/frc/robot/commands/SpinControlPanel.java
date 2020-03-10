@@ -16,6 +16,16 @@ public class SpinControlPanel extends CommandBase {
   private final ControlPanel CP;
   private final double speed;
 
+  /**
+   * This spins the control panel when the command is executing
+   *
+   * @param CP the ControlPanel Subsystem
+   * @param speed the desired speed to run the spinner motor at
+   * @see ControlPanel
+   * 
+   * @author Andrew Card
+   */
+
   public SpinControlPanel(ControlPanel CP, double speed) {
 
     this.CP = CP;

@@ -18,15 +18,21 @@ public class Lift extends SubsystemBase {
 
   private static WPI_TalonSRX lift;
 
+  /**
+   * 
+   * Lift Subsystem
+   * 
+   */
+
   public Lift() {
-    if (RobotBase.isReal()) {
+
 
       lift = new WPI_TalonSRX(LiftConstants.ID);
       lift.setNeutralMode(NeutralMode.Brake);
 
-    }
-  }
 
+  }
+  //moves lift
   public void liftMove(double speed) {
 
     lift.set(speed);

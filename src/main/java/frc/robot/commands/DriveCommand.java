@@ -16,6 +16,16 @@ public class DriveCommand extends CommandBase {
   double speed;
   double rotation;
 
+  /**
+   * This command runs the Drivetrain when the command is executing | Not for driver control use
+   *
+   * @param drivetrain the Drivetrain Subsystem
+   * @param speed the desired forward speed of the robot
+   * @param rotation the desired turning speed of the robot
+   * @see Drivetrain
+   * 
+   * @author Andrew Card
+   */
   public DriveCommand(Drivetrain drivetrain, double speed, double rotation) {
     this.drivetrain = drivetrain;
     this.speed = speed;
@@ -23,24 +33,20 @@ public class DriveCommand extends CommandBase {
     addRequirements(drivetrain);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     drivetrain.comboDrive(speed, rotation);
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     drivetrain.comboDrive(0, 0);
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

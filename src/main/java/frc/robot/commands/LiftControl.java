@@ -16,24 +16,29 @@ public class LiftControl extends CommandBase {
 
   private final Lift lift;
   private final DoubleSupplier speed;
-  //private final DoubleSupplier liftPosition;
 
-  public LiftControl(Lift lift, DoubleSupplier speed /*,DoubleSupplier liftPosition*/) {
+  /**
+   * This command runs the Lift when the command is executing and should be used for axis based driver control
+   *
+   * @param lift the Lift Subsystem
+   * @param speed the desired speed/power of the lift
+   * @see Lift
+   * 
+   * @author Andrew Card
+   */
+
+  public LiftControl(Lift lift, DoubleSupplier speed) {
     
     this.lift = lift;
     this.speed = speed;
 
-    //this.liftPosition = liftPosition;
-
     addRequirements(lift);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
@@ -41,13 +46,11 @@ public class LiftControl extends CommandBase {
 
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     lift.liftMove(0);
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

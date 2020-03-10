@@ -8,14 +8,64 @@
 package frc.robot.custom_classes;
 
 /**
- * Add your docs here.
+ * Taken From ArborLib
  */
 public class Scalar {
 
-    //From ArborLib
-    public static int scaleInt(int input, int minO, int maxO, int minN, int maxN){return ((input - minO)/(maxO - minO)) * (maxN - minN) + minN;}
-    public static double scaleDouble(double input, double minO, double maxO, double minN, double maxN){return ((input - minO)/(maxO - minO)) * (maxN - minN) + minN;}
-    public static float scaleFloat(float input, float minO, float maxO, float minN, float maxN){return ((input - minO)/(maxO - minO)) * (maxN - minN) + minN;}
-    public static long scaleLong(long input, long minO, long maxO, long minN, long maxN){return ((input - minO)/(maxO - minO)) * (maxN - minN) + minN;}
+    /**
+     * @param input value to be scaled
+     * @param minO  minumum value that the input will be
+     * @param maxO  maximum value that the input will be
+     * @param minN  desired new minimum value the input will be
+     * @param maxN  desired new maximum value the input will be
+     * @return scaled input
+     * 
+     * @author Andrew Card
+     */
+    public static int scaleInt(int input, int minO, int maxO, int minN, int maxN) {
+        return ((input - minO) / (maxO - minO)) * (maxN - minN) + minN;
+    }
+
+    /**
+     * @param input value to be scaled
+     * @param minO  minumum value that the input will be
+     * @param maxO  maximum value that the input will be
+     * @param minN  desired new minimum value the input will be
+     * @param maxN  desired new maximum value the input will be
+     * @return scaled input
+     * 
+     * @author Andrew Card
+     */
+    public static double scaleDouble(double input, double minO, double maxO, double minN, double maxN) {
+        return ((input - minO) / (maxO - minO)) * (maxN - minN) + minN;
+    }
+
+    /**
+     * @param input value to be scaled
+     * @param minO  minumum value that the input will be
+     * @param maxO  maximum value that the input will be
+     * @param minN  desired new minimum value the input will be
+     * @param maxN  desired new maximum value the input will be
+     * @return scaled input
+     * 
+     * @author Andrew Card
+     */
+    public static float scaleFloat(float input, float minO, float maxO, float minN, float maxN) {
+        return ((input - minO) / (maxO - minO)) * (maxN - minN) + minN;
+    }
+
+    /**
+     * @param input value to be scaled
+     * @param minO  minumum value that the input will be
+     * @param maxO  maximum value that the input will be
+     * @param minN  desired new minimum value the input will be
+     * @param maxN  desired new maximum value the input will be
+     * @return scaled input
+     * 
+     * @author Andrew Card
+     */
+    public static long scaleLong(long input, long minO, long maxO, long minN, long maxN) {
+        return ((input - minO) / (maxO - minO)) * (maxN - minN) + minN;
+    }
 
 }

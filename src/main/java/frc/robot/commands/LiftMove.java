@@ -15,6 +15,16 @@ public class LiftMove extends CommandBase {
   private final Lift lift;
   private final double speed;
 
+  /**
+   * This command runs the Lift when the command is executing and should be used for button based driver control
+   *
+   * @param lift the Lift Subsystem
+   * @param speed the desired speed/power of the lift
+   * @see Lift
+   * 
+   * @author Andrew Card
+   */
+
   public LiftMove(Lift lift, double speed) {
   
     this.lift = lift;

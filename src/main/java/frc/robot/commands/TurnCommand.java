@@ -15,7 +15,17 @@ public class TurnCommand extends CommandBase {
   Drivetrain s_drivetrain;
   Double turnspeed;
 
-  public TurnCommand(Double turnspeed, Drivetrain s_drivetrain) {
+  /**
+   * This command runs the Drivetrain and should be used to turn the robot on its z axis without x or y movement
+   *
+   * @param drivetrain the Drivetrain Subsystem
+   * @param turnspeed speed the desired rotation speed of the robot
+   * @see Drivetrain
+   * 
+   * @author Andrew Card
+   */
+
+  public TurnCommand(Double turnspeed,Drivetrain s_drivetrain) {
     
     this.s_drivetrain = s_drivetrain;
     this.turnspeed = turnspeed;
@@ -31,14 +41,14 @@ public class TurnCommand extends CommandBase {
   @Override
   public void execute() {
 
-    s_drivetrain.pureDrive(turnspeed, -turnspeed);
+    s_drivetrain.autoDrive(turnspeed, -turnspeed);
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    s_drivetrain.pureDrive(0, 0);
+    s_drivetrain.voltDrive(0, 0);
   }
 
   // Returns true when the command should end.

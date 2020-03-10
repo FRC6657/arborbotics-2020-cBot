@@ -22,37 +22,30 @@ public class Outtake extends SubsystemBase {
   private Servo gate;
 
   public Outtake() {
-    if (RobotBase.isReal()) {
+
       outtakeLeft = new WPI_TalonSRX(7);
       outtakeRight = new WPI_TalonSRX(8);
       gate = new Servo(ServoConstants.GATE_PWM);
 
       outtakeLeft.setNeutralMode(NeutralMode.Coast);
       outtakeRight.setNeutralMode(NeutralMode.Coast);
-    }
-  }
 
+  }
+  //Outtakes
   public void outtakeOut(double speed) {
 
     outtakeLeft.set(-speed);
     outtakeRight.set(-speed);
 
   }
-
-  public void outtakeIn(double speed) {
-
-    outtakeLeft.set(speed);
-    outtakeRight.set(speed);
-
-  }
-
+  //Stops the Outtake
   public void outtakeStop() {
 
     outtakeLeft.set(0);
     outtakeRight.set(0);
 
   }
-
+  //Sets the Hopper Gate Servo angle
   public void setServoAngle(double angle) {
 
     gate.setAngle(angle);

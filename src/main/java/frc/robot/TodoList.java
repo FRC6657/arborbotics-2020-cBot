@@ -12,7 +12,6 @@ package frc.robot;
  */
 public class TodoList {
 
-    //TODO:Comment Everything
-    //TODO:Information readouts on shuffleboard
+    //TODO:TEST EVERYTHING
 
 }

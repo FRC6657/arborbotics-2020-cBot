@@ -28,8 +28,14 @@ public class Drivetrain extends SubsystemBase {
 
   private int reverse;
 
+  /**
+   * 
+   * Drivetrain Subsystem
+   * 
+   */
   public Drivetrain() {
-    if (RobotBase.isReal()) {
+
+      //motor declaration
       m_frontLeft = new WPI_TalonSRX(DriveConstants.FRONT_LEFT_ID);
       m_frontRight = new WPI_TalonSRX(DriveConstants.FRONT_RIGHT_ID);
       m_backLeft = new WPI_VictorSPX(DriveConstants.BACK_LEFT_ID);
@@ -44,19 +50,20 @@ public class Drivetrain extends SubsystemBase {
       m_rightmotors = new SpeedControllerGroup(m_frontRight, m_backRight);
 
       reverse = 1;
-    }
+    
   }
-
+  //Drive with both forward and sideways power
   public void comboDrive(double xSpeed, double zRotation) {
 
     double leftPower = xSpeed + zRotation;
     double rightPower = -(xSpeed - zRotation);
 
     m_leftmotors.set(reverse * leftPower);
-    m_rightmotors.set(reverse * (rightPower/* + DriveConstants.DRIFT_AJUST*/));
+    m_rightmotors.set(reverse * (rightPower));
 
   }
 
+  //Drive with only motor power
   public void pureDrive(double left, double right) {
 
     m_leftmotors.set(left);
@@ -64,17 +71,28 @@ public class Drivetrain extends SubsystemBase {
 
   }
 
+  //drive with drift compensation
+  public void autoDrive(double xSpeed, double zRotation){
+
+    double leftPower = xSpeed + zRotation;
+    double rightPower = -(xSpeed - zRotation);
+
+    m_leftmotors.set(reverse * leftPower);
+    m_rightmotors.set(reverse * (rightPower + DriveConstants.DRIFT_AJUST));
+
+  }
+  //drive with volts
   public void voltDrive(double left_volts, double right_volts) {
 
     m_leftmotors.setVoltage(left_volts);
     m_rightmotors.setVoltage(right_volts);
 
   }
-
+  //switch robot direction
   public void switchReverse() {
     reverse = -reverse;
   }
-
+  //get direction
   public double getReverse() {
     return reverse;
   }

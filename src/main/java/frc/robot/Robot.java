@@ -42,6 +42,7 @@ public class Robot extends TimedRobot {
       CameraServer instance1  = CameraServer.getInstance();
       CameraServer instance2 = CameraServer.getInstance();
 
+      //Camera configuration
       camera1 = new UsbCamera("Outtake Camera", 0);
       camera2 = new UsbCamera("Intake Camera", 1);
       instance1.addCamera(camera1);
@@ -59,8 +60,9 @@ public class Robot extends TimedRobot {
       server1.setFPS(10);
       server2.setFPS(10);
 
-      Shuffleboard.getTab("Main").add(camera1).withPosition(1, 2).withSize(6, 5);
-      Shuffleboard.getTab("Main").add(camera2).withPosition(8, 2).withSize(6, 5);
+      //Puts the cameras on shuffleboard
+      Shuffleboard.getTab("Main").add(camera1).withPosition(0, 1).withSize(5, 4);
+      Shuffleboard.getTab("Main").add(camera2).withPosition(7, 1).withSize(4, 4);
 
     m_robotContainer = new RobotContainer();
 

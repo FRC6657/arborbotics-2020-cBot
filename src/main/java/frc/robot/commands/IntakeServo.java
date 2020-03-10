@@ -14,32 +14,34 @@ import frc.robot.subsystems.Camera_Intake;
 public class IntakeServo extends CommandBase {
 
   Camera_Intake servo;
-
+  /**
+   * This command changes the Intake Camera Servo position when the command is either initialized or ended
+   *
+   * @param Camera_Intake the Camera_intake Subsystem
+   * @see Camera_Intake
+   * 
+   * @author Andrew Card
+   */
   public IntakeServo(Camera_Intake servo) {
-    // Use addRequirements() here to declare subsystem dependencies.
     this.servo = servo;
     addRequirements(servo);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     servo.setIntakeCameraServo(ServoConstants.LIFT_ANGLE);
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     servo.setIntakeCameraServo(ServoConstants.INTAKE_ANGLE);
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

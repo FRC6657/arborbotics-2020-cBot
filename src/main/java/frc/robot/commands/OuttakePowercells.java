@@ -18,6 +18,17 @@ public class OuttakePowercells extends CommandBase {
 
   private final Outtake outtakePowercells;
 
+  /**
+   * This command runs the Outtake when the command is executing
+   * <p>
+   * This command raises the Hopper Gate when Initialized, and Lowers it when Ended
+   *
+   * @param Outtake the Outtake Subsystem
+   * @see Outtake
+   * 
+   * @author Andrew Card
+   */
+
   public OuttakePowercells(Outtake outtakePowercells) {
 
     this.outtakePowercells = outtakePowercells;

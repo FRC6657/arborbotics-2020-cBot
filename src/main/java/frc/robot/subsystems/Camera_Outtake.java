@@ -14,13 +14,17 @@ import frc.robot.Constants.ServoConstants;
 public class Camera_Outtake extends SubsystemBase {
 
   private Servo outtakeServo;
-
+  /**
+   * 
+   * Outtake Camera Subsystem
+   * 
+   */
   public Camera_Outtake() {
 
     outtakeServo = new Servo(ServoConstants.OUTTAKE_CAMERA_PWM);
 
   }
-
+//sets the outtake camera_angle
   public void setOuttakeCameraServo(double angle){
     outtakeServo.setAngle(angle);
   }

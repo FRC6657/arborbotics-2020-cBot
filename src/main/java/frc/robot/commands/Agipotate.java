@@ -7,38 +7,42 @@
 
 package frc.robot.commands;
 
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Agipotato;
 
 public class Agipotate extends CommandBase {
 
   private final Agipotato Agipotate;
-  private final DoubleSupplier Speed;
+  private final double speed;
 
-  public Agipotate(Agipotato Agipotate, DoubleSupplier Speed) {
+/**
+ * This command runs the Agitator at a set speed while the command is executed
+ *
+ * @param  Agipotato the Agitator Subsystem
+ * @param  speed the speed at which the motor is told to run
+ * @see    Agipotato
+ * 
+ * @author Andrew Card
+ */
+  public Agipotate(Agipotato Agipotate, double speed) {
 
     this.Agipotate = Agipotate;
-    this.Speed = Speed;
+    this.speed = speed;
 
     addRequirements(Agipotate);
 
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Agipotate.agipotate(Speed.getAsDouble());
+    Agipotate.agipotate(speed);
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     Agipotate.agipotate(0);
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

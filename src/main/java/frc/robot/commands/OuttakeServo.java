@@ -15,6 +15,15 @@ public class OuttakeServo extends CommandBase {
 
   Camera_Outtake servo;
 
+  /**
+   * This command changes the Outtake Camera Servo position when the command is either initialized or ended
+   *
+   * @param Camera_Outtake the Camera_intake Subsystem
+   * @see Camera_Intake
+   * 
+   * @author Andrew Card
+   */
+
   public OuttakeServo(Camera_Outtake servo) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.servo = servo;

@@ -18,6 +18,17 @@ public class TeleopDrive extends CommandBase {
   private final DoubleSupplier xSpeed;
   private final DoubleSupplier rotation;
 
+  /**
+   * This command runs the Drivetrain when the command is executing and should be used for axis based driver control
+   *
+   * @param drive the Drivetrain Subsystem
+   * @param xSpeed the desired forward speed of the robot
+   * @param rotation the desired rotational speed of the robot
+   * @see Drivetrain
+   * 
+   * @author Andrew Card
+   */
+
   public TeleopDrive(Drivetrain drive, DoubleSupplier xSpeed, DoubleSupplier rotation) {
     
     this.drive = drive;

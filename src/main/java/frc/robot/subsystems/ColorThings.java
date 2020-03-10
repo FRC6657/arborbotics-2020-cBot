@@ -8,35 +8,27 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.PWMSpeedController;
-import edu.wpi.first.wpilibj.PWMVictorSPX;
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Victor;
-import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.I2C.Port;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ColorConstants;
-
-import java.util.Map;
 
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 
 public class ColorThings extends SubsystemBase {
-  /**
-   * Creates a new ColorThings.
-   */
 
-  private VictorSP m_blinkin = new VictorSP(0); 
+  //Blinkin acts like a motor controller
+  private Spark m_blinkin = new Spark(0);
+  
+  //Color Sensor
   private ColorSensorV3 m_colorsensor;
 
+  //Color Targets
   private final ColorMatch m_colorMatcher = new ColorMatch();
   private final Color kRedTarget = ColorConstants.RED_TARGET;
   private final Color kGreenTarget = ColorConstants.GREEN_TARGET;
@@ -44,12 +36,21 @@ public class ColorThings extends SubsystemBase {
   private final Color kYellowTarget = ColorConstants.YELLOW_TARGET;
   private final Color kLoweredTarget = ColorConstants.LOWERED_TARGET;
 
+  //color string for matching up colors
   private String colorString = "No Color";
 
+  private int loops = 0;
+  /**
+   * 
+   * Color Subsystem
+   * 
+   */
   public ColorThings() {
     
+      //Assigns the color sensor to the i2c port
       m_colorsensor = new ColorSensorV3(Port.kOnboard);
 
+      //Adds the targets to the matcher
       m_colorMatcher.addColorMatch(kBlueTarget);
       m_colorMatcher.addColorMatch(kGreenTarget);
       m_colorMatcher.addColorMatch(kRedTarget);
@@ -57,7 +58,7 @@ public class ColorThings extends SubsystemBase {
       m_colorMatcher.addColorMatch(kLoweredTarget);
 
   }
-
+  //used to match color
   public void matchColor() {
 
     Color detectedColor = m_colorsensor.getColor();
@@ -65,8 +66,7 @@ public class ColorThings extends SubsystemBase {
     String colorString;
     ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
 
-    // Color String Represents the color the fms is seing. This assumed The sensor
-    // is in the middle front of the panel.
+    // Color String Represents the color the fms is seing. This assumed The sensor is in the middle front of the panel.
     if (match.color.equals(kRedTarget)) {
 
       colorString = "B";
@@ -99,7 +99,7 @@ public class ColorThings extends SubsystemBase {
       m_blinkin.set(blinkin_colors.SOLID_WHITE.color);
     }
 
-    
+      //SmartDashboard Prints
       SmartDashboard.putNumber("Red", detectedColor.red);
       SmartDashboard.putNumber("Green", detectedColor.green);
       SmartDashboard.putNumber("Blue", detectedColor.blue);
@@ -110,18 +110,21 @@ public class ColorThings extends SubsystemBase {
     
   }
 
+  //gets the fms color data
   public String getMatchData() {
     return DriverStation.getInstance().getGameSpecificMessage();
   }
 
+  //gets the color string
   public String getColorString() {
     return colorString;
   }
-
+  //sets blinkin color
   public void setBlinkin(double color) {
     m_blinkin.set(color);
   }
 
+  //Enum with all possible blinkin colors
   public enum blinkin_colors {
     RAINBOW_PALETTE(-99), PARTY_PALETTE(-97), OCEAN_PALETTE(-95), LAVA_PALETTE(-93), FOREST_PALETTE(-91),
     RAINBOW_WITH_GLITTER(-89), CONFETTI(-87), SHOT_RED(-85), SHOT_BLUE(-83), SHOT_WHITE(-81),
@@ -157,8 +160,11 @@ public class ColorThings extends SubsystemBase {
 
   @Override
   public void periodic() {
-
-    matchColor();
-
+    loops += 1;
+    //Prevents rio lag
+    if(loops == 10){
+      matchColor();
+      loops = 0;
+    }
   }
 }

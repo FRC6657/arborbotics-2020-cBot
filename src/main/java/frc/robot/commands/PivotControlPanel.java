@@ -16,6 +16,16 @@ public class PivotControlPanel extends CommandBase {
   private final ControlPanel CP;
   private final double speed;
 
+  /**
+   * This pivots the control panel mechanism when the command is executing
+   *
+   * @param CP the ControlPanel Subsystem
+   * @param speed the desired speed to run the pivot motor at
+   * @see ControlPanel
+   * 
+   * @author Andrew Card
+   */
+
   public PivotControlPanel(ControlPanel CP, double speed) {
 
     this.CP = CP;

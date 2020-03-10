@@ -13,34 +13,41 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class IntakePowercells extends CommandBase {
 
-  private final Intake intakePowercells;
+  private final Intake intake;
   private final double speed;
 
-  public IntakePowercells(Intake intakePowercells,double speed) {
+  /**
+   * This command runs the Intake when the command is executing
+   *
+   * @param intake the Intake Subsystem
+   * @param speed the desired Intake Speed
+   * @see Intake
+   * 
+   * @author Andrew Card
+   */
+
+  public IntakePowercells(Intake intake,double speed) {
    
-    this.intakePowercells = intakePowercells;
+    this.intake = intake;
     this.speed = speed;
 
-    addRequirements(intakePowercells);
+    addRequirements(intake);
 
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    intakePowercells.intakeIn(speed);
+    intake.intake(speed);
 
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intakePowercells.intakeIn(0);
+    intake.intake(0);
     
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

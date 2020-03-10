@@ -14,8 +14,17 @@ public class SwitchDriveDirection extends CommandBase {
 
   private Drivetrain s_drivetrain;
 
+  /**
+   * This switches the direction of forward on the robot by reversing the motor power
+   *
+   * @param s_drivetrian the Drivetrain Subsystem
+   * @see Drivetrain
+   * 
+   * @author Andrew Card
+   */
+
   public SwitchDriveDirection(Drivetrain s_drivetrain) {
-    this.s_drivetrain=s_drivetrain;
+    this.s_drivetrain = s_drivetrain;
     addRequirements(s_drivetrain);
   }
 
