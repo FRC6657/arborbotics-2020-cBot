@@ -52,9 +52,9 @@ public class Constants {
         public static final double DRIFT_AJUST = 0.1;
 
         //Deadbands
-        public static final double STICK_DEADBAND = 0.2;
+        public static final double STICK_DEADBAND = 0.1;
         public static final double TWIST_DEADBAND = 0.1;
-        public static final double TRIGGER_DEADBAND = 0.2;
+        public static final double TRIGGER_DEADBAND = 0.1;
 
         //Drivetrain CAN ID's
         public static final int FRONT_LEFT_ID = 1;
@@ -92,7 +92,7 @@ public class Constants {
     public static final class ControlPanelConstants {
 
         //Speeds
-        public static final double PIVOT_SPEED = 1;
+        public static final double PIVOT_SPEED = 0.5;
         public static final double ROTATE_SPEED = 0.4;
 
         //CAN ID's

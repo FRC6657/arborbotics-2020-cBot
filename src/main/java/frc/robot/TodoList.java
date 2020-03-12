@@ -12,6 +12,13 @@ package frc.robot;
  */
 public class TodoList {
 
-    //TODO:TEST EVERYTHING
+    /**
+     * 
+     * TODO: Test If Auto Runs
+     * TODO: Test Driver Controls
+     * TODO: Test Speed Changing
+     * TODO: Test Direction Changing
+     * 
+     */
 
 }

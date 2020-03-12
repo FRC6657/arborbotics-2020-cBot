@@ -74,38 +74,38 @@ public class ColorThings extends SubsystemBase {
     if (match.color == kRedTarget) {
 
       colorString = "B";
-      //m_blinkin.set(blinkin_colors.SOLID_DARK_BLUE.color);
-      m_blinkin.set(0.85);
+      m_blinkin.set(blinkin_colors.SOLID_DARK_BLUE.color);
+      //m_blinkin.set(0.85);
     } else if (match.color == kGreenTarget) {
 
       colorString = "Y";
-      //m_blinkin.set(blinkin_colors.SOLID_GOLD.color);
-      m_blinkin.set(0.67);
+      m_blinkin.set(blinkin_colors.SOLID_GOLD.color);
+      //m_blinkin.set(0.67);
 
     } else if (match.color == kBlueTarget) {
 
       colorString = "R";
-      //m_blinkin.set(blinkin_colors.SOLID_DARK_RED.color);
-      m_blinkin.set(0.59);
+      m_blinkin.set(blinkin_colors.SOLID_DARK_RED.color);
+      //m_blinkin.set(0.59);
 
     } else if (match.color == kYellowTarget) {
 
       colorString = "G";
-      //m_blinkin.set(blinkin_colors.SOLID_DARK_GREEN.color);
-      m_blinkin.set(0.75);
+      m_blinkin.set(blinkin_colors.SOLID_DARK_GREEN.color);
+      //m_blinkin.set(0.75);
 
     } 
     else if (match.color.equals(kLoweredTarget)) {
 
       colorString = "L";
-      //m_blinkin.set(blinkin_colors.RAINBOW_PALETTE.color);
-      m_blinkin.set(-0.99);
+      m_blinkin.set(blinkin_colors.RAINBOW_PALETTE.color);
+      //m_blinkin.set(-0.99);
 
     } 
     else {
       colorString = "Unknown";
-      //m_blinkin.set(blinkin_colors.SOLID_WHITE.color);
-      m_blinkin.set(0.85);
+      m_blinkin.set(blinkin_colors.SOLID_WHITE.color);
+      //m_blinkin.set(0.85);
     }
 
       //SmartDashboard Prints
@@ -113,8 +113,8 @@ public class ColorThings extends SubsystemBase {
       SmartDashboard.putNumber("Green", detectedColor.green);
       SmartDashboard.putNumber("Blue", detectedColor.blue);
       SmartDashboard.putNumber("Confidence", match.confidence);
-      SmartDashboard.putString("Detected Color", colorString);
-      SmartDashboard.putString("Match Data", getMatchData());
+      SmartDashboard.putString("FMS Sensor Color", colorString);
+      SmartDashboard.putString("Color to go to", getMatchData());
 
     
   }
@@ -171,15 +171,11 @@ public class ColorThings extends SubsystemBase {
   public void periodic() {
     loops += 1;
 
-    setBlinkin(0.57);
-
     //Prevents rio lag
     if(loops == 10){
  
-      //matchColor();
+      matchColor();
       loops = 0;
-
-
 
     }
   }

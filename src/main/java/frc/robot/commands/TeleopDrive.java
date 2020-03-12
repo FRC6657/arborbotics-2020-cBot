@@ -40,6 +40,8 @@ public class TeleopDrive extends CommandBase {
 
   @Override
   public void execute() {
+    //System.out.println("Speed" + xSpeed.getAsDouble());
+    //System.out.println("Rotation" + rotation.getAsDouble());
     drive.comboDrive(xSpeed.getAsDouble(), rotation.getAsDouble());
   }
 

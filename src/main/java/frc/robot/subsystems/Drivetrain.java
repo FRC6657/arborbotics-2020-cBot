@@ -11,8 +11,12 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
@@ -26,7 +30,10 @@ public class Drivetrain extends SubsystemBase {
   private SpeedControllerGroup m_leftmotors;
   private SpeedControllerGroup m_rightmotors;
 
-  private int reverse;
+  private Encoder m_leftEncoder;
+  private Encoder m_rightEncoder;
+
+  private boolean reverse = false;
 
   /**
    * 
@@ -49,7 +56,26 @@ public class Drivetrain extends SubsystemBase {
       m_leftmotors = new SpeedControllerGroup(m_frontLeft, m_backLeft);
       m_rightmotors = new SpeedControllerGroup(m_frontRight, m_backRight);
 
-      reverse = 1;
+      m_leftEncoder = new Encoder(0,1);
+      m_rightEncoder = new Encoder(2,3);
+      
+      Shuffleboard.getTab("Drivetrain")
+      .add("LeftMotor", m_frontLeft.getMotorOutputPercent())
+        .withPosition(0, 0)
+        .withWidget(BuiltInWidgets.kDial)
+        .withSize(2, 1);
+
+    Shuffleboard.getTab("Drivetrain")
+      .add("RightMotor", m_frontRight.getMotorOutputPercent())
+        .withPosition(2, 0)
+        .withWidget(BuiltInWidgets.kDial)
+        .withSize(2, 1);
+    
+    Shuffleboard.getTab("Drivetrain")
+      .add("Reverse", getReverse())
+        .withPosition(0, 1)
+        .withWidget(BuiltInWidgets.kBooleanBox)
+        .withSize(4, 0);
     
   }
   //Drive with both forward and sideways power
@@ -58,9 +84,14 @@ public class Drivetrain extends SubsystemBase {
     double leftPower = xSpeed + zRotation;
     double rightPower = -(xSpeed - zRotation);
 
-    m_leftmotors.set(reverse * leftPower);
-    m_rightmotors.set(reverse * (rightPower));
-
+    if(reverse){
+      m_leftmotors.set(-leftPower);
+      m_rightmotors.set(-rightPower);
+    }
+    if(!reverse){
+      m_leftmotors.set(leftPower);
+      m_rightmotors.set(rightPower);
+    }
   }
 
   //Drive with only motor power
@@ -77,8 +108,8 @@ public class Drivetrain extends SubsystemBase {
     double leftPower = xSpeed + zRotation;
     double rightPower = -(xSpeed - zRotation);
 
-    m_leftmotors.set(reverse * leftPower);
-    m_rightmotors.set(reverse * (rightPower + DriveConstants.DRIFT_AJUST));
+    m_leftmotors.set(leftPower);
+    m_rightmotors.set(rightPower + DriveConstants.DRIFT_AJUST);
 
   }
   //drive with volts
@@ -90,14 +121,20 @@ public class Drivetrain extends SubsystemBase {
   }
   //switch robot direction
   public void switchReverse() {
-    reverse = -reverse;
+    reverse = !reverse;
   }
   //get direction
-  public double getReverse() {
+  public boolean getReverse() {
     return reverse;
   }
 
   @Override
   public void periodic() {
+
+    Shuffleboard.update();
+
+    SmartDashboard.putNumber("Left Encoder: ", m_leftEncoder.getDistance());
+    SmartDashboard.putNumber("Right Encoder: ", m_rightEncoder.getDistance());
+
   }
 }
